@@ -74,10 +74,3 @@ typings/
 
 # FuseBox cache
 .fusebox/
-
-# R
-analysis-in-R/.Rproj.user
-analysis-in-R/.RData
-analysis-in-R/.Rhistory
-analysis-in-R/analysis-in-R.Rproj
-analysis-in-R/out/
