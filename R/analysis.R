@@ -151,7 +151,7 @@ run_bsts <-
         loc = loc,
         time = time_points,
         mean = means,
-        map = maps,
+        MAP = maps,
         hdi95 = hdi95,
         hdi90 = hdi90,
         hdi80 = hdi80,
