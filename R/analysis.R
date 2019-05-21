@@ -1,9 +1,10 @@
-# install.packages(c("readr", "bsts", "tidyverse", "coda", "doFuture"))
+# install.packages(c("readr", "bsts", "tidyverse", "coda", "bayestestR", "doFuture"))
 
 library(readr)
 library(bsts)
 library(tidyverse)
 library(coda)
+library(bayestestR)
 library(doFuture)
 
 loc_ids <- c(
@@ -67,7 +68,7 @@ run_bsts <-
     
     small_sigma_prior <- SdPrior(0.1 * sdy, upper.limit = 0.5 * sdy)
     large_sigma_prior <- SdPrior(0.5 * sdy, upper.limit = 2 * sdy)
-  
+    
     ss <- AddLocalLevel(list(), y)
     # ss <- AddLocalLevel(ss, y, SdPrior(sdy, upper.limit = 3 * sdy), NormalPrior(initial.y, 3 * sdy))
     # ss <- AddLocalLevel(list(), y, sigma_prior, NormalPrior(initial.y, 0.5 * sdy))
@@ -104,7 +105,22 @@ run_bsts <-
     
     means <- colMeans(state)
     
-    modes <- rowMeans(HPDinterval(as.mcmc(state), prob = 0.0))
+    maps <- unlist(apply(state, 2, map_estimate))
+    
+    # hdi95 <- apply(state, 2, hdi, ci=0.95)
+    # hdi95.lower <- unlist(lapply(hdi95, function(x) { return(x$CI_low) }))
+    # hdi95.upper <- unlist(lapply(hdi95, function(x) { return(x$CI_high) }))
+    # hdi90 <- apply(state, 2, hdi, ci=0.90)
+    # hdi90.lower <- unlist(lapply(hdi90, function(x) { return(x$CI_low) }))
+    # hdi90.upper <- unlist(lapply(hdi90, function(x) { return(x$CI_high) }))
+    # hdi80 <- apply(state, 2, hdi, ci=0.80)
+    # hdi80.lower <- unlist(lapply(hdi80, function(x) { return(x$CI_low) }))
+    # hdi80.upper <- unlist(lapply(hdi80, function(x) { return(x$CI_high) }))
+    # hdi50 <- apply(state, 2, hdi, ci=0.50)
+    # hdi50.lower <- unlist(lapply(hdi50, function(x) { return(x$CI_low) }))
+    # hdi50.upper <- unlist(lapply(hdi50, function(x) { return(x$CI_high) }))
+    
+    # modes <- rowMeans(HPDinterval(as.mcmc(state), prob = 0.0))
     
     hdi95 <- HPDinterval(as.mcmc(state), prob = 0.95)
     hdi90 <- HPDinterval(as.mcmc(state), prob = 0.9)
@@ -135,7 +151,7 @@ run_bsts <-
         loc = loc,
         time = time_points,
         mean = means,
-        mode = modes,
+        map = maps,
         hdi95 = hdi95,
         hdi90 = hdi90,
         hdi80 = hdi80,
@@ -178,10 +194,10 @@ run_bsts <-
     return (list(mcmc_results = mcmc_results, mcmc_summary = mcmc_summary))
   }
 
-loc = "1"
-cat = "buildings"
-time_end <- as.POSIXct("2020-04-12 13:00:00", tz = "UTC")
-run_bsts(dataset, loc, cat, time_end, plot_bsts = T)
+# loc = "4"
+# cat = "shake_intensity"
+# time_end <- as.POSIXct("2020-04-12 13:00:00", tz = "UTC")
+# result <- run_bsts(dataset, loc, cat, time_end, plot_bsts = T)
 
 run_parallel <- function(pop, fun) {
   registerDoFuture()
@@ -212,18 +228,10 @@ time_start_loop <- Sys.time()
 
 for (loc in loc_ids[1]) {
   for (cat in categories[2]) {
-    #loc <- "1"
-    #cat <- "buildings"
-    
     print(loc)
     print(cat)
     
-    ## All time points
-    # time_min <- min(dataset$time)
-    # time_max <- max(dataset$time)
-    # time_points <- seq(time_min, time_max, by = "5 min")
-    
-    ## Only time points with data
+    ## Analyse only time points with data
     time_points <- sort(unique(
       dataset %>%
         dplyr::filter(location == loc) %>%
@@ -301,11 +309,6 @@ for (loc in loc_ids[1]) {
         )
       }
     }
-    
-    
-    #time_end <- as.POSIXct("2020-04-07 13:00:00", tz = "UTC")
-    #run_bsts_end(time_end)
-    #run_bsts_end(time_end + 60000)
     
     time_start <- Sys.time()
     
