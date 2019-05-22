@@ -1,0 +1,83 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 800,
+  "height": 400,
+  "padding": 20,
+
+  "config": {
+    "axisBand": {
+      "bandPosition": 1,
+      "tickExtra": true,
+      "tickOffset": 0
+    }
+  },
+
+  "data": [
+    {
+      "name": "shake",
+      "url": "data/shake_intensity_summary.csv",
+      "format": {
+        "type": "csv"
+      }
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "yscale",
+      "type": "band",
+      "range": "height",
+      "domain": {
+        "data": "shake",
+        "field": "loc",
+        "sort": { "op": "max", "field": "MAP", "order": "descending" }
+      }
+    },
+    {
+      "name": "xscale",
+      "type": "linear",
+      "range": "width",
+      "round": true,
+      "domain": { "data": "shake", "fields": ["hdi95lower", "hdi95upper"] },
+      "zero": false,
+      "nice": true
+    }
+  ],
+
+  "axes": [
+    { "orient": "bottom", "scale": "xscale", "zindex": 1, "title": "Rating" },
+    { "orient": "left", "scale": "yscale", "tickCount": 5, "zindex": 1 }
+  ],
+
+  "marks": [
+    {
+      "type": "rect",
+      "from": { "data": "shake" },
+      "encode": {
+        "enter": {
+          "fill": { "value": "black" },
+          "height": { "value": 1 }
+        },
+        "update": {
+          "y": { "scale": "yscale", "field": "loc", "band": 0.5 },
+          "x": { "scale": "xscale", "field": "hdi95lower" },
+          "x2": { "scale": "xscale", "field": "hdi95upper" }
+        }
+      }
+    },
+    {
+      "type": "symbol",
+      "from": { "data": "shake" },
+      "encode": {
+        "enter": {
+          "fill": { "value": "navy" },
+          "size": { "value": 40 }
+        },
+        "update": {
+          "x": { "scale": "xscale", "field": "MAP" },
+          "y": { "scale": "yscale", "field": "loc", "band": 0.5 }
+        }
+      }
+    }
+  ]
+}

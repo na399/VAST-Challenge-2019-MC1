@@ -1,0 +1,194 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 800,
+  "height": 450,
+  "padding": 20,
+
+  "config": {
+    "axisBand": {
+      "bandPosition": 1,
+      "tickExtra": true,
+      "tickOffset": 0
+    }
+  },
+
+  "signals": [
+    {
+      "name": "indexTime",
+      "update": "time('Apr 6 2020')",
+      "on": [
+        {
+          "events": "mousemove",
+          "update": "round(invert('x', clamp(x(), 0, width)) / 300000) * 300000"
+        }
+      ]
+    },
+    { "name": "maxDate", "update": "time('Apr 11 2020')" }
+  ],
+
+  "data": [
+    {
+      "name": "shake",
+      "url": "data/shake_intensity_summary.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "timepoints",
+      "transform": [
+        {
+          "type": "sequence",
+          "start": 1586131200000,
+          "stop": 1586563200000,
+          "step": 300000,
+          "as": "time"
+        }
+      ]
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "group",
+      "name": "ErrorBarChart",
+      "description": "MAP with CI",
+      "encode": {
+        "enter": {
+          "height": { "value": 350 },
+          "width": { "value": 800 }
+        }
+      },
+      "data": [
+        {
+          "name": "shake",
+          "source": "shake",
+          "transform": [
+            {
+              "type": "filter",
+              "expr": "datum.time == indexTime"
+            }
+          ]
+        }
+      ],
+      "scales": [
+        {
+          "name": "yscale",
+          "type": "band",
+          "range": [0, 350],
+          "domain": {
+            "data": "shake",
+            "field": "loc",
+            "sort": { "op": "max", "field": "MAP", "order": "descending" }
+          }
+        },
+        {
+          "name": "xscale",
+          "type": "linear",
+          "range": "width",
+          "round": true,
+          "domain": [0, 10],
+          "zero": false,
+          "nice": true
+        }
+      ],
+      "axes": [
+        { "orient": "top", "scale": "xscale", "zindex": 1, "title": "Rating" },
+        { "orient": "left", "scale": "yscale", "tickCount": 5, "zindex": 1 }
+      ],
+      "marks": [
+        {
+          "type": "rect",
+          "from": { "data": "shake" },
+          "encode": {
+            "enter": {
+              "fill": { "value": "black" },
+              "height": { "value": 1 }
+            },
+            "update": {
+              "y": { "scale": "yscale", "field": "loc", "band": 0.5 },
+              "x": { "scale": "xscale", "field": "hdi95\\.lower" },
+              "x2": { "scale": "xscale", "field": "hdi95\\.upper" }
+            }
+          }
+        },
+        {
+          "type": "symbol",
+          "from": { "data": "shake" },
+          "encode": {
+            "enter": {
+              "fill": { "value": "navy" },
+              "size": { "value": 40 }
+            },
+            "update": {
+              "x": { "scale": "xscale", "field": "MAP" },
+              "y": { "scale": "yscale", "field": "loc", "band": 0.5 }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "name": "timeline",
+      "encode": {
+        "enter": {
+          "height": { "value": 50 },
+          "width": { "value": 800 },
+          "y": { "value": 400 }
+        }
+      },
+      "scales": [
+        {
+          "name": "x",
+          "type": "time",
+          "domain": { "data": "shake", "field": "time" },
+          "range": "width",
+          "nice": true
+        }
+      ],
+      "axes": [{ "orient": "bottom", "scale": "x", "grid": false }],
+      "marks": [
+        {
+          "type": "rule",
+          "from": { "data": "shake" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "x", "field": "time" },
+              "y": { "value": 0 },
+              "y2": { "field": { "group": "height" } },
+              "stroke": { "value": "steelblue" }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": { "scale": "x", "signal": "indexTime", "offset": 0.5 },
+              "y": { "value": 0 },
+              "y2": { "field": { "group": "height" } },
+              "stroke": { "value": "firebrick" }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": { "scale": "x", "signal": "indexTime" },
+              "y": { "value": 0, "offset": -5 },
+              "align": { "value": "center" },
+              "text": { "signal": "timeFormat(indexTime, '%x %H:%M')" },
+              "fill": { "value": "firebrick" }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

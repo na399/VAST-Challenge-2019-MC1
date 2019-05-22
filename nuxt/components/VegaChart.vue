@@ -13,7 +13,7 @@ export default {
       default: null
     },
     renderer: {
-      default: 'canvas'
+      default: 'svg'
     },
     hover: {
       default: 'hover'
@@ -21,14 +21,16 @@ export default {
   },
   data: function() {
     return {
-      view: {}
+      view: null
     }
   },
   mounted: function() {
     this.view = this.createView(this.spec)
   },
   beforeDestroy: function() {
-    this.view.finalize()
+    if (this.view) {
+      this.view.finalize()
+    }
   },
   watch: {
     spec: {
@@ -48,7 +50,9 @@ export default {
 
       view.initialize(this.$el)
 
-      this.addSignalEmitter(spec, view)
+      if (spec.signals) {
+        this.addSignalEmitter(spec, view)
+      }
 
       view.run()
 
