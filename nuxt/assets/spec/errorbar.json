@@ -29,7 +29,7 @@
   "data": [
     {
       "name": "shake",
-      "url": "data/shake_intensity_summary.csv",
+      "url": "data/shake_intensity_summary_processed.csv",
       "format": {
         "type": "csv",
         "parse": {
@@ -83,7 +83,11 @@
           "domain": {
             "data": "shake",
             "field": "loc",
-            "sort": { "op": "max", "field": "MAP", "order": "descending" }
+            "sort": {
+              "op": "max",
+              "field": "hdi90\\.lower",
+              "order": "descending"
+            }
           }
         },
         {
@@ -107,12 +111,27 @@
           "encode": {
             "enter": {
               "fill": { "value": "black" },
-              "height": { "value": 1 }
+              "height": { "value": 1 },
+              "opacity": [
+                {
+                  "test": "datum.in15min == 1",
+                  "value": 1
+                },
+                {
+                  "test": "datum.in60min == 1",
+                  "value": 0.7
+                },
+                {
+                  "test": "datum.over60min == 1",
+                  "value": 0.5
+                },
+                { "value": 0.3 }
+              ]
             },
             "update": {
               "y": { "scale": "yscale", "field": "loc", "band": 0.5 },
-              "x": { "scale": "xscale", "field": "hdi95\\.lower" },
-              "x2": { "scale": "xscale", "field": "hdi95\\.upper" }
+              "x": { "scale": "xscale", "field": "hdi90\\.lower" },
+              "x2": { "scale": "xscale", "field": "hdi90\\.upper" }
             }
           }
         },
@@ -121,7 +140,21 @@
           "from": { "data": "shake" },
           "encode": {
             "enter": {
-              "fill": { "value": "navy" },
+              "fill": [
+                {
+                  "test": "datum.in15min == 1",
+                  "value": "navy"
+                },
+                {
+                  "test": "datum.in60min == 1",
+                  "value": "steelblue"
+                },
+                {
+                  "test": "datum.over60min == 1",
+                  "value": "lightblue"
+                },
+                { "value": "grey" }
+              ],
               "size": { "value": 40 }
             },
             "update": {
@@ -161,7 +194,8 @@
               "x": { "scale": "x", "field": "time" },
               "y": { "value": 0 },
               "y2": { "field": { "group": "height" } },
-              "stroke": { "value": "steelblue" }
+              "stroke": { "value": "steelblue" },
+              "opacity": { "value": 0.5 }
             }
           }
         },
