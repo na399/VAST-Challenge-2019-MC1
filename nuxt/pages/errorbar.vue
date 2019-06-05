@@ -1,7 +1,8 @@
 <template>
   <section class="container">
     <div>
-      <VegaChart :spec="specErrorBar"/>
+      <VegaChart :spec="specErrorBar" :renderer="'canvas'" />
+      <p><i>Tested on Chrome v75</i></p>
     </div>
   </section>
 </template>
