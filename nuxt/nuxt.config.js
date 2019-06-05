@@ -66,5 +66,12 @@ export default {
         })
       }
     }
+  },
+
+  /*
+   ** Generate configuration
+   */
+  generate: {
+    subFolders: false
   }
 }
