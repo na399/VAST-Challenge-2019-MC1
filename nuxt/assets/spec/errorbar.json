@@ -18,22 +18,31 @@
       "update": "time('Apr 6 2020')",
       "on": [
         {
-          "events": "mousemove",
+          "events": "@timeInTimeline:mousemove",
           "update": "round(invert('x', clamp(x(), 0, width)) / 300000) * 300000"
         },
         {
-          "events": "timer{200}",
-          "update": "indexTime + 300000"
+          "events": "timer{600}",
+          "update": "TimelineControl == 'Play' ? indexTime + 300000 : indexTime"
         }
       ]
     },
-    { "name": "maxDate", "update": "time('Apr 11 2020')" }
+    { "name": "maxDate", "update": "time('Apr 11 2020')" },
+    {
+      "name": "TimelineControl",
+      "value": "Play",
+      "bind": {
+        "input": "radio",
+        "options": ["Play", "Pause"]
+      }
+    },
+    { "name": "dataURL", "value": "data/shake_intensity_summary_processed.csv" }
   ],
 
   "data": [
     {
-      "name": "shake",
-      "url": "data/shake_intensity_summary_processed.csv",
+      "name": "summary",
+      "url": { "signal": "dataURL" },
       "format": {
         "type": "csv",
         "parse": {
@@ -69,8 +78,8 @@
       },
       "data": [
         {
-          "name": "shake",
-          "source": "shake",
+          "name": "summary",
+          "source": "summary",
           "transform": [
             {
               "type": "filter",
@@ -85,7 +94,7 @@
           "type": "band",
           "range": [0, 350],
           "domain": {
-            "data": "shake",
+            "data": "summary",
             "field": "loc",
             "sort": {
               "op": "max",
@@ -111,7 +120,7 @@
       "marks": [
         {
           "type": "rect",
-          "from": { "data": "shake" },
+          "from": { "data": "summary" },
           "encode": {
             "enter": {
               "fill": { "value": "black" },
@@ -127,7 +136,7 @@
         },
         {
           "type": "rect",
-          "from": { "data": "shake" },
+          "from": { "data": "summary" },
           "encode": {
             "enter": {
               "fill": { "value": "black" },
@@ -143,7 +152,7 @@
         },
         {
           "type": "rect",
-          "from": { "data": "shake" },
+          "from": { "data": "summary" },
           "encode": {
             "enter": {
               "fill": { "value": "black" },
@@ -159,7 +168,7 @@
         },
         {
           "type": "symbol",
-          "from": { "data": "shake" },
+          "from": { "data": "summary" },
           "encode": {
             "enter": {
               "shape": { "value": "stroke" },
@@ -215,7 +224,7 @@
         {
           "name": "x",
           "type": "time",
-          "domain": { "data": "shake", "field": "time" },
+          "domain": { "data": "summary", "field": "time" },
           "range": "width",
           "nice": true
         }
@@ -224,14 +233,15 @@
       "marks": [
         {
           "type": "rule",
-          "from": { "data": "shake" },
+          "name": "timeInTimeline",
+          "from": { "data": "summary" },
           "encode": {
             "enter": {
               "x": { "scale": "x", "field": "time" },
               "y": { "value": 0 },
               "y2": { "field": { "group": "height" } },
               "stroke": { "value": "steelblue" },
-              "opacity": { "value": 0.5 }
+              "opacity": { "value": 0.1 }
             }
           }
         },
