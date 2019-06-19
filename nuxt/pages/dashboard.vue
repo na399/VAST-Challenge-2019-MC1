@@ -1,8 +1,11 @@
 <template>
   <section class="container">
     <div>
-      <VegaChart :spec="specErrorBar" :renderer="'canvas'" />
-      <p><i>Tested on Chrome v75</i></p>
+      <VegaChart :spec="specDashboard" :renderer="'canvas'"/>
+      <br>
+      <p>
+        <i>Tested on Chrome v75</i>
+      </p>
     </div>
   </section>
 </template>
@@ -10,8 +13,7 @@
 <script>
 import VegaChart from '~/components/VegaChart.vue'
 
-import specErrorBar from '~/assets/spec/errorbar.json'
-
+import specDashboard from '~/assets/spec/dashboard.json'
 
 export default {
   components: {
@@ -19,7 +21,7 @@ export default {
   },
   data: function() {
     return {
-      specErrorBar: specErrorBar,
+      specDashboard: specDashboard
     }
   },
   methods: {
@@ -38,5 +40,13 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.vega-bind-name {
+  padding: 0px 10px;
+}
+
+.vega-bind-radio * {
+  padding: 0px 5px;
 }
 </style>

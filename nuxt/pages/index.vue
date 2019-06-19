@@ -4,7 +4,7 @@
       <h1 class="title">VAST Challenge 2019 MC1</h1>
       <div class="links">
         <a href="examples" class="button--green">Examples</a>
-        <a href="errorbar" class="button--green">Error Bar Chart</a>
+        <a href="dashboard" class="button--green">Dashboard</a>
       </div>
     </div>
   </section>
