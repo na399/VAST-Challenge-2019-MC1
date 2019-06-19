@@ -55,6 +55,30 @@
 
   "data": [
     {
+      "name": "locNames",
+      "values": [
+        { "loc": "1", "name": "PALACE HILLS" },
+        { "loc": "2", "name": "NORTHWEST" },
+        { "loc": "3", "name": "OLD TOWN" },
+        { "loc": "4", "name": "SAFE TOWN" },
+        { "loc": "5", "name": "SOUTHWEST" },
+        { "loc": "6", "name": "DOWNTOWN" },
+        { "loc": "7", "name": "WILSON FOREST" },
+        { "loc": "8", "name": "SCENIC VISTA" },
+        { "loc": "9", "name": "BROADVIEW" },
+        { "loc": "10", "name": "CHAPPARAL" },
+        { "loc": "11", "name": "TERRAPIN" },
+        { "loc": "12", "name": "PEPPER MILL" },
+        { "loc": "13", "name": "CHEDDARFORD" },
+        { "loc": "14", "name": "EASTON" },
+        { "loc": "15", "name": "WESTON" },
+        { "loc": "16", "name": "SOUTHTON" },
+        { "loc": "17", "name": "OAK WILLOW" },
+        { "loc": "18", "name": "EAST PARTON" },
+        { "loc": "19", "name": "WEST PARTON" }
+      ]
+    },
+    {
       "name": "shake_intensity",
       "url": "data/shake_intensity_summary_processed.csv",
       "format": {
@@ -134,9 +158,7 @@
     {
       "name": "selectedCategorySummary",
       "source": "allSummary",
-      "transform": [
-        { "type": "filter", "expr": "datum.cat == SelectCategory" }
-      ]
+      "transform": [{ "type": "filter", "expr": "datum.cat == SelectCategory" }]
     },
     {
       "name": "timepoints",
@@ -205,6 +227,29 @@
         { "orient": "left", "scale": "yscale", "tickCount": 5, "zindex": 1 }
       ],
       "marks": [
+        {
+          "type": "text",
+          "from": { "data": "selectedCategorySummary" },
+          "encode": {
+            "enter": {
+              "align": { "value": "right" }
+            },
+            "update": {
+              "text": [
+                {
+                  "test": "datum['hdi95\\.lower'] > 2",
+                  "field": "locName"
+                },
+                { "value": "" }
+              ],
+              "y": { "scale": "yscale", "field": "loc", "band": 0.5 },
+              "x": {
+                "scale": "xscale",
+                "signal": "datum['hdi95\\.lower'] - 0.1"
+              }
+            }
+          }
+        },
         {
           "type": "rect",
           "from": { "data": "selectedCategorySummary" },
