@@ -4,7 +4,7 @@
       <VegaChart :spec="specDashboard" :renderer="'canvas'"/>
       <br>
       <p>
-        <i>Tested on Chrome v75</i>
+        <i>Only tested on Chrome v75</i>
       </p>
     </div>
   </section>

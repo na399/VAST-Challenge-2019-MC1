@@ -36,13 +36,27 @@
         "options": ["Play", "Pause"]
       }
     },
-    { "name": "dataURL", "value": "data/shake_intensity_summary_processed.csv" }
+    {
+      "name": "SelectCategory",
+      "value": "shake_intensity",
+      "bind": {
+        "input": "select",
+        "options": [
+          "shake_intensity",
+          "medical",
+          "power",
+          "sewer_and_water",
+          "buildings",
+          "roads_and_bridges"
+        ]
+      }
+    }
   ],
 
   "data": [
     {
-      "name": "summary",
-      "url": { "signal": "dataURL" },
+      "name": "shake_intensity",
+      "url": "data/shake_intensity_summary_processed.csv",
       "format": {
         "type": "csv",
         "parse": {
@@ -50,6 +64,79 @@
           "time_end": "date"
         }
       }
+    },
+    {
+      "name": "medical",
+      "url": "data/medical_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "power",
+      "url": "data/power_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "sewer_and_water",
+      "url": "data/sewer_and_water_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "buildings",
+      "url": "data/buildings_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "roads_and_bridges",
+      "url": "data/roads_and_bridges_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "allSummary",
+      "source": [
+        "shake_intensity",
+        "medical",
+        "power",
+        "sewer_and_water",
+        "buildings",
+        "roads_and_bridges"
+      ]
+    },
+    {
+      "name": "selectedCategorySummary",
+      "source": "allSummary",
+      "transform": [
+        { "type": "filter", "expr": "datum.cat == SelectCategory" }
+      ]
     },
     {
       "name": "timepoints",
@@ -78,8 +165,8 @@
       },
       "data": [
         {
-          "name": "summary",
-          "source": "summary",
+          "name": "selectedCategorySummary",
+          "source": "selectedCategorySummary",
           "transform": [
             {
               "type": "filter",
@@ -94,7 +181,7 @@
           "type": "band",
           "range": [0, 600],
           "domain": {
-            "data": "summary",
+            "data": "selectedCategorySummary",
             "field": "loc",
             "sort": {
               "op": "max",
@@ -120,7 +207,7 @@
       "marks": [
         {
           "type": "rect",
-          "from": { "data": "summary" },
+          "from": { "data": "selectedCategorySummary" },
           "encode": {
             "enter": {
               "fill": { "value": "hsl(0, 0%, 90%)" },
@@ -135,7 +222,7 @@
         },
         {
           "type": "rect",
-          "from": { "data": "summary" },
+          "from": { "data": "selectedCategorySummary" },
           "encode": {
             "enter": {
               "fill": { "value": "hsl(0, 0%, 70%)" },
@@ -150,7 +237,7 @@
         },
         {
           "type": "rect",
-          "from": { "data": "summary" },
+          "from": { "data": "selectedCategorySummary" },
           "encode": {
             "enter": {
               "fill": { "value": "hsl(0, 0%, 50%)" },
@@ -165,7 +252,7 @@
         },
         {
           "type": "symbol",
-          "from": { "data": "summary" },
+          "from": { "data": "selectedCategorySummary" },
           "encode": {
             "enter": {
               "shape": { "value": "stroke" },
@@ -217,11 +304,17 @@
           "y": { "value": 650 }
         }
       },
+      "data": [
+        {
+          "name": "selectedCategorySummary",
+          "source": "selectedCategorySummary"
+        }
+      ],
       "scales": [
         {
           "name": "x",
           "type": "time",
-          "domain": { "data": "summary", "field": "time" },
+          "domain": { "data": "selectedCategorySummary", "field": "time" },
           "range": "width",
           "nice": true
         }
@@ -231,7 +324,7 @@
         {
           "type": "rule",
           "name": "timeInTimeline",
-          "from": { "data": "summary" },
+          "from": { "data": "selectedCategorySummary" },
           "encode": {
             "enter": {
               "x": { "scale": "x", "field": "time" },
