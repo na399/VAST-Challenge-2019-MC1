@@ -50,6 +50,14 @@
           "roads_and_bridges"
         ]
       }
+    },
+    {
+      "name": "SortOption",
+      "value": "hdi95\\.lower",
+      "bind": {
+        "input": "select",
+        "options": ["hdi95\\.lower", "hdi90\\.lower", "hdi50\\.lower", "MAP"]
+      }
     }
   ],
 
@@ -76,6 +84,16 @@
         { "loc": "17", "name": "OAK WILLOW" },
         { "loc": "18", "name": "EAST PARTON" },
         { "loc": "19", "name": "WEST PARTON" }
+      ]
+    },
+    {
+      "name": "colourThreshold",
+      "values": [
+        { "start": 0, "end": 2 },
+        { "start": 2, "end": 4 },
+        { "start": 4, "end": 6 },
+        { "start": 6, "end": 8 },
+        { "start": 8, "end": 10 }
       ]
     },
     {
@@ -207,7 +225,7 @@
             "field": "loc",
             "sort": {
               "op": "max",
-              "field": "hdi95\\.lower",
+              "field": { "signal": "SortOption" },
               "order": "descending"
             }
           }
@@ -220,14 +238,54 @@
           "domain": [0, 10],
           "zero": false,
           "nice": true
+        },
+        {
+          "name": "cscale",
+          "type": "threshold",
+          "range": [
+            "hsl(203, 50%, 71%)",
+            "hsl(44, 100%, 78%)",
+            "hsl(19, 97%, 67%)",
+            "hsl(3, 69%, 50%)",
+            "hsl(3, 78%, 19%)"
+          ],
+          "domain": [2, 4, 6, 8, 10]
         }
       ],
       "axes": [
-        { "orient": "top", "scale": "xscale", "zindex": 1, "title": "Rating" },
-        { "orient": "left", "scale": "yscale", "tickCount": 5, "zindex": 1 }
+        {
+          "orient": "top",
+          "scale": "xscale",
+          "zindex": 1,
+          "title": "Rating",
+          "labelFontSize": 14
+        },
+        {
+          "orient": "left",
+          "scale": "yscale",
+          "tickCount": 5,
+          "zindex": 1,
+          "title": "Neighborhood",
+          "labelFontSize": 14
+        }
       ],
       "marks": [
         {
+          "name": "colorScale",
+          "type": "rect",
+          "from": { "data": "colourThreshold" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xscale", "field": "start" },
+              "x2": { "scale": "xscale", "field": "end" },
+              "y": { "value": -5 },
+              "y2": { "value": 0 },
+              "fill": { "scale": "cscale", "field": "start" }
+            }
+          }
+        },
+        {
+          "name": "Location Name Label",
           "type": "text",
           "from": { "data": "selectedCategorySummary" },
           "encode": {
@@ -375,7 +433,7 @@
               "x": { "scale": "x", "field": "time" },
               "y": { "value": 0 },
               "y2": { "field": { "group": "height" } },
-              "stroke": { "value": "steelblue" },
+              "stroke": { "value": "hsl(0, 0%, 80%)" },
               "opacity": { "value": 0.1 }
             }
           }
@@ -387,7 +445,7 @@
               "x": { "scale": "x", "signal": "indexTime", "offset": 0.5 },
               "y": { "value": 0 },
               "y2": { "field": { "group": "height" } },
-              "stroke": { "value": "firebrick" }
+              "stroke": { "value": "hsl(120, 50%, 30%)" }
             }
           }
         },
@@ -399,7 +457,7 @@
               "y": { "value": 0, "offset": -5 },
               "align": { "value": "center" },
               "text": { "signal": "timeFormat(indexTime, '%x %H:%M')" },
-              "fill": { "value": "firebrick" }
+              "fill": { "value": "hsl(120, 50%, 30%)" }
             }
           }
         }
