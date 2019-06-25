@@ -256,7 +256,8 @@
               "expr": "datum.time == indexTime"
             }
           ]
-        },        {
+        },
+        {
           "name": "roads_and_bridges_time",
           "source": "roads_and_bridges",
           "transform": [
@@ -293,15 +294,15 @@
             19
           ],
           "range": [
-            80,
-            180,
-            320,
+            100,
+            220,
+            360,
             520,
-            180,
+            220,
             220,
             760,
-            560,
-            380,
+            590,
+            450,
             590,
             660,
             660,
@@ -339,25 +340,25 @@
             19
           ],
           "range": [
-            160,
             140,
-            100,
-            120,
-            320,
+            140,
+            140,
+            220,
+            330,
             260,
-            320,
-            610,
-            480,
+            350,
+            590,
+            500,
             460,
             460,
             350,
-            320,
+            330,
             220,
             220,
-            310,
+            300,
             420,
-            320,
-            320
+            330,
+            330
           ]
         },
         {
@@ -403,11 +404,11 @@
               "y": { "scale": "yPosNum", "field": "loc", "offset": 10 },
               "width": { "value": 12 },
               "height": { "value": 12 },
-              "cornerRadius": { "value" : 3 },
+              "cornerRadius": { "value": 3 },
               "fill": { "scale": "cscale", "field": "MAP" },
               "fillOpacity": [
                 { "test": "datum.in15min == 1", "value": 1 },
-                { "value": 0.9}
+                { "value": 0.9 }
               ],
               "stroke": { "scale": "cscale", "field": "MAP" },
               "strokeWidth": [
@@ -426,11 +427,11 @@
               "y": { "scale": "yPosNum", "field": "loc", "offset": 10 },
               "width": { "value": 12 },
               "height": { "value": 12 },
-              "cornerRadius": { "value" : 3 },
+              "cornerRadius": { "value": 3 },
               "fill": { "scale": "cscale", "field": "MAP" },
               "fillOpacity": [
                 { "test": "datum.in15min == 1", "value": 1 },
-                { "value": 0.9}
+                { "value": 0.9 }
               ],
               "stroke": { "scale": "cscale", "field": "MAP" },
               "strokeWidth": [
@@ -449,11 +450,11 @@
               "y": { "scale": "yPosNum", "field": "loc", "offset": 10 },
               "width": { "value": 12 },
               "height": { "value": 12 },
-              "cornerRadius": { "value" : 3 },
+              "cornerRadius": { "value": 3 },
               "fill": { "scale": "cscale", "field": "MAP" },
               "fillOpacity": [
                 { "test": "datum.in15min == 1", "value": 1 },
-                { "value": 0.9}
+                { "value": 0.9 }
               ],
               "stroke": { "scale": "cscale", "field": "MAP" },
               "strokeWidth": [
@@ -472,11 +473,11 @@
               "y": { "scale": "yPosNum", "field": "loc", "offset": 25 },
               "width": { "value": 12 },
               "height": { "value": 12 },
-              "cornerRadius": { "value" : 3 },
+              "cornerRadius": { "value": 3 },
               "fill": { "scale": "cscale", "field": "MAP" },
               "fillOpacity": [
                 { "test": "datum.in15min == 1", "value": 1 },
-                { "value": 0.9}
+                { "value": 0.9 }
               ],
               "stroke": { "scale": "cscale", "field": "MAP" },
               "strokeWidth": [
@@ -495,11 +496,11 @@
               "y": { "scale": "yPosNum", "field": "loc", "offset": 25 },
               "width": { "value": 12 },
               "height": { "value": 12 },
-              "cornerRadius": { "value" : 3 },
+              "cornerRadius": { "value": 3 },
               "fill": { "scale": "cscale", "field": "MAP" },
               "fillOpacity": [
                 { "test": "datum.in15min == 1", "value": 1 },
-                { "value": 0.9}
+                { "value": 0.9 }
               ],
               "stroke": { "scale": "cscale", "field": "MAP" },
               "strokeWidth": [
@@ -518,11 +519,11 @@
               "y": { "scale": "yPosNum", "field": "loc", "offset": 25 },
               "width": { "value": 12 },
               "height": { "value": 12 },
-              "cornerRadius": { "value" : 3 },
+              "cornerRadius": { "value": 3 },
               "fill": { "scale": "cscale", "field": "MAP" },
               "fillOpacity": [
                 { "test": "datum.in15min == 1", "value": 1 },
-                { "value": 0.9}
+                { "value": 0.9 }
               ],
               "stroke": { "scale": "cscale", "field": "MAP" },
               "strokeWidth": [
@@ -591,7 +592,6 @@
               "x": { "scale": "xPosNum", "field": "loc", "offset": 0 },
               "x2": { "scale": "xPosNum", "field": "loc", "offset": 12 },
               "y": { "scale": "yPosNum", "field": "loc", "offset": 31 },
-              "opacity": { "value": 0.8 },
               "opacity": { "value": 0.8 },
               "stroke": { "value": "white" },
               "strokeWidth": [

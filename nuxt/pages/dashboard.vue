@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <div>
-      <VegaChart :spec="specDashboard" :renderer="'canvas'"/>
+      <VegaChart :spec="specDashboard" :renderer="'svg'"/>
       <br>
       <p>
         <i>Only tested on Chrome v75</i>
