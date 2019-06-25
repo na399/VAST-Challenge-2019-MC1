@@ -5,6 +5,8 @@
       <div class="links">
         <a href="examples" class="button--green">Examples</a>
         <a href="dashboard" class="button--green">Dashboard</a>
+        <a href="map" class="button--green">Map</a>
+        <a href="linechart" class="button--green">Line Chart</a>
       </div>
     </div>
   </section>

@@ -1,0 +1,707 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 800,
+  "height": 800,
+  "padding": 20,
+
+  "config": {
+    "axisBand": {
+      "bandPosition": 1,
+      "tickExtra": true,
+      "tickOffset": 0
+    }
+  },
+
+  "signals": [
+    {
+      "name": "indexTime",
+      "update": "time('Apr 6 2020')",
+      "on": [
+        {
+          "events": "@timeInTimeline:mousemove",
+          "update": "round(invert('xTime', clamp(x(), 0, width)) / 300000) * 300000"
+        },
+        {
+          "events": "timer{600}",
+          "update": "TimelineControl == 'Play' & indexTime < maxDate ? indexTime + 300000 : indexTime"
+        }
+      ]
+    },
+    { "name": "maxDate", "update": "time('Apr 11 2020')" },
+    {
+      "name": "TimelineControl",
+      "value": "Play",
+      "bind": {
+        "input": "radio",
+        "options": ["Play", "Pause"]
+      }
+    },
+    {
+      "name": "SelectCategory",
+      "value": "shake_intensity",
+      "bind": {
+        "input": "select",
+        "options": [
+          "shake_intensity",
+          "medical",
+          "power",
+          "sewer_and_water",
+          "buildings",
+          "roads_and_bridges"
+        ]
+      }
+    },
+    {
+      "name": "SortOption",
+      "value": "hdi95\\.lower",
+      "bind": {
+        "input": "select",
+        "options": ["hdi95\\.lower", "hdi90\\.lower", "hdi50\\.lower", "MAP"]
+      }
+    }
+  ],
+
+  "data": [
+    {
+      "name": "locNames",
+      "values": [
+        { "loc": "1", "name": "PALACE HILLS" },
+        { "loc": "2", "name": "NORTHWEST" },
+        { "loc": "3", "name": "OLD TOWN" },
+        { "loc": "4", "name": "SAFE TOWN" },
+        { "loc": "5", "name": "SOUTHWEST" },
+        { "loc": "6", "name": "DOWNTOWN" },
+        { "loc": "7", "name": "WILSON FOREST" },
+        { "loc": "8", "name": "SCENIC VISTA" },
+        { "loc": "9", "name": "BROADVIEW" },
+        { "loc": "10", "name": "CHAPPARAL" },
+        { "loc": "11", "name": "TERRAPIN" },
+        { "loc": "12", "name": "PEPPER MILL" },
+        { "loc": "13", "name": "CHEDDARFORD" },
+        { "loc": "14", "name": "EASTON" },
+        { "loc": "15", "name": "WESTON" },
+        { "loc": "16", "name": "SOUTHTON" },
+        { "loc": "17", "name": "OAK WILLOW" },
+        { "loc": "18", "name": "EAST PARTON" },
+        { "loc": "19", "name": "WEST PARTON" }
+      ]
+    },
+    {
+      "name": "colourThreshold",
+      "values": [
+        { "start": 0, "end": 2 },
+        { "start": 2, "end": 4 },
+        { "start": 4, "end": 6 },
+        { "start": 6, "end": 8 },
+        { "start": 8, "end": 10 }
+      ]
+    },
+    {
+      "name": "shake_intensity",
+      "url": "data/shake_intensity_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "medical",
+      "url": "data/medical_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "power",
+      "url": "data/power_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "sewer_and_water",
+      "url": "data/sewer_and_water_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "buildings",
+      "url": "data/buildings_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "roads_and_bridges",
+      "url": "data/roads_and_bridges_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "allSummary",
+      "source": [
+        "shake_intensity",
+        "medical",
+        "power",
+        "sewer_and_water",
+        "buildings",
+        "roads_and_bridges"
+      ]
+    },
+    {
+      "name": "selectedCategorySummary",
+      "source": "allSummary",
+      "transform": [{ "type": "filter", "expr": "datum.cat == SelectCategory" }]
+    },
+    {
+      "name": "timepoints",
+      "transform": [
+        {
+          "type": "sequence",
+          "start": 1586131200000,
+          "stop": 1586563200000,
+          "step": 300000,
+          "as": "time"
+        }
+      ]
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "group",
+      "name": "map",
+      "encode": {
+        "enter": {
+          "height": { "value": 662 },
+          "width": { "value": 800 }
+        }
+      },
+      "data": [
+        {
+          "name": "locNames",
+          "source": "locNames"
+        },
+        {
+          "name": "shake_intensity_time",
+          "source": "shake_intensity",
+          "transform": [
+            {
+              "type": "filter",
+              "expr": "datum.time == indexTime"
+            }
+          ]
+        },
+        {
+          "name": "medical_time",
+          "source": "medical",
+          "transform": [
+            {
+              "type": "filter",
+              "expr": "datum.time == indexTime"
+            }
+          ]
+        },
+        {
+          "name": "power_time",
+          "source": "power",
+          "transform": [
+            {
+              "type": "filter",
+              "expr": "datum.time == indexTime"
+            }
+          ]
+        },
+        {
+          "name": "sewer_and_water_time",
+          "source": "sewer_and_water",
+          "transform": [
+            {
+              "type": "filter",
+              "expr": "datum.time == indexTime"
+            }
+          ]
+        },
+        {
+          "name": "buildings_time",
+          "source": "buildings",
+          "transform": [
+            {
+              "type": "filter",
+              "expr": "datum.time == indexTime"
+            }
+          ]
+        },        {
+          "name": "roads_and_bridges_time",
+          "source": "roads_and_bridges",
+          "transform": [
+            {
+              "type": "filter",
+              "expr": "datum.time == indexTime"
+            }
+          ]
+        }
+      ],
+      "scales": [
+        {
+          "name": "xPosNum",
+          "type": "ordinal",
+          "domain": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "range": [
+            80,
+            180,
+            320,
+            520,
+            180,
+            220,
+            760,
+            560,
+            380,
+            590,
+            660,
+            660,
+            550,
+            360,
+            290,
+            290,
+            450,
+            450,
+            360
+          ]
+        },
+        {
+          "name": "yPosNum",
+          "type": "ordinal",
+          "domain": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "range": [
+            160,
+            140,
+            100,
+            120,
+            320,
+            260,
+            320,
+            610,
+            480,
+            460,
+            460,
+            350,
+            320,
+            220,
+            220,
+            310,
+            420,
+            320,
+            320
+          ]
+        },
+        {
+          "name": "cscale",
+          "type": "threshold",
+          "range": [
+            "hsl(203, 50%, 71%)",
+            "hsl(44, 100%, 78%)",
+            "hsl(19, 97%, 67%)",
+            "hsl(3, 69%, 50%)",
+            "hsl(3, 78%, 19%)"
+          ],
+          "domain": [2, 4, 6, 8, 10]
+        }
+      ],
+      "marks": [
+        {
+          "type": "image",
+          "name": "border",
+          "encode": {
+            "enter": {
+              "url": { "value": "img/mc1-neighborhoods-border.png" }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "from": { "data": "locNames" },
+          "encode": {
+            "enter": {
+              "text": { "field": "loc" },
+              "x": { "scale": "xPosNum", "field": "loc" },
+              "y": { "scale": "yPosNum", "field": "loc" }
+            }
+          }
+        },
+        {
+          "type": "rect",
+          "from": { "data": "shake_intensity_time" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xPosNum", "field": "loc", "offset": 0 },
+              "y": { "scale": "yPosNum", "field": "loc", "offset": 10 },
+              "width": { "value": 12 },
+              "height": { "value": 12 },
+              "cornerRadius": { "value" : 3 },
+              "fill": { "scale": "cscale", "field": "MAP" },
+              "fillOpacity": [
+                { "test": "datum.in15min == 1", "value": 1 },
+                { "value": 0.9}
+              ],
+              "stroke": { "scale": "cscale", "field": "MAP" },
+              "strokeWidth": [
+                { "test": "datum.in15min == 1", "value": 2 },
+                { "value": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "rect",
+          "from": { "data": "medical_time" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xPosNum", "field": "loc", "offset": 15 },
+              "y": { "scale": "yPosNum", "field": "loc", "offset": 10 },
+              "width": { "value": 12 },
+              "height": { "value": 12 },
+              "cornerRadius": { "value" : 3 },
+              "fill": { "scale": "cscale", "field": "MAP" },
+              "fillOpacity": [
+                { "test": "datum.in15min == 1", "value": 1 },
+                { "value": 0.9}
+              ],
+              "stroke": { "scale": "cscale", "field": "MAP" },
+              "strokeWidth": [
+                { "test": "datum.in15min == 1", "value": 2 },
+                { "value": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "rect",
+          "from": { "data": "power_time" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xPosNum", "field": "loc", "offset": 30 },
+              "y": { "scale": "yPosNum", "field": "loc", "offset": 10 },
+              "width": { "value": 12 },
+              "height": { "value": 12 },
+              "cornerRadius": { "value" : 3 },
+              "fill": { "scale": "cscale", "field": "MAP" },
+              "fillOpacity": [
+                { "test": "datum.in15min == 1", "value": 1 },
+                { "value": 0.9}
+              ],
+              "stroke": { "scale": "cscale", "field": "MAP" },
+              "strokeWidth": [
+                { "test": "datum.in15min == 1", "value": 2 },
+                { "value": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "rect",
+          "from": { "data": "sewer_and_water_time" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xPosNum", "field": "loc", "offset": 0 },
+              "y": { "scale": "yPosNum", "field": "loc", "offset": 25 },
+              "width": { "value": 12 },
+              "height": { "value": 12 },
+              "cornerRadius": { "value" : 3 },
+              "fill": { "scale": "cscale", "field": "MAP" },
+              "fillOpacity": [
+                { "test": "datum.in15min == 1", "value": 1 },
+                { "value": 0.9}
+              ],
+              "stroke": { "scale": "cscale", "field": "MAP" },
+              "strokeWidth": [
+                { "test": "datum.in15min == 1", "value": 2 },
+                { "value": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "rect",
+          "from": { "data": "buildings_time" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xPosNum", "field": "loc", "offset": 15 },
+              "y": { "scale": "yPosNum", "field": "loc", "offset": 25 },
+              "width": { "value": 12 },
+              "height": { "value": 12 },
+              "cornerRadius": { "value" : 3 },
+              "fill": { "scale": "cscale", "field": "MAP" },
+              "fillOpacity": [
+                { "test": "datum.in15min == 1", "value": 1 },
+                { "value": 0.9}
+              ],
+              "stroke": { "scale": "cscale", "field": "MAP" },
+              "strokeWidth": [
+                { "test": "datum.in15min == 1", "value": 2 },
+                { "value": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "rect",
+          "from": { "data": "roads_and_bridges_time" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xPosNum", "field": "loc", "offset": 30 },
+              "y": { "scale": "yPosNum", "field": "loc", "offset": 25 },
+              "width": { "value": 12 },
+              "height": { "value": 12 },
+              "cornerRadius": { "value" : 3 },
+              "fill": { "scale": "cscale", "field": "MAP" },
+              "fillOpacity": [
+                { "test": "datum.in15min == 1", "value": 1 },
+                { "value": 0.9}
+              ],
+              "stroke": { "scale": "cscale", "field": "MAP" },
+              "strokeWidth": [
+                { "test": "datum.in15min == 1", "value": 2 },
+                { "value": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "from": { "data": "shake_intensity_time" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xPosNum", "field": "loc", "offset": 0 },
+              "x2": { "scale": "xPosNum", "field": "loc", "offset": 12 },
+              "y": { "scale": "yPosNum", "field": "loc", "offset": 16 },
+              "opacity": { "value": 0.8 },
+              "stroke": { "value": "white" },
+              "strokeWidth": [
+                { "test": "datum.over60min == 1", "value": 2 },
+                { "value": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "from": { "data": "medical_time" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xPosNum", "field": "loc", "offset": 15 },
+              "x2": { "scale": "xPosNum", "field": "loc", "offset": 27 },
+              "y": { "scale": "yPosNum", "field": "loc", "offset": 16 },
+              "opacity": { "value": 0.8 },
+              "stroke": { "value": "white" },
+              "strokeWidth": [
+                { "test": "datum.over60min == 1", "value": 2 },
+                { "value": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "from": { "data": "power_time" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xPosNum", "field": "loc", "offset": 30 },
+              "x2": { "scale": "xPosNum", "field": "loc", "offset": 42 },
+              "y": { "scale": "yPosNum", "field": "loc", "offset": 16 },
+              "opacity": { "value": 0.8 },
+              "stroke": { "value": "white" },
+              "strokeWidth": [
+                { "test": "datum.over60min == 1", "value": 2 },
+                { "value": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "from": { "data": "sewer_and_water_time" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xPosNum", "field": "loc", "offset": 0 },
+              "x2": { "scale": "xPosNum", "field": "loc", "offset": 12 },
+              "y": { "scale": "yPosNum", "field": "loc", "offset": 31 },
+              "opacity": { "value": 0.8 },
+              "opacity": { "value": 0.8 },
+              "stroke": { "value": "white" },
+              "strokeWidth": [
+                { "test": "datum.over60min == 1", "value": 2 },
+                { "value": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "from": { "data": "buildings_time" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xPosNum", "field": "loc", "offset": 15 },
+              "x2": { "scale": "xPosNum", "field": "loc", "offset": 27 },
+              "y": { "scale": "yPosNum", "field": "loc", "offset": 31 },
+              "opacity": { "value": 0.8 },
+              "stroke": { "value": "white" },
+              "strokeWidth": [
+                { "test": "datum.over60min == 1", "value": 2 },
+                { "value": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "from": { "data": "roads_and_bridges_time" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xPosNum", "field": "loc", "offset": 30 },
+              "x2": { "scale": "xPosNum", "field": "loc", "offset": 42 },
+              "y": { "scale": "yPosNum", "field": "loc", "offset": 31 },
+              "opacity": { "value": 0.8 },
+              "stroke": { "value": "white" },
+              "strokeWidth": [
+                { "test": "datum.over60min == 1", "value": 2 },
+                { "value": 0 }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "name": "timeline",
+      "encode": {
+        "enter": {
+          "height": { "value": 30 },
+          "width": { "value": 800 },
+          "y": { "value": 680 }
+        }
+      },
+      "data": [
+        {
+          "name": "selectedCategorySummary",
+          "source": "selectedCategorySummary"
+        }
+      ],
+      "scales": [
+        {
+          "name": "xTime",
+          "type": "time",
+          "domain": { "data": "selectedCategorySummary", "field": "time" },
+          "range": "width",
+          "nice": true
+        }
+      ],
+      "axes": [{ "orient": "bottom", "scale": "xTime", "grid": false }],
+      "marks": [
+        {
+          "type": "rule",
+          "name": "timeInTimeline",
+          "from": { "data": "selectedCategorySummary" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xTime", "field": "time" },
+              "y": { "value": 0 },
+              "y2": { "field": { "group": "height" } },
+              "stroke": { "value": "hsl(0, 0%, 80%)" },
+              "opacity": { "value": 0.1 }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": { "scale": "xTime", "signal": "indexTime", "offset": 0.5 },
+              "y": { "value": 0 },
+              "y2": { "field": { "group": "height" } },
+              "stroke": { "value": "hsl(120, 50%, 30%)" }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": { "scale": "xTime", "signal": "indexTime" },
+              "y": { "value": 0, "offset": -5 },
+              "align": { "value": "center" },
+              "text": { "signal": "timeFormat(indexTime, '%x %H:%M')" },
+              "fill": { "value": "hsl(120, 50%, 30%)" }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
