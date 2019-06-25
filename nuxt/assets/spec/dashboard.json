@@ -19,7 +19,7 @@
       "on": [
         {
           "events": "@timeInTimeline:mousemove",
-          "update": "round(invert('x', clamp(x(), 0, width)) / 300000) * 300000"
+          "update": "round(invert('xTime', clamp(x(), 0, width)) / 300000) * 300000"
         },
         {
           "events": "timer{600}",
@@ -365,25 +365,7 @@
             "update": {
               "xc": { "scale": "xscale", "field": "MAP" },
               "yc": { "scale": "yscale", "field": "loc", "band": 0.5 },
-              "stroke": [
-                {
-                  "test": "datum.MAP <= 2",
-                  "value": "hsl(203, 50%, 71%)"
-                },
-                {
-                  "test": "datum.MAP <= 4",
-                  "value": "hsl(44, 100%, 78%)"
-                },
-                {
-                  "test": "datum.MAP <= 6",
-                  "value": "hsl(19, 97%, 67%)"
-                },
-                {
-                  "test": "datum.MAP <= 8",
-                  "value": "hsl(3, 69%, 50%)"
-                },
-                { "value": "hsl(3, 78%, 19%)" }
-              ],
+              "stroke": { "scale": "cscale", "field": "MAP" },
               "size": [
                 { "test": "datum.in15min == 1", "value": 1000 },
                 { "value": 250 }
@@ -415,14 +397,14 @@
       ],
       "scales": [
         {
-          "name": "x",
+          "name": "xTime",
           "type": "time",
           "domain": { "data": "selectedCategorySummary", "field": "time" },
           "range": "width",
           "nice": true
         }
       ],
-      "axes": [{ "orient": "bottom", "scale": "x", "grid": false }],
+      "axes": [{ "orient": "bottom", "scale": "xTime", "grid": false }],
       "marks": [
         {
           "type": "rule",
@@ -430,7 +412,7 @@
           "from": { "data": "selectedCategorySummary" },
           "encode": {
             "enter": {
-              "x": { "scale": "x", "field": "time" },
+              "x": { "scale": "xTime", "field": "time" },
               "y": { "value": 0 },
               "y2": { "field": { "group": "height" } },
               "stroke": { "value": "hsl(0, 0%, 80%)" },
@@ -442,7 +424,7 @@
           "type": "rule",
           "encode": {
             "update": {
-              "x": { "scale": "x", "signal": "indexTime", "offset": 0.5 },
+              "x": { "scale": "xTime", "signal": "indexTime", "offset": 0.5 },
               "y": { "value": 0 },
               "y2": { "field": { "group": "height" } },
               "stroke": { "value": "hsl(120, 50%, 30%)" }
@@ -453,7 +435,7 @@
           "type": "text",
           "encode": {
             "update": {
-              "x": { "scale": "x", "signal": "indexTime" },
+              "x": { "scale": "xTime", "signal": "indexTime" },
               "y": { "value": 0, "offset": -5 },
               "align": { "value": "center" },
               "text": { "signal": "timeFormat(indexTime, '%x %H:%M')" },
