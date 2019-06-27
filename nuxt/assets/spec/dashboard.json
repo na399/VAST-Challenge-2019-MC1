@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "width": 1700,
+  "width": 1440,
   "height": 800,
   "padding": 20,
 
@@ -192,6 +192,33 @@
     }
   ],
 
+  "scales": [
+    {
+      "name": "cscale",
+      "type": "threshold",
+      "range": [
+        "hsl(203, 50%, 85%)",
+        "hsl(44, 100%, 78%)",
+        "hsl(19, 97%, 67%)",
+        "hsl(3, 69%, 50%)",
+        "hsl(3, 78%, 19%)"
+      ],
+      "domain": [2, 4, 6, 8, 10]
+    },
+    {
+      "name": "cscaleDark",
+      "type": "threshold",
+      "range": [
+        "hsl(203, 50%, 65%)",
+        "hsl(44, 100%, 58%)",
+        "hsl(19, 97%, 47%)",
+        "hsl(3, 69%, 30%)",
+        "hsl(3, 78%, 0%)"
+      ],
+      "domain": [2, 4, 6, 8, 10]
+    }
+  ],
+
   "marks": [
     {
       "type": "group",
@@ -362,18 +389,6 @@
             330,
             330
           ]
-        },
-        {
-          "name": "cscale",
-          "type": "threshold",
-          "range": [
-            "hsl(203, 50%, 71%)",
-            "hsl(44, 100%, 78%)",
-            "hsl(19, 97%, 67%)",
-            "hsl(3, 69%, 50%)",
-            "hsl(3, 78%, 19%)"
-          ],
-          "domain": [2, 4, 6, 8, 10]
         }
       ],
       "marks": [
@@ -406,13 +421,9 @@
               "y": { "scale": "yPosNum", "field": "loc", "offset": 10 },
               "width": { "value": 12 },
               "height": { "value": 12 },
-              "cornerRadius": { "value": 3 },
+              "cornerRadius": { "value": 7 },
               "fill": { "scale": "cscale", "field": "MAP" },
-              "fillOpacity": [
-                { "test": "datum.in15min == 1", "value": 1 },
-                { "value": 0.9 }
-              ],
-              "stroke": { "scale": "cscale", "field": "MAP" },
+              "stroke": { "scale": "cscaleDark", "field": "MAP" },
               "strokeWidth": [
                 { "test": "datum.in15min == 1", "value": 2 },
                 { "value": 0 }
@@ -429,13 +440,9 @@
               "y": { "scale": "yPosNum", "field": "loc", "offset": 10 },
               "width": { "value": 12 },
               "height": { "value": 12 },
-              "cornerRadius": { "value": 3 },
+              "cornerRadius": { "value": 7 },
               "fill": { "scale": "cscale", "field": "MAP" },
-              "fillOpacity": [
-                { "test": "datum.in15min == 1", "value": 1 },
-                { "value": 0.9 }
-              ],
-              "stroke": { "scale": "cscale", "field": "MAP" },
+              "stroke": { "scale": "cscaleDark", "field": "MAP" },
               "strokeWidth": [
                 { "test": "datum.in15min == 1", "value": 2 },
                 { "value": 0 }
@@ -452,13 +459,9 @@
               "y": { "scale": "yPosNum", "field": "loc", "offset": 10 },
               "width": { "value": 12 },
               "height": { "value": 12 },
-              "cornerRadius": { "value": 3 },
+              "cornerRadius": { "value": 7 },
               "fill": { "scale": "cscale", "field": "MAP" },
-              "fillOpacity": [
-                { "test": "datum.in15min == 1", "value": 1 },
-                { "value": 0.9 }
-              ],
-              "stroke": { "scale": "cscale", "field": "MAP" },
+              "stroke": { "scale": "cscaleDark", "field": "MAP" },
               "strokeWidth": [
                 { "test": "datum.in15min == 1", "value": 2 },
                 { "value": 0 }
@@ -475,13 +478,9 @@
               "y": { "scale": "yPosNum", "field": "loc", "offset": 25 },
               "width": { "value": 12 },
               "height": { "value": 12 },
-              "cornerRadius": { "value": 3 },
+              "cornerRadius": { "value": 7 },
               "fill": { "scale": "cscale", "field": "MAP" },
-              "fillOpacity": [
-                { "test": "datum.in15min == 1", "value": 1 },
-                { "value": 0.9 }
-              ],
-              "stroke": { "scale": "cscale", "field": "MAP" },
+              "stroke": { "scale": "cscaleDark", "field": "MAP" },
               "strokeWidth": [
                 { "test": "datum.in15min == 1", "value": 2 },
                 { "value": 0 }
@@ -498,13 +497,9 @@
               "y": { "scale": "yPosNum", "field": "loc", "offset": 25 },
               "width": { "value": 12 },
               "height": { "value": 12 },
-              "cornerRadius": { "value": 3 },
+              "cornerRadius": { "value": 7 },
               "fill": { "scale": "cscale", "field": "MAP" },
-              "fillOpacity": [
-                { "test": "datum.in15min == 1", "value": 1 },
-                { "value": 0.9 }
-              ],
-              "stroke": { "scale": "cscale", "field": "MAP" },
+              "stroke": { "scale": "cscaleDark", "field": "MAP" },
               "strokeWidth": [
                 { "test": "datum.in15min == 1", "value": 2 },
                 { "value": 0 }
@@ -521,13 +516,9 @@
               "y": { "scale": "yPosNum", "field": "loc", "offset": 25 },
               "width": { "value": 12 },
               "height": { "value": 12 },
-              "cornerRadius": { "value": 3 },
+              "cornerRadius": { "value": 7 },
               "fill": { "scale": "cscale", "field": "MAP" },
-              "fillOpacity": [
-                { "test": "datum.in15min == 1", "value": 1 },
-                { "value": 0.9 }
-              ],
-              "stroke": { "scale": "cscale", "field": "MAP" },
+              "stroke": { "scale": "cscaleDark", "field": "MAP" },
               "strokeWidth": [
                 { "test": "datum.in15min == 1", "value": 2 },
                 { "value": 0 }
@@ -645,9 +636,9 @@
       "description": "MAP with CI",
       "encode": {
         "enter": {
-          "width": { "value": 800 },
+          "width": { "value": 600 },
           "height": { "value": 700 },
-          "x": { "value": 900 },
+          "x": { "value": 840 },
           "y": { "value": 0 }
         }
       },
@@ -686,18 +677,6 @@
           "domain": [0, 10],
           "zero": false,
           "nice": true
-        },
-        {
-          "name": "cscale",
-          "type": "threshold",
-          "range": [
-            "hsl(203, 50%, 71%)",
-            "hsl(44, 100%, 78%)",
-            "hsl(19, 97%, 67%)",
-            "hsl(3, 69%, 50%)",
-            "hsl(3, 78%, 19%)"
-          ],
-          "domain": [2, 4, 6, 8, 10]
         }
       ],
       "axes": [
@@ -733,7 +712,7 @@
           }
         },
         {
-          "name": "Location Name Label",
+          "name": "LocationNameLabel",
           "type": "text",
           "from": { "data": "selectedCategorySummary" },
           "encode": {
@@ -762,7 +741,7 @@
           "encode": {
             "enter": {
               "fill": { "value": "hsl(0, 0%, 90%)" },
-              "height": { "value": 20 }
+              "height": { "value": 6 }
             },
             "update": {
               "yc": { "scale": "yscale", "field": "loc", "band": 0.5 },
@@ -777,7 +756,7 @@
           "encode": {
             "enter": {
               "fill": { "value": "hsl(0, 0%, 70%)" },
-              "height": { "value": 20 }
+              "height": { "value": 10 }
             },
             "update": {
               "yc": { "scale": "yscale", "field": "loc", "band": 0.5 },
@@ -792,7 +771,7 @@
           "encode": {
             "enter": {
               "fill": { "value": "hsl(0, 0%, 50%)" },
-              "height": { "value": 20 }
+              "height": { "value": 14 }
             },
             "update": {
               "yc": { "scale": "yscale", "field": "loc", "band": 0.5 },
@@ -806,22 +785,45 @@
           "from": { "data": "selectedCategorySummary" },
           "encode": {
             "enter": {
-              "shape": { "value": "stroke" },
-              "angle": { "value": 90 },
-              "strokeWidth": { "value": 5 }
+              "shape": { "value": "circle" },
+              "strokeWidth": { "value": 3 }
             },
             "update": {
               "xc": { "scale": "xscale", "field": "MAP" },
               "yc": { "scale": "yscale", "field": "loc", "band": 0.5 },
-              "stroke": { "scale": "cscale", "field": "MAP" },
-              "size": [
-                { "test": "datum.in15min == 1", "value": 1000 },
-                { "value": 250 }
+              "fill": { "scale": "cscale", "field": "MAP" },
+              "stroke": [
+                {
+                  "test": "datum.in15min == 1",
+                  "scale": "cscaleDark",
+                  "field": "MAP"
+                }
               ],
-              "strokeDash": [
-                { "test": "datum.over60min == 1", "value": [4, 2] },
-                { "value": [1, 0] }
+              "size": [
+                {
+                  "test": "datum.in15min == 1",
+                  "value": 200
+                },
+                { "value": 150 }
               ]
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "from": { "data": "selectedCategorySummary" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xscale", "field": "MAP", "offset": -5 },
+              "x2": { "scale": "xscale", "field": "MAP", "offset": 5 },
+              "y": { "scale": "yscale", "field": "loc", "band": 0.5 },
+              "opacity": { "value": 0.8 },
+              "stroke": { "value": "hsl(0, 0%, 50%)" },
+              "strokeWidth": [
+                { "test": "datum.over60min == 1", "value": 3 },
+                { "value": 0 }
+              ],
+              "strokeCap": { "value": "round" }
             }
           }
         }
