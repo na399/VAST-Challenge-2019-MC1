@@ -1,0 +1,439 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 800,
+  "height": 800,
+  "padding": 20,
+
+  "config": {
+    "axisBand": {
+      "bandPosition": 1,
+      "tickExtra": true,
+      "tickOffset": 0
+    }
+  },
+
+  "signals": [
+    {
+      "name": "indexTime",
+      "update": "time('Apr 8 2020')",
+      "on": [
+        {
+          "events": "@timeInTimeline:mousemove",
+          "update": "round(invert('xTime', clamp(x(), 0, width)) / 300000) * 300000"
+        },
+        {
+          "events": "timer{600}",
+          "update": "TimelineControl == 'Play' & indexTime < maxDate ? indexTime + 300000 : indexTime"
+        }
+      ]
+    },
+    { "name": "maxDate", "update": "time('Apr 11 2020')" },
+    { "name": "minDate", "update": "time('Apr 6 2020')" },
+    {
+      "name": "timeSpan",
+      "on": [
+        {
+          "events": { "signal": "indexTime" },
+          "update": "[minDate, indexTime]"
+        }
+      ]
+    },
+    { "name": "rangeStep", "value": 100 },
+    { "name": "height", "update": "rangeStep * 6" },
+    {
+      "name": "TimelineControl",
+      "value": "Play",
+      "bind": {
+        "input": "radio",
+        "options": ["Play", "Pause"]
+      }
+    },
+    {
+      "name": "SelectCategory",
+      "value": "shake_intensity",
+      "bind": {
+        "input": "select",
+        "options": [
+          "shake_intensity",
+          "medical",
+          "power",
+          "sewer_and_water",
+          "buildings",
+          "roads_and_bridges"
+        ]
+      }
+    },
+    {
+      "name": "SortOption",
+      "value": "hdi95\\.lower",
+      "bind": {
+        "input": "select",
+        "options": ["hdi95\\.lower", "hdi90\\.lower", "hdi50\\.lower", "MAP"]
+      }
+    }
+  ],
+
+  "data": [
+    {
+      "name": "locNames",
+      "values": [
+        { "loc": "1", "name": "PALACE HILLS" },
+        { "loc": "2", "name": "NORTHWEST" },
+        { "loc": "3", "name": "OLD TOWN" },
+        { "loc": "4", "name": "SAFE TOWN" },
+        { "loc": "5", "name": "SOUTHWEST" },
+        { "loc": "6", "name": "DOWNTOWN" },
+        { "loc": "7", "name": "WILSON FOREST" },
+        { "loc": "8", "name": "SCENIC VISTA" },
+        { "loc": "9", "name": "BROADVIEW" },
+        { "loc": "10", "name": "CHAPPARAL" },
+        { "loc": "11", "name": "TERRAPIN" },
+        { "loc": "12", "name": "PEPPER MILL" },
+        { "loc": "13", "name": "CHEDDARFORD" },
+        { "loc": "14", "name": "EASTON" },
+        { "loc": "15", "name": "WESTON" },
+        { "loc": "16", "name": "SOUTHTON" },
+        { "loc": "17", "name": "OAK WILLOW" },
+        { "loc": "18", "name": "EAST PARTON" },
+        { "loc": "19", "name": "WEST PARTON" }
+      ]
+    },
+    {
+      "name": "colourThreshold",
+      "values": [
+        { "start": 0, "end": 2 },
+        { "start": 2, "end": 4 },
+        { "start": 4, "end": 6 },
+        { "start": 6, "end": 8 },
+        { "start": 8, "end": 10 }
+      ]
+    },
+    {
+      "name": "shake_intensity",
+      "url": "data/shake_intensity_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "medical",
+      "url": "data/medical_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "power",
+      "url": "data/power_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "sewer_and_water",
+      "url": "data/sewer_and_water_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "buildings",
+      "url": "data/buildings_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "roads_and_bridges",
+      "url": "data/roads_and_bridges_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "allSummary",
+      "source": [
+        "shake_intensity",
+        "medical",
+        "power",
+        "sewer_and_water",
+        "buildings",
+        "roads_and_bridges"
+      ]
+    },
+    {
+      "name": "selectedCategorySummary",
+      "source": "allSummary",
+      "transform": [{ "type": "filter", "expr": "datum.cat == SelectCategory" }]
+    },
+    {
+      "name": "timepoints",
+      "transform": [
+        {
+          "type": "sequence",
+          "start": 1586131200000,
+          "stop": 1586563200000,
+          "step": 300000,
+          "as": "time"
+        }
+      ]
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "group",
+      "name": "timeline",
+      "encode": {
+        "enter": {
+          "height": { "value": 30 },
+          "width": { "value": 800 },
+          "y": { "value": 0 }
+        }
+      },
+      "data": [
+        {
+          "name": "allSummary",
+          "source": "allSummary",
+          "transform": [
+            {
+              "type": "filter",
+              "expr": "datum.loc == 4"
+            }
+          ]
+        }
+      ],
+      "scales": [
+        {
+          "name": "xTime",
+          "type": "time",
+          "domain": { "data": "allSummary", "field": "time" },
+          "range": "width",
+          "nice": true
+        }
+      ],
+      "axes": [{ "orient": "bottom", "scale": "xTime", "grid": false }],
+      "marks": [
+        {
+          "type": "rule",
+          "name": "timeInTimeline",
+          "from": { "data": "allSummary" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xTime", "field": "time" },
+              "y": { "value": 0 },
+              "y2": { "field": { "group": "height" } },
+              "stroke": { "value": "hsl(0, 0%, 80%)" },
+              "opacity": { "value": 0.1 }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": { "scale": "xTime", "signal": "indexTime", "offset": 0.5 },
+              "y": { "value": 0 },
+              "y2": { "field": { "group": "height" } },
+              "stroke": { "value": "hsl(120, 50%, 30%)" }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": { "scale": "xTime", "signal": "indexTime" },
+              "y": { "value": 0, "offset": -5 },
+              "align": { "value": "center" },
+              "text": { "signal": "timeFormat(indexTime, '%x %H:%M')" },
+              "fill": { "value": "hsl(120, 50%, 30%)" }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "name": "LineCharts",
+      "description": "Line charts of all data categories for a given location",
+      "encode": {
+        "enter": {
+          "height": { "value": 600 },
+          "width": { "value": 800 },
+          "y": { "value": 120 }
+        }
+      },
+      "data": [
+        {
+          "name": "allSummary",
+          "source": "allSummary",
+          "transform": [
+            {
+              "type": "filter",
+              "expr": "datum.loc == 4"
+            }
+          ]
+        }
+      ],
+      "scales": [
+        {
+          "name": "yLine",
+          "type": "linear",
+          "round": true,
+          "domain": [0, 10],
+          "range": [0, 80],
+          "nice": true,
+          "zero": true,
+          "reverse": true
+        },
+        {
+          "name": "xLine",
+          "type": "time",
+          "domain": { "data": "allSummary", "field": "time" },
+          "domainRaw": { "signal": "timeSpan" },
+          "range": "width"
+        },
+        {
+          "name": "row",
+          "type": "band",
+          "domain": [
+            "shake_intensity",
+            "medical",
+            "power",
+            "sewer_and_water",
+            "buildings",
+            "roads_and_bridges"
+          ],
+          "range": { "step": { "signal": "rangeStep" } }
+        },
+        {
+          "name": "cscale",
+          "type": "threshold",
+          "range": [
+            "hsl(203, 50%, 85%)",
+            "hsl(44, 100%, 78%)",
+            "hsl(19, 97%, 67%)",
+            "hsl(3, 69%, 50%)",
+            "hsl(3, 78%, 19%)"
+          ],
+          "domain": [2, 4, 6, 8, 10]
+        }
+      ],
+      "axes": [
+        {
+          "orient": "bottom",
+          "scale": "xLine",
+          "zindex": 1,
+          "labelFontSize": 14
+        },
+        {
+          "orient": "left",
+          "scale": "row",
+          "domain": false,
+          "tickSize": 0
+        }
+      ],
+      "marks": [
+        {
+          "type": "group",
+          "from": {
+            "facet": {
+              "name": "cat",
+              "data": "allSummary",
+              "groupby": "cat"
+            }
+          },
+          "encode": {
+            "enter": {
+              "x": { "value": 0 },
+              "y": { "scale": "row", "field": "cat" },
+              "width": { "signal": "width" },
+              "height": { "signal": "rangeStep" }
+            }
+          },
+          "axes": [
+            {
+              "orient": "right",
+              "scale": "yLine",
+              "tickCount": 5,
+              "zindex": 0,
+              "title": "Rating",
+              "labelFontSize": 14
+            }
+          ],
+          "marks": [
+            {
+              "type": "area",
+              "from": { "data": "cat" },
+              "clip": true,
+              "encode": {
+                "enter": {
+                  "fill": { "value": "hsl(0, 0%, 90%)" }
+                },
+                "update": {
+                  "x": { "scale": "xLine", "field": "time" },
+                  "y": { "scale": "yLine", "field": "hdi95\\.lower" },
+                  "y2": { "scale": "yLine", "field": "hdi95\\.upper" }
+                }
+              }
+            },
+            {
+              "type": "line",
+              "from": { "data": "cat" },
+              "clip": true,
+              "encode": {
+                "update": {
+                  "x": { "scale": "xLine", "field": "time" },
+                  "y": { "scale": "yLine", "field": "MAP" }
+                }
+              }
+            },
+            {
+              "type": "symbol",
+              "from": { "data": "cat" },
+              "encode": {
+                "update": {
+                  "x": { "scale": "xLine", "field": "time" },
+                  "y": { "scale": "yLine", "field": "MAP" },
+                  "fill": [
+                    {
+                      "test": "datum.time == indexTime",
+                      "scale": "cscale",
+                      "field": "MAP"
+                    },
+                    { "value": null }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
