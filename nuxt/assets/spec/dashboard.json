@@ -329,7 +329,7 @@
             520,
             220,
             220,
-            760,
+            758,
             590,
             450,
             590,
@@ -413,218 +413,236 @@
           }
         },
         {
-          "type": "rect",
+          "type": "symbol",
           "from": { "data": "shake_intensity_time" },
           "encode": {
             "enter": {
-              "x": { "scale": "xPosNum", "field": "loc", "offset": 0 },
-              "y": { "scale": "yPosNum", "field": "loc", "offset": 10 },
-              "width": { "value": 12 },
-              "height": { "value": 12 },
-              "cornerRadius": { "value": 7 },
+              "xc": { "scale": "xPosNum", "field": "loc", "offset": 5 },
+              "yc": { "scale": "yPosNum", "field": "loc", "offset": 15 },
+              "size": [
+                {
+                  "test": "datum.in15min == 1",
+                  "value": 150
+                },
+                { "value": 120 }
+              ],
               "fill": { "scale": "cscale", "field": "MAP" },
-              "stroke": { "scale": "cscaleDark", "field": "MAP" },
-              "strokeWidth": [
-                { "test": "datum.in15min == 1", "value": 2 },
-                { "value": 0 }
+              "strokeWidth": { "value": 2 },
+              "stroke": [
+                {
+                  "test": "datum.in15min == 1",
+                  "scale": "cscaleDark",
+                  "field": "MAP"
+                }
               ]
             }
           }
         },
         {
-          "type": "rect",
+          "type": "symbol",
           "from": { "data": "medical_time" },
           "encode": {
             "enter": {
-              "x": { "scale": "xPosNum", "field": "loc", "offset": 15 },
-              "y": { "scale": "yPosNum", "field": "loc", "offset": 10 },
-              "width": { "value": 12 },
-              "height": { "value": 12 },
-              "cornerRadius": { "value": 7 },
+              "xc": { "scale": "xPosNum", "field": "loc", "offset": 20 },
+              "yc": { "scale": "yPosNum", "field": "loc", "offset": 15 },
+              "size": [
+                {
+                  "test": "datum.in15min == 1",
+                  "value": 150
+                },
+                { "value": 120 }
+              ],
               "fill": { "scale": "cscale", "field": "MAP" },
-              "stroke": { "scale": "cscaleDark", "field": "MAP" },
-              "strokeWidth": [
-                { "test": "datum.in15min == 1", "value": 2 },
-                { "value": 0 }
+              "strokeWidth": { "value": 2 },
+              "stroke": [
+                {
+                  "test": "datum.in15min == 1",
+                  "scale": "cscaleDark",
+                  "field": "MAP"
+                }
               ]
             }
           }
         },
         {
-          "type": "rect",
+          "type": "symbol",
           "from": { "data": "power_time" },
           "encode": {
             "enter": {
-              "x": { "scale": "xPosNum", "field": "loc", "offset": 30 },
-              "y": { "scale": "yPosNum", "field": "loc", "offset": 10 },
-              "width": { "value": 12 },
-              "height": { "value": 12 },
-              "cornerRadius": { "value": 7 },
+              "xc": { "scale": "xPosNum", "field": "loc", "offset": 35 },
+              "yc": { "scale": "yPosNum", "field": "loc", "offset": 15 },
+              "size": [
+                {
+                  "test": "datum.in15min == 1",
+                  "value": 150
+                },
+                { "value": 120 }
+              ],
               "fill": { "scale": "cscale", "field": "MAP" },
-              "stroke": { "scale": "cscaleDark", "field": "MAP" },
-              "strokeWidth": [
-                { "test": "datum.in15min == 1", "value": 2 },
-                { "value": 0 }
+              "strokeWidth": { "value": 2 },
+              "stroke": [
+                {
+                  "test": "datum.in15min == 1",
+                  "scale": "cscaleDark",
+                  "field": "MAP"
+                }
               ]
             }
           }
         },
         {
-          "type": "rect",
+          "type": "symbol",
           "from": { "data": "sewer_and_water_time" },
           "encode": {
             "enter": {
-              "x": { "scale": "xPosNum", "field": "loc", "offset": 0 },
-              "y": { "scale": "yPosNum", "field": "loc", "offset": 25 },
-              "width": { "value": 12 },
-              "height": { "value": 12 },
-              "cornerRadius": { "value": 7 },
+              "xc": { "scale": "xPosNum", "field": "loc", "offset": 5 },
+              "yc": { "scale": "yPosNum", "field": "loc", "offset": 30 },
+              "size": [
+                {
+                  "test": "datum.in15min == 1",
+                  "value": 150
+                },
+                { "value": 120 }
+              ],
               "fill": { "scale": "cscale", "field": "MAP" },
-              "stroke": { "scale": "cscaleDark", "field": "MAP" },
-              "strokeWidth": [
-                { "test": "datum.in15min == 1", "value": 2 },
-                { "value": 0 }
+              "strokeWidth": { "value": 2 },
+              "stroke": [
+                {
+                  "test": "datum.in15min == 1",
+                  "scale": "cscaleDark",
+                  "field": "MAP"
+                }
               ]
             }
           }
         },
         {
-          "type": "rect",
+          "type": "symbol",
           "from": { "data": "buildings_time" },
           "encode": {
             "enter": {
-              "x": { "scale": "xPosNum", "field": "loc", "offset": 15 },
-              "y": { "scale": "yPosNum", "field": "loc", "offset": 25 },
-              "width": { "value": 12 },
-              "height": { "value": 12 },
-              "cornerRadius": { "value": 7 },
+              "xc": { "scale": "xPosNum", "field": "loc", "offset": 20 },
+              "yc": { "scale": "yPosNum", "field": "loc", "offset": 30 },
+              "size": [
+                {
+                  "test": "datum.in15min == 1",
+                  "value": 150
+                },
+                { "value": 120 }
+              ],
               "fill": { "scale": "cscale", "field": "MAP" },
-              "stroke": { "scale": "cscaleDark", "field": "MAP" },
-              "strokeWidth": [
-                { "test": "datum.in15min == 1", "value": 2 },
-                { "value": 0 }
+              "strokeWidth": { "value": 2 },
+              "stroke": [
+                {
+                  "test": "datum.in15min == 1",
+                  "scale": "cscaleDark",
+                  "field": "MAP"
+                }
               ]
             }
           }
         },
         {
-          "type": "rect",
+          "type": "symbol",
           "from": { "data": "roads_and_bridges_time" },
           "encode": {
             "enter": {
-              "x": { "scale": "xPosNum", "field": "loc", "offset": 30 },
-              "y": { "scale": "yPosNum", "field": "loc", "offset": 25 },
-              "width": { "value": 12 },
-              "height": { "value": 12 },
-              "cornerRadius": { "value": 7 },
+              "xc": { "scale": "xPosNum", "field": "loc", "offset": 35 },
+              "yc": { "scale": "yPosNum", "field": "loc", "offset": 30 },
+              "size": [
+                {
+                  "test": "datum.in15min == 1",
+                  "value": 150
+                },
+                { "value": 120 }
+              ],
               "fill": { "scale": "cscale", "field": "MAP" },
-              "stroke": { "scale": "cscaleDark", "field": "MAP" },
-              "strokeWidth": [
-                { "test": "datum.in15min == 1", "value": 2 },
-                { "value": 0 }
+              "strokeWidth": { "value": 2 },
+              "stroke": [
+                {
+                  "test": "datum.in15min == 1",
+                  "scale": "cscaleDark",
+                  "field": "MAP"
+                }
               ]
             }
           }
         },
         {
-          "type": "rule",
+          "type": "symbol",
           "from": { "data": "shake_intensity_time" },
           "encode": {
             "enter": {
-              "x": { "scale": "xPosNum", "field": "loc", "offset": 0 },
-              "x2": { "scale": "xPosNum", "field": "loc", "offset": 12 },
-              "y": { "scale": "yPosNum", "field": "loc", "offset": 16 },
+              "xc": { "scale": "xPosNum", "field": "loc", "offset": 5 },
+              "yc": { "scale": "yPosNum", "field": "loc", "offset": 15 },
+              "size": { "value": 30 },
               "opacity": { "value": 0.8 },
-              "stroke": { "value": "white" },
-              "strokeWidth": [
-                { "test": "datum.over60min == 1", "value": 2 },
-                { "value": 0 }
-              ]
+              "fill": [{ "test": "datum.over60min == 1", "value": "white" }]
             }
           }
         },
         {
-          "type": "rule",
+          "type": "symbol",
           "from": { "data": "medical_time" },
           "encode": {
             "enter": {
-              "x": { "scale": "xPosNum", "field": "loc", "offset": 15 },
-              "x2": { "scale": "xPosNum", "field": "loc", "offset": 27 },
-              "y": { "scale": "yPosNum", "field": "loc", "offset": 16 },
+              "xc": { "scale": "xPosNum", "field": "loc", "offset": 20 },
+              "yc": { "scale": "yPosNum", "field": "loc", "offset": 15 },
+              "size": { "value": 30 },
               "opacity": { "value": 0.8 },
-              "stroke": { "value": "white" },
-              "strokeWidth": [
-                { "test": "datum.over60min == 1", "value": 2 },
-                { "value": 0 }
-              ]
+              "fill": [{ "test": "datum.over60min == 1", "value": "white" }]
             }
           }
         },
         {
-          "type": "rule",
+          "type": "symbol",
           "from": { "data": "power_time" },
           "encode": {
             "enter": {
-              "x": { "scale": "xPosNum", "field": "loc", "offset": 30 },
-              "x2": { "scale": "xPosNum", "field": "loc", "offset": 42 },
-              "y": { "scale": "yPosNum", "field": "loc", "offset": 16 },
+              "xc": { "scale": "xPosNum", "field": "loc", "offset": 35 },
+              "yc": { "scale": "yPosNum", "field": "loc", "offset": 15 },
+              "size": { "value": 30 },
               "opacity": { "value": 0.8 },
-              "stroke": { "value": "white" },
-              "strokeWidth": [
-                { "test": "datum.over60min == 1", "value": 2 },
-                { "value": 0 }
-              ]
+              "fill": [{ "test": "datum.over60min == 1", "value": "white" }]
             }
           }
         },
         {
-          "type": "rule",
+          "type": "symbol",
           "from": { "data": "sewer_and_water_time" },
           "encode": {
             "enter": {
-              "x": { "scale": "xPosNum", "field": "loc", "offset": 0 },
-              "x2": { "scale": "xPosNum", "field": "loc", "offset": 12 },
-              "y": { "scale": "yPosNum", "field": "loc", "offset": 31 },
+              "xc": { "scale": "xPosNum", "field": "loc", "offset": 5 },
+              "yc": { "scale": "yPosNum", "field": "loc", "offset": 30 },
+              "size": { "value": 30 },
               "opacity": { "value": 0.8 },
-              "stroke": { "value": "white" },
-              "strokeWidth": [
-                { "test": "datum.over60min == 1", "value": 2 },
-                { "value": 0 }
-              ]
+              "fill": [{ "test": "datum.over60min == 1", "value": "white" }]
             }
           }
         },
         {
-          "type": "rule",
+          "type": "symbol",
           "from": { "data": "buildings_time" },
           "encode": {
             "enter": {
-              "x": { "scale": "xPosNum", "field": "loc", "offset": 15 },
-              "x2": { "scale": "xPosNum", "field": "loc", "offset": 27 },
-              "y": { "scale": "yPosNum", "field": "loc", "offset": 31 },
+              "xc": { "scale": "xPosNum", "field": "loc", "offset": 20 },
+              "yc": { "scale": "yPosNum", "field": "loc", "offset": 30 },
+              "size": { "value": 30 },
               "opacity": { "value": 0.8 },
-              "stroke": { "value": "white" },
-              "strokeWidth": [
-                { "test": "datum.over60min == 1", "value": 2 },
-                { "value": 0 }
-              ]
+              "fill": [{ "test": "datum.over60min == 1", "value": "white" }]
             }
           }
         },
         {
-          "type": "rule",
+          "type": "symbol",
           "from": { "data": "roads_and_bridges_time" },
           "encode": {
             "enter": {
-              "x": { "scale": "xPosNum", "field": "loc", "offset": 30 },
-              "x2": { "scale": "xPosNum", "field": "loc", "offset": 42 },
-              "y": { "scale": "yPosNum", "field": "loc", "offset": 31 },
+              "xc": { "scale": "xPosNum", "field": "loc", "offset": 35 },
+              "yc": { "scale": "yPosNum", "field": "loc", "offset": 30 },
+              "size": { "value": 30 },
               "opacity": { "value": 0.8 },
-              "stroke": { "value": "white" },
-              "strokeWidth": [
-                { "test": "datum.over60min == 1", "value": 2 },
-                { "value": 0 }
-              ]
+              "fill": [{ "test": "datum.over60min == 1", "value": "white" }]
             }
           }
         }
@@ -755,7 +773,7 @@
           "from": { "data": "selectedCategorySummary" },
           "encode": {
             "enter": {
-              "fill": { "value": "hsl(0, 0%, 70%)" },
+              "fill": { "value": "hsl(0, 0%, 85%)" },
               "height": { "value": 10 }
             },
             "update": {
@@ -770,7 +788,7 @@
           "from": { "data": "selectedCategorySummary" },
           "encode": {
             "enter": {
-              "fill": { "value": "hsl(0, 0%, 50%)" },
+              "fill": { "value": "hsl(0, 0%, 80%)" },
               "height": { "value": 14 }
             },
             "update": {
@@ -810,20 +828,17 @@
           }
         },
         {
-          "type": "rule",
+          "type": "symbol",
           "from": { "data": "selectedCategorySummary" },
           "encode": {
             "enter": {
-              "x": { "scale": "xscale", "field": "MAP", "offset": -5 },
-              "x2": { "scale": "xscale", "field": "MAP", "offset": 5 },
-              "y": { "scale": "yscale", "field": "loc", "band": 0.5 },
+              "xc": { "scale": "xscale", "field": "MAP" },
+              "yc": { "scale": "yscale", "field": "loc", "band": 0.5 },
               "opacity": { "value": 0.8 },
-              "stroke": { "value": "hsl(0, 0%, 50%)" },
-              "strokeWidth": [
-                { "test": "datum.over60min == 1", "value": 3 },
-                { "value": 0 }
-              ],
-              "strokeCap": { "value": "round" }
+              "size": { "value": 50 },
+              "fill": [
+                { "test": "datum.over60min == 1", "value": "hsl(0, 0%, 80%)" }
+              ]
             }
           }
         }
