@@ -1,0 +1,492 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 800,
+  "height": 400,
+  "padding": 20,
+
+  "config": {
+    "axisBand": {
+      "bandPosition": 1,
+      "tickExtra": true,
+      "tickOffset": 0
+    }
+  },
+
+  "signals": [
+    {
+      "name": "indexTime",
+      "update": "time('Apr 6 2020')",
+      "on": [
+        {
+          "events": "@timeInTimeline:mousemove",
+          "update": "round(invert('xTime', clamp(x(), 0, width)) / 300000) * 300000"
+        },
+        {
+          "events": "timer{600}",
+          "update": "TimelineControl == 'Play' & indexTime < maxDate ? indexTime + 300000 : indexTime"
+        }
+      ]
+    },
+    { "name": "maxDate", "update": "time('Apr 11 2020')" },
+    { "name": "minDate", "update": "time('Apr 6 2020')" },
+    {
+      "name": "timeSpan",
+      "on": [
+        {
+          "events": { "signal": "indexTime" },
+          "update": "[minDate, indexTime]"
+        }
+      ]
+    },
+    {
+      "name": "TimelineControl",
+      "value": "Play",
+      "bind": {
+        "input": "radio",
+        "options": ["Play", "Pause"]
+      }
+    },
+    {
+      "name": "Colour",
+      "value": "VSUP",
+      "bind": {
+        "input": "radio",
+        "options": ["VSUP", "VSUP_", "Normal"]
+      }
+    },
+    {
+      "name": "SelectLocation",
+      "value": 3,
+      "bind": {
+        "input": "select",
+        "options": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ]
+      }
+    }
+  ],
+
+  "data": [
+    {
+      "name": "locNames",
+      "values": [
+        { "loc": "1", "name": "PALACE HILLS" },
+        { "loc": "2", "name": "NORTHWEST" },
+        { "loc": "3", "name": "OLD TOWN" },
+        { "loc": "4", "name": "SAFE TOWN" },
+        { "loc": "5", "name": "SOUTHWEST" },
+        { "loc": "6", "name": "DOWNTOWN" },
+        { "loc": "7", "name": "WILSON FOREST" },
+        { "loc": "8", "name": "SCENIC VISTA" },
+        { "loc": "9", "name": "BROADVIEW" },
+        { "loc": "10", "name": "CHAPPARAL" },
+        { "loc": "11", "name": "TERRAPIN" },
+        { "loc": "12", "name": "PEPPER MILL" },
+        { "loc": "13", "name": "CHEDDARFORD" },
+        { "loc": "14", "name": "EASTON" },
+        { "loc": "15", "name": "WESTON" },
+        { "loc": "16", "name": "SOUTHTON" },
+        { "loc": "17", "name": "OAK WILLOW" },
+        { "loc": "18", "name": "EAST PARTON" },
+        { "loc": "19", "name": "WEST PARTON" }
+      ]
+    },
+    {
+      "name": "colourThreshold",
+      "values": [
+        { "start": 0, "end": 2 },
+        { "start": 2, "end": 4 },
+        { "start": 4, "end": 6 },
+        { "start": 6, "end": 8 },
+        { "start": 8, "end": 10 }
+      ]
+    },
+    {
+      "name": "shake_intensity",
+      "url": "data/shake_intensity_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "medical",
+      "url": "data/medical_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "power",
+      "url": "data/power_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "sewer_and_water",
+      "url": "data/sewer_and_water_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "buildings",
+      "url": "data/buildings_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "roads_and_bridges",
+      "url": "data/roads_and_bridges_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "allSummary",
+      "source": [
+        "shake_intensity",
+        "medical",
+        "power",
+        "sewer_and_water",
+        "buildings",
+        "roads_and_bridges"
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "cscale",
+      "type": "threshold",
+      "range": [
+        "hsl(203, 50%, 85%)",
+        "hsl(44, 100%, 78%)",
+        "hsl(19, 97%, 67%)",
+        "hsl(3, 69%, 50%)",
+        "hsl(3, 78%, 19%)"
+      ],
+      "domain": [2, 4, 6, 8, 10]
+    },
+    {
+      "name": "cscaleDark",
+      "type": "threshold",
+      "range": [
+        "hsl(203, 50%, 65%)",
+        "hsl(44, 100%, 58%)",
+        "hsl(19, 97%, 47%)",
+        "hsl(3, 69%, 30%)",
+        "hsl(3, 78%, 0%)"
+      ],
+      "domain": [2, 4, 6, 8, 10]
+    },
+    {
+      "name": "vsup0",
+      "type": "threshold",
+      "range": [
+        "hsl(166, 28%, 84%)",
+        "hsl(45, 90%, 78%)",
+        "hsl(32, 92%, 73%)",
+        "hsl(22, 89%, 67%)",
+        "hsl(14, 85%, 61%)",
+        "hsl(8, 82%, 55%)",
+        "hsl(3, 80%, 48%)",
+        "hsl(3, 79%, 29%)"
+      ],
+      "domain": [1.25, 2.5, 3.75, 5, 6.75, 7.5, 8.75, 10]
+    },
+    {
+      "name": "vsup1",
+      "type": "threshold",
+      "range": [
+        "hsl(56, 43%, 85%)",
+        "hsl(26, 97%, 78%)",
+        "hsl(12, 92%, 70%)",
+        "hsl(9, 56%, 55%)"
+      ],
+      "domain": [2.5, 5, 7.5, 10]
+    },
+    {
+      "name": "vsup2",
+      "type": "threshold",
+      "range": ["hsl(37, 100%, 88%)", "hsl(11, 100%, 77%)"],
+      "domain": [5, 10]
+    },
+    {
+      "name": "vsup3",
+      "type": "threshold",
+      "range": ["hsl(18, 0%, 91%)"],
+      "domain": [10]
+    },
+    {
+      "name": "vsup0_",
+      "type": "threshold",
+      "range": [
+        "hsl(58, 42%, 81%)",
+        "hsl(26, 91%, 70%)",
+        "hsl(10, 83%, 58%)",
+        "hsl(3, 80%, 38%)"
+      ],
+      "domain": [2.5, 5, 7.5, 10]
+    },
+    {
+      "name": "vsup1_",
+      "type": "threshold",
+      "range": ["hsl(37, 100%, 84%)", "hsl(10, 96%, 70%)"],
+      "domain": [5, 10]
+    },
+    {
+      "name": "vsup2_",
+      "type": "threshold",
+      "range": ["hsl(18, 0%, 88%)"],
+      "domain": [10]
+    },
+    {
+      "name": "xTime",
+      "type": "time",
+      "domain": { "data": "allSummary", "field": "time" },
+      "range": "width",
+      "nice": true
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "group",
+      "name": "timeline",
+      "encode": {
+        "enter": {
+          "height": { "value": 30 },
+          "width": { "value": 800 },
+          "y": { "value": 0 }
+        }
+      },
+      "axes": [{ "orient": "bottom", "scale": "xTime", "grid": false }],
+      "marks": [
+        {
+          "type": "rule",
+          "name": "timeInTimeline",
+          "from": { "data": "allSummary" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xTime", "field": "time" },
+              "y": { "value": 0 },
+              "y2": { "field": { "group": "height" } },
+              "stroke": { "value": "hsl(0, 0%, 80%)" },
+              "opacity": { "value": 0.1 }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": { "scale": "xTime", "signal": "indexTime", "offset": 0.5 },
+              "y": { "value": 0 },
+              "y2": { "field": { "group": "height" } },
+              "stroke": { "value": "hsl(120, 50%, 30%)" }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": { "scale": "xTime", "signal": "indexTime" },
+              "y": { "value": 0, "offset": -5 },
+              "align": { "value": "center" },
+              "text": { "signal": "timeFormat(indexTime, '%x %H:%M')" },
+              "fill": { "value": "hsl(120, 50%, 30%)" }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "name": "heatMap",
+      "description": "Heat map of all data categories for a given location",
+      "encode": {
+        "enter": {
+          "height": { "value": 100 },
+          "width": { "value": 800 },
+          "y": { "value": 120 }
+        }
+      },
+      "data": [
+        {
+          "name": "allSummary",
+          "source": "allSummary",
+          "transform": [
+            {
+              "type": "filter",
+              "expr": "datum.loc == SelectLocation"
+            }
+          ]
+        },
+        {
+          "name": "aggregatedSummary",
+          "source": "allSummary",
+          "transform": [
+            {
+              "type": "filter",
+              "expr": "datum.time_diff == 0"
+            },
+            {
+              "type": "formula",
+              "as": "dateHour",
+              "expr": "utcParse(utcFormat(datum.time, '%Y-%m-%d %H'), '%Y-%m-%d %H')"
+            },
+            {
+              "type": "formula",
+              "as": "CIR",
+              "expr": "datum['hdi95\\.upper'] - datum['hdi95\\.lower']"
+            },
+            {
+              "type": "aggregate",
+              "groupby": ["loc", "cat", "dateHour"],
+              "fields": ["MAP", "CIR"],
+              "ops": ["median", "median"],
+              "as": ["medianMAP", "medianCIR"]
+            }
+          ]
+        }
+      ],
+      "scales": [
+        {
+          "name": "xHeatmap",
+          "type": "time",
+          "domain": { "data": "aggregatedSummary", "field": "dateHour" },
+          "domainRaw": { "signal": "timeSpan" },
+          "range": "width"
+        },
+        {
+          "name": "row",
+          "type": "band",
+          "domain": [
+            "shake_intensity",
+            "medical",
+            "power",
+            "sewer_and_water",
+            "buildings",
+            "roads_and_bridges"
+          ],
+          "range": [0, 100]
+        }
+      ],
+      "axes": [
+        {
+          "orient": "bottom",
+          "scale": "xHeatmap",
+          "zindex": 1,
+          "labelFontSize": 14
+        },
+        {
+          "orient": "left",
+          "scale": "row",
+          "domain": false,
+          "tickSize": 0
+        }
+      ],
+      "marks": [
+        {
+          "type": "rect",
+          "from": { "data": "aggregatedSummary" },
+          "clip": true,
+          "encode": {
+            "enter": {
+              "y": { "scale": "row", "field": "cat" },
+              "height": { "scale": "row", "band": 1 }
+            },
+            "update": {
+              "x": { "scale": "xHeatmap", "field": "dateHour" },
+              "width": {
+                "signal": "scale('xHeatmap', utcParse('2020-04-06 01', '%Y-%m-%d %H'))"
+              },
+              "fill": [
+                {
+                  "test": "Colour == 'VSUP' & datum.medianCIR <= 2.5",
+                  "scale": "vsup0",
+                  "field": "medianMAP"
+                },
+                {
+                  "test": "Colour == 'VSUP' & datum.medianCIR <= 5",
+                  "scale": "vsup1",
+                  "field": "medianMAP"
+                },
+                {
+                  "test": "Colour == 'VSUP' & datum.medianCIR <= 7.5",
+                  "scale": "vsup2",
+                  "field": "medianMAP"
+                },
+                {
+                  "test": "Colour == 'VSUP' & datum.medianCIR > 7.5",
+                  "scale": "vsup3",
+                  "field": "medianMAP"
+                },
+                {
+                  "test": "Colour == 'VSUP_' & datum.medianCIR <= 2.5",
+                  "scale": "vsup0_",
+                  "field": "medianMAP"
+                },
+                {
+                  "test": "Colour == 'VSUP_' & datum.medianCIR <= 5",
+                  "scale": "vsup1_",
+                  "field": "medianMAP"
+                },
+                {
+                  "test": "Colour == 'VSUP' & datum.medianCIR > 5",
+                  "scale": "vsup2_",
+                  "field": "medianMAP"
+                },
+                { "scale": "cscale", "field": "medianMAP" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
