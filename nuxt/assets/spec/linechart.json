@@ -201,6 +201,42 @@
           "as": "time"
         }
       ]
+    },
+    {
+      "name": "aggregatedReports",
+      "url": "data/mc1-reports-data-aggregated.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date"
+        }
+      }
+    }
+  ],
+  "scales": [
+    {
+      "name": "cscale",
+      "type": "threshold",
+      "range": [
+        "hsl(203, 50%, 85%)",
+        "hsl(44, 100%, 78%)",
+        "hsl(19, 97%, 67%)",
+        "hsl(3, 69%, 50%)",
+        "hsl(3, 78%, 19%)"
+      ],
+      "domain": [2, 4, 6, 8, 10]
+    },
+    {
+      "name": "cscaleDark",
+      "type": "threshold",
+      "range": [
+        "hsl(203, 50%, 65%)",
+        "hsl(44, 100%, 58%)",
+        "hsl(19, 97%, 47%)",
+        "hsl(3, 69%, 30%)",
+        "hsl(3, 78%, 0%)"
+      ],
+      "domain": [2, 4, 6, 8, 10]
     }
   ],
 
@@ -215,18 +251,6 @@
           "y": { "value": 0 }
         }
       },
-      "data": [
-        {
-          "name": "allSummary",
-          "source": "allSummary",
-          "transform": [
-            {
-              "type": "filter",
-              "expr": "datum.loc == 4"
-            }
-          ]
-        }
-      ],
       "scales": [
         {
           "name": "xTime",
@@ -279,7 +303,7 @@
     },
     {
       "type": "group",
-      "name": "LineCharts",
+      "name": "lineCharts",
       "description": "Line charts of all data categories for a given location",
       "encode": {
         "enter": {
@@ -295,7 +319,17 @@
           "transform": [
             {
               "type": "filter",
-              "expr": "datum.loc == 4"
+              "expr": "datum.loc == 3"
+            }
+          ]
+        },
+        {
+          "name": "aggregatedReports",
+          "source": "aggregatedReports",
+          "transform": [
+            {
+              "type": "filter",
+              "expr": "datum.location == 3"
             }
           ]
         }
@@ -319,6 +353,12 @@
           "range": "width"
         },
         {
+          "name": "radiusMark",
+          "type": "linear",
+          "domain": { "data": "aggregatedReports", "field": "count" },
+          "range": [10, 150]
+        },
+        {
           "name": "row",
           "type": "band",
           "domain": [
@@ -330,18 +370,6 @@
             "roads_and_bridges"
           ],
           "range": { "step": { "signal": "rangeStep" } }
-        },
-        {
-          "name": "cscale",
-          "type": "threshold",
-          "range": [
-            "hsl(203, 50%, 85%)",
-            "hsl(44, 100%, 78%)",
-            "hsl(19, 97%, 67%)",
-            "hsl(3, 69%, 50%)",
-            "hsl(3, 78%, 19%)"
-          ],
-          "domain": [2, 4, 6, 8, 10]
         }
       ],
       "axes": [
@@ -380,10 +408,9 @@
             {
               "orient": "right",
               "scale": "yLine",
-              "tickCount": 5,
-              "zindex": 0,
-              "title": "Rating",
-              "labelFontSize": 14
+              "tickCount": 6,
+              "labelFontSize": 14,
+              "offset": 10
             }
           ],
           "marks": [
@@ -407,9 +434,39 @@
               "from": { "data": "cat" },
               "clip": true,
               "encode": {
+                "enter": {
+                  "stroke": { "value": "hsl(0, 0%, 50%)" }
+                },
                 "update": {
                   "x": { "scale": "xLine", "field": "time" },
-                  "y": { "scale": "yLine", "field": "MAP" }
+                  "y": { "scale": "yLine", "field": "MAP" },
+                  "strokeDash": [
+                    {
+                      "test": "datum.over60min == 1 ",
+                      "value": [4, 2]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "symbol",
+              "from": { "data": "cat" },
+              "clip": true,
+              "encode": {
+                "enter": {
+                  "size": { "value": 20 }
+                },
+                "update": {
+                  "x": { "scale": "xLine", "field": "time" },
+                  "y": { "scale": "yLine", "field": "MAP" },
+                  "fill": [
+                    {
+                      "test": "datum.over60min == 1 & datum.time % 6000000 == 0",
+                      "value": "white"
+                    },
+                    { "value": null }
+                  ]
                 }
               }
             },
@@ -417,6 +474,10 @@
               "type": "symbol",
               "from": { "data": "cat" },
               "encode": {
+                "enter": {
+                  "size": { "value": 150 },
+                  "strokeWidth": { "value": 3 }
+                },
                 "update": {
                   "x": { "scale": "xLine", "field": "time" },
                   "y": { "scale": "yLine", "field": "MAP" },
@@ -427,7 +488,69 @@
                       "field": "MAP"
                     },
                     { "value": null }
+                  ],
+                  "stroke": [
+                    {
+                      "test": "datum.in15min == 1 & datum.time == indexTime",
+                      "scale": "cscaleDark",
+                      "field": "MAP"
+                    },
+                    { "value": null }
                   ]
+                }
+              }
+            },
+            {
+              "type": "symbol",
+              "from": { "data": "cat" },
+              "encode": {
+                "enter": {
+                  "size": { "value": 30 }
+                },
+                "update": {
+                  "x": { "scale": "xLine", "field": "time" },
+                  "y": { "scale": "yLine", "field": "MAP" },
+                  "fill": [
+                    {
+                      "test": "datum.over60min == 1 & datum.time == indexTime",
+                      "value": "white"
+                    },
+                    { "value": null }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "from": {
+            "facet": {
+              "name": "cat",
+              "data": "aggregatedReports",
+              "groupby": "cat"
+            }
+          },
+          "clip": true,
+          "encode": {
+            "enter": {
+              "x": { "value": 0 },
+              "y": { "scale": "row", "field": "cat" },
+              "width": { "signal": "width" },
+              "height": { "signal": "rangeStep" }
+            }
+          },
+          "marks": [
+            {
+              "type": "symbol",
+              "from": { "data": "cat" },
+              "encode": {
+                "update": {
+                  "x": { "scale": "xLine", "field": "time" },
+                  "y": { "scale": "yLine", "field": "rating" },
+                  "size": { "scale": "radiusMark", "field": "count" },
+                  "fill": { "scale": "cscale", "field": "rating" },
+                  "opacity": { "value": 0.5 }
                 }
               }
             }
