@@ -27,13 +27,22 @@
         }
       ]
     },
+    { "name": "minDate", "update": "time('Apr 6 2020')" },
     { "name": "maxDate", "update": "time('Apr 11 2020')" },
     {
       "name": "TimelineControl",
-      "value": "Play",
+      "value": "Pause",
       "bind": {
         "input": "radio",
         "options": ["Play", "Pause"]
+      }
+    },
+    {
+      "name": "Colour",
+      "value": "VSUP",
+      "bind": {
+        "input": "radio",
+        "options": ["VSUP", "VSUP_", "Normal"]
       }
     },
     {
@@ -89,93 +98,40 @@
     {
       "name": "colourThreshold",
       "values": [
-        { "start": 0, "end": 2 },
-        { "start": 2, "end": 4 },
-        { "start": 4, "end": 6 },
-        { "start": 6, "end": 8 },
-        { "start": 8, "end": 10 }
+        { "start": 0, "end": 1.25 },
+        { "start": 1.25, "end": 2.5 },
+        { "start": 2.5, "end": 3.75 },
+        { "start": 3.75, "end": 5 },
+        { "start": 5, "end": 6.25 },
+        { "start": 6.25, "end": 7.5 },
+        { "start": 7.5, "end": 8.75 },
+        { "start": 8.75, "end": 10 }
       ]
     },
     {
-      "name": "shake_intensity",
-      "url": "data/shake_intensity_summary_processed.csv",
-      "format": {
-        "type": "csv",
-        "parse": {
-          "time": "date",
-          "time_end": "date"
-        }
-      }
-    },
-    {
-      "name": "medical",
-      "url": "data/medical_summary_processed.csv",
-      "format": {
-        "type": "csv",
-        "parse": {
-          "time": "date",
-          "time_end": "date"
-        }
-      }
-    },
-    {
-      "name": "power",
-      "url": "data/power_summary_processed.csv",
-      "format": {
-        "type": "csv",
-        "parse": {
-          "time": "date",
-          "time_end": "date"
-        }
-      }
-    },
-    {
-      "name": "sewer_and_water",
-      "url": "data/sewer_and_water_summary_processed.csv",
-      "format": {
-        "type": "csv",
-        "parse": {
-          "time": "date",
-          "time_end": "date"
-        }
-      }
-    },
-    {
-      "name": "buildings",
-      "url": "data/buildings_summary_processed.csv",
-      "format": {
-        "type": "csv",
-        "parse": {
-          "time": "date",
-          "time_end": "date"
-        }
-      }
-    },
-    {
-      "name": "roads_and_bridges",
-      "url": "data/roads_and_bridges_summary_processed.csv",
-      "format": {
-        "type": "csv",
-        "parse": {
-          "time": "date",
-          "time_end": "date"
-        }
-      }
-    },
-    {
       "name": "allSummary",
-      "source": [
-        "shake_intensity",
-        "medical",
-        "power",
-        "sewer_and_water",
-        "buildings",
-        "roads_and_bridges"
+      "url": "data/all_summary_processed.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date",
+          "time_end": "date"
+        }
+      }
+    },
+    {
+      "name": "allSummaryAtTime",
+      "source": "allSummary",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.time == indexTime"
+        }
       ]
     },
     {
       "name": "selectedCategorySummary",
-      "source": "allSummary",
+      "source": "allSummaryAtTime",
       "transform": [{ "type": "filter", "expr": "datum.cat == SelectCategory" }]
     },
     {
@@ -183,8 +139,8 @@
       "transform": [
         {
           "type": "sequence",
-          "start": 1586131200000,
-          "stop": 1586563200000,
+          "start": { "signal": "minDate" },
+          "stop": { "signal": "maxDate" },
           "step": 300000,
           "as": "time"
         }
@@ -197,25 +153,84 @@
       "name": "cscale",
       "type": "threshold",
       "range": [
-        "hsl(203, 50%, 85%)",
-        "hsl(44, 100%, 78%)",
-        "hsl(19, 97%, 67%)",
-        "hsl(3, 69%, 50%)",
-        "hsl(3, 78%, 19%)"
+        "hsl(184, 30%, 84%)",
+        "hsl(26, 100%, 66%)",
+        "hsl(2, 95%, 48%)",
+        "hsl(4, 87%, 16%)"
       ],
-      "domain": [2, 4, 6, 8, 10]
+      "domain": [2.5, 5, 7.5, 10]
     },
     {
       "name": "cscaleDark",
       "type": "threshold",
       "range": [
-        "hsl(203, 50%, 65%)",
-        "hsl(44, 100%, 58%)",
-        "hsl(19, 97%, 47%)",
-        "hsl(3, 69%, 30%)",
-        "hsl(3, 78%, 0%)"
+        "hsl(184, 30%, 84%)",
+        "hsl(26, 100%, 66%)",
+        "hsl(2, 95%, 48%)",
+        "hsl(4, 87%, 16%)"
       ],
-      "domain": [2, 4, 6, 8, 10]
+      "domain": [2.5, 5, 7.5, 10]
+    },
+    {
+      "name": "vsup0",
+      "type": "threshold",
+      "range": [
+        "hsl(184, 30%, 84%)",
+        "hsl(26, 100%, 66%)",
+        "hsl(2, 95%, 48%)",
+        "hsl(4, 87%, 16%)"
+      ],
+      "domain": [2.5, 5, 7.5, 10]
+    },
+    {
+      "name": "vsup1",
+      "type": "threshold",
+      "range": ["hsl(37, 100%, 83%)", "hsl(11, 49%, 55%)"],
+      "domain": [5, 10]
+    },
+    {
+      "name": "vsup2",
+      "type": "threshold",
+      "range": ["hsl(20, 100%, 85%)"],
+      "domain": [10]
+    },
+    {
+      "name": "vsup0_",
+      "type": "threshold",
+      "range": [
+        "hsl(193, 100%, 75%)",
+        "hsl(45, 86%, 79%)",
+        "hsl(31, 100%, 70%)",
+        "hsl(21, 100%, 62%)",
+        "hsl(11, 100%, 53%)",
+        "hsl(2, 91%, 40%)",
+        "hsl(1, 84%, 24%)",
+        "hsl(7, 96%, 9%)"
+      ],
+      "domain": [1.25, 2.5, 3.75, 5, 6.25, 7.5, 8.75, 10]
+    },
+    {
+      "name": "vsup1_",
+      "type": "threshold",
+      "range": [
+        "hsl(189, 30%, 88%)",
+        "hsl(26, 100%, 75%)",
+        "hsl(10, 98%, 63%)",
+        "hsl(8, 35%, 36%)"
+      ],
+      "domain": [2.5, 5, 7.5, 10]
+    },
+    {
+      "name": "vsup2_",
+      "type": "threshold",
+      "range": ["hsl(37, 100%, 87%)", "hsl(11, 54%, 67%)"],
+      "domain": [5, 10]
+    },
+    {
+      "name": "vsup3_",
+      "type": "threshold",
+      "range": ["hsl(19, 100%, 89%)"],
+      "domain": [10]
     }
   ],
 
@@ -237,64 +252,8 @@
           "source": "locNames"
         },
         {
-          "name": "shake_intensity_time",
-          "source": "shake_intensity",
-          "transform": [
-            {
-              "type": "filter",
-              "expr": "datum.time == indexTime"
-            }
-          ]
-        },
-        {
-          "name": "medical_time",
-          "source": "medical",
-          "transform": [
-            {
-              "type": "filter",
-              "expr": "datum.time == indexTime"
-            }
-          ]
-        },
-        {
-          "name": "power_time",
-          "source": "power",
-          "transform": [
-            {
-              "type": "filter",
-              "expr": "datum.time == indexTime"
-            }
-          ]
-        },
-        {
-          "name": "sewer_and_water_time",
-          "source": "sewer_and_water",
-          "transform": [
-            {
-              "type": "filter",
-              "expr": "datum.time == indexTime"
-            }
-          ]
-        },
-        {
-          "name": "buildings_time",
-          "source": "buildings",
-          "transform": [
-            {
-              "type": "filter",
-              "expr": "datum.time == indexTime"
-            }
-          ]
-        },
-        {
-          "name": "roads_and_bridges_time",
-          "source": "roads_and_bridges",
-          "transform": [
-            {
-              "type": "filter",
-              "expr": "datum.time == indexTime"
-            }
-          ]
+          "name": "allSummaryAtTime",
+          "source": "allSummaryAtTime"
         }
       ],
       "scales": [
@@ -414,25 +373,122 @@
         },
         {
           "type": "symbol",
-          "from": { "data": "shake_intensity_time" },
+          "from": { "data": "allSummaryAtTime" },
           "encode": {
             "enter": {
-              "xc": { "scale": "xPosNum", "field": "loc", "offset": 5 },
-              "yc": { "scale": "yPosNum", "field": "loc", "offset": 15 },
-              "size": [
+              "size": { "value": 200 },
+              "fill": [
                 {
-                  "test": "datum.in15min == 1",
-                  "value": 150
-                },
-                { "value": 120 }
-              ],
-              "fill": { "scale": "cscale", "field": "MAP" },
-              "strokeWidth": { "value": 2 },
-              "stroke": [
-                {
-                  "test": "datum.in15min == 1",
-                  "scale": "cscaleDark",
+                  "test": "Colour == 'VSUP' & datum.CIR <= 3.75",
+                  "scale": "vsup0",
                   "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP' & datum.CIR <= 7.5",
+                  "scale": "vsup1",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP' & datum.CIR > 7.5",
+                  "scale": "vsup2",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 1.875",
+                  "scale": "vsup0_",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 3.75",
+                  "scale": "vsup1_",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 7.5",
+                  "scale": "vsup2_",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP_' & datum.CIR > 7.5",
+                  "scale": "vsup3_",
+                  "field": "MAP"
+                },
+                { "scale": "cscale", "field": "MAP" }
+              ],
+              "xc": [
+                {
+                  "test": "datum.cat == 'shake_intensity'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 5
+                },
+                {
+                  "test": "datum.cat == 'medical'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 20
+                },
+                {
+                  "test": "datum.cat == 'power'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 35
+                },
+                {
+                  "test": "datum.cat == 'sewer_and_water'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 5
+                },
+                {
+                  "test": "datum.cat == 'buildings'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 20
+                },
+                {
+                  "test": "datum.cat == 'roads_and_bridges'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 35
+                }
+              ],
+              "yc": [
+                {
+                  "test": "datum.cat == 'shake_intensity'",
+                  "scale": "yPosNum",
+                  "field": "loc",
+                  "offset": 15
+                },
+                {
+                  "test": "datum.cat == 'medical'",
+                  "scale": "yPosNum",
+                  "field": "loc",
+                  "offset": 15
+                },
+                {
+                  "test": "datum.cat == 'power'",
+                  "scale": "yPosNum",
+                  "field": "loc",
+                  "offset": 15
+                },
+                {
+                  "test": "datum.cat == 'sewer_and_water'",
+                  "scale": "yPosNum",
+                  "field": "loc",
+                  "offset": 30
+                },
+                {
+                  "test": "datum.cat == 'buildings'",
+                  "scale": "yPosNum",
+                  "field": "loc",
+                  "offset": 30
+                },
+                {
+                  "test": "datum.cat == 'roads_and_bridges'",
+                  "scale": "yPosNum",
+                  "field": "loc",
+                  "offset": 30
                 }
               ]
             }
@@ -440,209 +496,99 @@
         },
         {
           "type": "symbol",
-          "from": { "data": "medical_time" },
+          "from": { "data": "allSummaryAtTime" },
           "encode": {
             "enter": {
-              "xc": { "scale": "xPosNum", "field": "loc", "offset": 20 },
-              "yc": { "scale": "yPosNum", "field": "loc", "offset": 15 },
               "size": [
-                {
-                  "test": "datum.in15min == 1",
-                  "value": 150
-                },
-                { "value": 120 }
+                { "test": "datum.in60min == 1", "value": 20 },
+                { "test": "datum.over60min == 1", "value": 40 }
               ],
-              "fill": { "scale": "cscale", "field": "MAP" },
-              "strokeWidth": { "value": 2 },
-              "stroke": [
+              "fill": [
                 {
-                  "test": "datum.in15min == 1",
-                  "scale": "cscaleDark",
-                  "field": "MAP"
+                  "test": "datum.in60min == 1 || datum.over60min == 1",
+                  "value": "white"
+                }
+              ],
+              "opacity": [
+                { "test": "datum.in60min == 1", "value": 0.5 },
+                { "test": "datum.over60min == 1", "value": 1 }
+              ],
+              "xc": [
+                {
+                  "test": "datum.cat == 'shake_intensity'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 5
+                },
+                {
+                  "test": "datum.cat == 'medical'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 20
+                },
+                {
+                  "test": "datum.cat == 'power'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 35
+                },
+                {
+                  "test": "datum.cat == 'sewer_and_water'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 5
+                },
+                {
+                  "test": "datum.cat == 'buildings'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 20
+                },
+                {
+                  "test": "datum.cat == 'roads_and_bridges'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 35
+                }
+              ],
+              "yc": [
+                {
+                  "test": "datum.cat == 'shake_intensity'",
+                  "scale": "yPosNum",
+                  "field": "loc",
+                  "offset": 15
+                },
+                {
+                  "test": "datum.cat == 'medical'",
+                  "scale": "yPosNum",
+                  "field": "loc",
+                  "offset": 15
+                },
+                {
+                  "test": "datum.cat == 'power'",
+                  "scale": "yPosNum",
+                  "field": "loc",
+                  "offset": 15
+                },
+                {
+                  "test": "datum.cat == 'sewer_and_water'",
+                  "scale": "yPosNum",
+                  "field": "loc",
+                  "offset": 30
+                },
+                {
+                  "test": "datum.cat == 'buildings'",
+                  "scale": "yPosNum",
+                  "field": "loc",
+                  "offset": 30
+                },
+                {
+                  "test": "datum.cat == 'roads_and_bridges'",
+                  "scale": "yPosNum",
+                  "field": "loc",
+                  "offset": 30
                 }
               ]
-            }
-          }
-        },
-        {
-          "type": "symbol",
-          "from": { "data": "power_time" },
-          "encode": {
-            "enter": {
-              "xc": { "scale": "xPosNum", "field": "loc", "offset": 35 },
-              "yc": { "scale": "yPosNum", "field": "loc", "offset": 15 },
-              "size": [
-                {
-                  "test": "datum.in15min == 1",
-                  "value": 150
-                },
-                { "value": 120 }
-              ],
-              "fill": { "scale": "cscale", "field": "MAP" },
-              "strokeWidth": { "value": 2 },
-              "stroke": [
-                {
-                  "test": "datum.in15min == 1",
-                  "scale": "cscaleDark",
-                  "field": "MAP"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "type": "symbol",
-          "from": { "data": "sewer_and_water_time" },
-          "encode": {
-            "enter": {
-              "xc": { "scale": "xPosNum", "field": "loc", "offset": 5 },
-              "yc": { "scale": "yPosNum", "field": "loc", "offset": 30 },
-              "size": [
-                {
-                  "test": "datum.in15min == 1",
-                  "value": 150
-                },
-                { "value": 120 }
-              ],
-              "fill": { "scale": "cscale", "field": "MAP" },
-              "strokeWidth": { "value": 2 },
-              "stroke": [
-                {
-                  "test": "datum.in15min == 1",
-                  "scale": "cscaleDark",
-                  "field": "MAP"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "type": "symbol",
-          "from": { "data": "buildings_time" },
-          "encode": {
-            "enter": {
-              "xc": { "scale": "xPosNum", "field": "loc", "offset": 20 },
-              "yc": { "scale": "yPosNum", "field": "loc", "offset": 30 },
-              "size": [
-                {
-                  "test": "datum.in15min == 1",
-                  "value": 150
-                },
-                { "value": 120 }
-              ],
-              "fill": { "scale": "cscale", "field": "MAP" },
-              "strokeWidth": { "value": 2 },
-              "stroke": [
-                {
-                  "test": "datum.in15min == 1",
-                  "scale": "cscaleDark",
-                  "field": "MAP"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "type": "symbol",
-          "from": { "data": "roads_and_bridges_time" },
-          "encode": {
-            "enter": {
-              "xc": { "scale": "xPosNum", "field": "loc", "offset": 35 },
-              "yc": { "scale": "yPosNum", "field": "loc", "offset": 30 },
-              "size": [
-                {
-                  "test": "datum.in15min == 1",
-                  "value": 150
-                },
-                { "value": 120 }
-              ],
-              "fill": { "scale": "cscale", "field": "MAP" },
-              "strokeWidth": { "value": 2 },
-              "stroke": [
-                {
-                  "test": "datum.in15min == 1",
-                  "scale": "cscaleDark",
-                  "field": "MAP"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "type": "symbol",
-          "from": { "data": "shake_intensity_time" },
-          "encode": {
-            "enter": {
-              "xc": { "scale": "xPosNum", "field": "loc", "offset": 5 },
-              "yc": { "scale": "yPosNum", "field": "loc", "offset": 15 },
-              "size": { "value": 30 },
-              "opacity": { "value": 0.8 },
-              "fill": [{ "test": "datum.over60min == 1", "value": "white" }]
-            }
-          }
-        },
-        {
-          "type": "symbol",
-          "from": { "data": "medical_time" },
-          "encode": {
-            "enter": {
-              "xc": { "scale": "xPosNum", "field": "loc", "offset": 20 },
-              "yc": { "scale": "yPosNum", "field": "loc", "offset": 15 },
-              "size": { "value": 30 },
-              "opacity": { "value": 0.8 },
-              "fill": [{ "test": "datum.over60min == 1", "value": "white" }]
-            }
-          }
-        },
-        {
-          "type": "symbol",
-          "from": { "data": "power_time" },
-          "encode": {
-            "enter": {
-              "xc": { "scale": "xPosNum", "field": "loc", "offset": 35 },
-              "yc": { "scale": "yPosNum", "field": "loc", "offset": 15 },
-              "size": { "value": 30 },
-              "opacity": { "value": 0.8 },
-              "fill": [{ "test": "datum.over60min == 1", "value": "white" }]
-            }
-          }
-        },
-        {
-          "type": "symbol",
-          "from": { "data": "sewer_and_water_time" },
-          "encode": {
-            "enter": {
-              "xc": { "scale": "xPosNum", "field": "loc", "offset": 5 },
-              "yc": { "scale": "yPosNum", "field": "loc", "offset": 30 },
-              "size": { "value": 30 },
-              "opacity": { "value": 0.8 },
-              "fill": [{ "test": "datum.over60min == 1", "value": "white" }]
-            }
-          }
-        },
-        {
-          "type": "symbol",
-          "from": { "data": "buildings_time" },
-          "encode": {
-            "enter": {
-              "xc": { "scale": "xPosNum", "field": "loc", "offset": 20 },
-              "yc": { "scale": "yPosNum", "field": "loc", "offset": 30 },
-              "size": { "value": 30 },
-              "opacity": { "value": 0.8 },
-              "fill": [{ "test": "datum.over60min == 1", "value": "white" }]
-            }
-          }
-        },
-        {
-          "type": "symbol",
-          "from": { "data": "roads_and_bridges_time" },
-          "encode": {
-            "enter": {
-              "xc": { "scale": "xPosNum", "field": "loc", "offset": 35 },
-              "yc": { "scale": "yPosNum", "field": "loc", "offset": 30 },
-              "size": { "value": 30 },
-              "opacity": { "value": 0.8 },
-              "fill": [{ "test": "datum.over60min == 1", "value": "white" }]
             }
           }
         }
@@ -663,13 +609,7 @@
       "data": [
         {
           "name": "selectedCategorySummary",
-          "source": "selectedCategorySummary",
-          "transform": [
-            {
-              "type": "filter",
-              "expr": "datum.time == indexTime"
-            }
-          ]
+          "source": "selectedCategorySummary"
         }
       ],
       "scales": [
@@ -703,12 +643,12 @@
           "scale": "xscale",
           "zindex": 1,
           "title": "Rating",
-          "labelFontSize": 14
+          "labelFontSize": 14,
+          "tickSize": 40
         },
         {
           "orient": "left",
           "scale": "yscale",
-          "tickCount": 5,
           "zindex": 1,
           "title": "Neighborhood",
           "labelFontSize": 14
@@ -720,12 +660,95 @@
           "type": "rect",
           "from": { "data": "colourThreshold" },
           "encode": {
-            "enter": {
+            "update": {
               "x": { "scale": "xscale", "field": "start" },
               "x2": { "scale": "xscale", "field": "end" },
-              "y": { "value": -5 },
+              "y": { "value": -10 },
               "y2": { "value": 0 },
-              "fill": { "scale": "cscale", "field": "start" }
+              "fill": [
+                {
+                  "test": "Colour == 'VSUP'",
+                  "scale": "vsup2",
+                  "field": "start"
+                },
+                {
+                  "test": "Colour == 'VSUP_'",
+                  "scale": "vsup3_",
+                  "field": "start"
+                },
+                { "scale": "cscale", "field": "start" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "colorScale1",
+          "type": "rect",
+          "from": { "data": "colourThreshold" },
+          "encode": {
+            "update": {
+              "x": { "scale": "xscale", "field": "start" },
+              "x2": { "scale": "xscale", "field": "end" },
+              "y": { "value": -20 },
+              "y2": { "value": -10 },
+              "fill": [
+                {
+                  "test": "Colour == 'VSUP'",
+                  "scale": "vsup1",
+                  "field": "start"
+                },
+                {
+                  "test": "Colour == 'VSUP_'",
+                  "scale": "vsup2_",
+                  "field": "start"
+                },
+                { "scale": "cscale", "field": "start" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "colorScale2",
+          "type": "rect",
+          "from": { "data": "colourThreshold" },
+          "encode": {
+            "update": {
+              "x": { "scale": "xscale", "field": "start" },
+              "x2": { "scale": "xscale", "field": "end" },
+              "y": { "value": -30 },
+              "y2": { "value": -20 },
+              "fill": [
+                {
+                  "test": "Colour == 'VSUP'",
+                  "scale": "vsup0",
+                  "field": "start"
+                },
+                {
+                  "test": "Colour == 'VSUP_'",
+                  "scale": "vsup1_",
+                  "field": "start"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "colorScale3",
+          "type": "rect",
+          "from": { "data": "colourThreshold" },
+          "encode": {
+            "update": {
+              "x": { "scale": "xscale", "field": "start" },
+              "x2": { "scale": "xscale", "field": "end" },
+              "y": { "value": -40 },
+              "y2": { "value": -30 },
+              "fill": [
+                {
+                  "test": "Colour == 'VSUP_'",
+                  "scale": "vsup0_",
+                  "field": "start"
+                }
+              ]
             }
           }
         },
@@ -804,26 +827,51 @@
           "encode": {
             "enter": {
               "shape": { "value": "circle" },
-              "strokeWidth": { "value": 3 }
+              "strokeWidth": { "value": 1.5 }
             },
             "update": {
               "xc": { "scale": "xscale", "field": "MAP" },
               "yc": { "scale": "yscale", "field": "loc", "band": 0.5 },
-              "fill": { "scale": "cscale", "field": "MAP" },
-              "stroke": [
+              "fill": [
                 {
-                  "test": "datum.in15min == 1",
-                  "scale": "cscaleDark",
+                  "test": "Colour == 'VSUP' & datum.CIR <= 3.75",
+                  "scale": "vsup0",
                   "field": "MAP"
-                }
-              ],
-              "size": [
-                {
-                  "test": "datum.in15min == 1",
-                  "value": 200
                 },
-                { "value": 150 }
-              ]
+                {
+                  "test": "Colour == 'VSUP' & datum.CIR <= 7.5",
+                  "scale": "vsup1",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP' & datum.CIR > 7.5",
+                  "scale": "vsup2",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 1.875",
+                  "scale": "vsup0_",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 3.75",
+                  "scale": "vsup1_",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 7.5",
+                  "scale": "vsup2_",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP_' & datum.CIR > 7.5",
+                  "scale": "vsup3_",
+                  "field": "MAP"
+                },
+                { "scale": "cscale", "field": "MAP" }
+              ],
+              "stroke": { "value": "white" },
+              "size": { "value": 300 }
             }
           }
         },
@@ -834,10 +882,19 @@
             "enter": {
               "xc": { "scale": "xscale", "field": "MAP" },
               "yc": { "scale": "yscale", "field": "loc", "band": 0.5 },
-              "opacity": { "value": 0.8 },
-              "size": { "value": 50 },
+              "size": [
+                { "test": "datum.in60min == 1", "value": 30 },
+                { "test": "datum.over60min == 1", "value": 60 }
+              ],
               "fill": [
-                { "test": "datum.over60min == 1", "value": "hsl(0, 0%, 80%)" }
+                {
+                  "test": "datum.in60min == 1 || datum.over60min == 1",
+                  "value": "white"
+                }
+              ],
+              "opacity": [
+                { "test": "datum.in60min == 1", "value": 0.5 },
+                { "test": "datum.over60min == 1", "value": 1 }
               ]
             }
           }
@@ -856,15 +913,15 @@
       },
       "data": [
         {
-          "name": "selectedCategorySummary",
-          "source": "selectedCategorySummary"
+          "name": "timepoints",
+          "source": "timepoints"
         }
       ],
       "scales": [
         {
           "name": "xTime",
           "type": "time",
-          "domain": { "data": "selectedCategorySummary", "field": "time" },
+          "domain": { "data": "timepoints", "field": "time" },
           "range": [0, 800],
           "nice": true
         }
@@ -874,7 +931,7 @@
         {
           "type": "rule",
           "name": "timeInTimeline",
-          "from": { "data": "selectedCategorySummary" },
+          "from": { "data": "timepoints" },
           "encode": {
             "enter": {
               "x": { "scale": "xTime", "field": "time" },

@@ -34,14 +34,20 @@ locNames = c(
   "WEST PARTON"
 )
 
+all_summary <- tibble()
+
 for (cat in categories) {
   data_summary <-
     read_csv(paste("./out/", cat, "_summary.csv", sep = ""))
   
   data_summary <- data_summary %>% arrange(loc, time)
   
+  data_summary <-
+    data_summary %>% mutate(CIR = ifelse(hdi95.upper > 10, 10 - hdi95.lower, hdi95.upper - hdi95.lower))
+  
   # round to 2 d.p. to reduce csv file size
   data_summary[4:13] <- round(data_summary[4:13], 2)
+  data_summary$CIR <- round(data_summary$CIR, 2)
   
   time_min <- as.POSIXct("2020-04-06", tz = "GMT")
   time_max <- as.POSIXct("2020-04-11", tz = "GMT")
@@ -66,6 +72,8 @@ for (cat in categories) {
     mutate(over60min = ifelse(60 * 60 < time_diff, 1, 0)) %>%
     mutate(locName = locNames[loc])
   
+  all_summary <- bind_rows(all_summary, processed_data)
+  
   write.csv(
     processed_data,
     paste("./out/", cat, "_summary_processed.csv", sep = ""),
@@ -73,3 +81,10 @@ for (cat in categories) {
     row.names = F
   )
 }
+
+write.csv(
+  all_summary,
+  paste("./out/", "all", "_summary_processed.csv", sep = ""),
+  quote = F,
+  row.names = F
+)
