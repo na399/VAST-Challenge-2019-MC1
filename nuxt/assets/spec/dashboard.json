@@ -22,7 +22,7 @@
           "update": "round(invert('xTime', clamp(x(), 0, width)) / 300000) * 300000"
         },
         {
-          "events": "timer{600}",
+          "events": "timer{1000}",
           "update": "TimelineControl == 'Play' & indexTime < maxDate ? indexTime + 300000 : indexTime"
         }
       ]
@@ -31,7 +31,7 @@
     { "name": "maxDate", "update": "time('Apr 11 2020')" },
     {
       "name": "TimelineControl",
-      "value": "Pause",
+      "value": "Play",
       "bind": {
         "input": "radio",
         "options": ["Play", "Pause"]
@@ -43,6 +43,14 @@
       "bind": {
         "input": "radio",
         "options": ["VSUP", "VSUP_", "Normal"]
+      }
+    },
+    {
+      "name": "ShowCategory",
+      "value": "Single",
+      "bind": {
+        "input": "radio",
+        "options": ["Single", "All"]
       }
     },
     {
@@ -132,7 +140,12 @@
     {
       "name": "selectedCategorySummary",
       "source": "allSummaryAtTime",
-      "transform": [{ "type": "filter", "expr": "datum.cat == SelectCategory" }]
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.cat == SelectCategory"
+        }
+      ]
     },
     {
       "name": "timepoints",
@@ -285,11 +298,11 @@
             100,
             220,
             360,
-            520,
+            550,
             220,
             220,
             758,
-            590,
+            660,
             450,
             590,
             660,
@@ -335,7 +348,7 @@
             330,
             260,
             350,
-            590,
+            560,
             500,
             460,
             460,
@@ -366,8 +379,10 @@
           "encode": {
             "enter": {
               "text": { "field": "loc" },
+              "fontSize": { "value": 14 },
               "x": { "scale": "xPosNum", "field": "loc" },
-              "y": { "scale": "yPosNum", "field": "loc" }
+              "y": { "scale": "yPosNum", "field": "loc" },
+              "tooltip": { "field": "name" }
             }
           }
         },
@@ -376,8 +391,18 @@
           "from": { "data": "allSummaryAtTime" },
           "encode": {
             "enter": {
-              "size": { "value": 200 },
+              "size": [
+                {
+                  "test": "ShowCategory == 'Single'",
+                  "value": 800
+                },
+                { "value": 200 }
+              ],
               "fill": [
+                {
+                  "test": "ShowCategory == 'Single' & datum.cat != SelectCategory",
+                  "value": null
+                },
                 {
                   "test": "Colour == 'VSUP' & datum.CIR <= 3.75",
                   "scale": "vsup0",
@@ -417,37 +442,43 @@
               ],
               "xc": [
                 {
-                  "test": "datum.cat == 'shake_intensity'",
+                  "test": "ShowCategory == 'Single'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 15
+                },
+                {
+                  "test": "ShowCategory == 'All' & datum.cat == 'shake_intensity'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 5
                 },
                 {
-                  "test": "datum.cat == 'medical'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'medical'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 20
                 },
                 {
-                  "test": "datum.cat == 'power'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'power'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 35
                 },
                 {
-                  "test": "datum.cat == 'sewer_and_water'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'sewer_and_water'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 5
                 },
                 {
-                  "test": "datum.cat == 'buildings'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'buildings'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 20
                 },
                 {
-                  "test": "datum.cat == 'roads_and_bridges'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'roads_and_bridges'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 35
@@ -455,37 +486,43 @@
               ],
               "yc": [
                 {
-                  "test": "datum.cat == 'shake_intensity'",
+                  "test": "ShowCategory == 'Single'",
+                  "scale": "yPosNum",
+                  "field": "loc",
+                  "offset": 25
+                },
+                {
+                  "test": "ShowCategory == 'All' & datum.cat == 'shake_intensity'",
                   "scale": "yPosNum",
                   "field": "loc",
                   "offset": 15
                 },
                 {
-                  "test": "datum.cat == 'medical'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'medical'",
                   "scale": "yPosNum",
                   "field": "loc",
                   "offset": 15
                 },
                 {
-                  "test": "datum.cat == 'power'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'power'",
                   "scale": "yPosNum",
                   "field": "loc",
                   "offset": 15
                 },
                 {
-                  "test": "datum.cat == 'sewer_and_water'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'sewer_and_water'",
                   "scale": "yPosNum",
                   "field": "loc",
                   "offset": 30
                 },
                 {
-                  "test": "datum.cat == 'buildings'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'buildings'",
                   "scale": "yPosNum",
                   "field": "loc",
                   "offset": 30
                 },
                 {
-                  "test": "datum.cat == 'roads_and_bridges'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'roads_and_bridges'",
                   "scale": "yPosNum",
                   "field": "loc",
                   "offset": 30
@@ -500,10 +537,22 @@
           "encode": {
             "enter": {
               "size": [
+                {
+                  "test": "ShowCategory == 'Single' & datum.in60min == 1",
+                  "value": 80
+                },
+                {
+                  "test": "ShowCategory == 'Single' & datum.over60min == 1",
+                  "value": 160
+                },
                 { "test": "datum.in60min == 1", "value": 20 },
                 { "test": "datum.over60min == 1", "value": 40 }
               ],
               "fill": [
+                {
+                  "test": "ShowCategory == 'Single' & datum.cat != SelectCategory",
+                  "value": null
+                },
                 {
                   "test": "datum.in60min == 1 || datum.over60min == 1",
                   "value": "white"
@@ -515,37 +564,43 @@
               ],
               "xc": [
                 {
-                  "test": "datum.cat == 'shake_intensity'",
+                  "test": "ShowCategory == 'Single'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 15
+                },
+                {
+                  "test": "ShowCategory == 'All' & datum.cat == 'shake_intensity'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 5
                 },
                 {
-                  "test": "datum.cat == 'medical'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'medical'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 20
                 },
                 {
-                  "test": "datum.cat == 'power'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'power'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 35
                 },
                 {
-                  "test": "datum.cat == 'sewer_and_water'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'sewer_and_water'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 5
                 },
                 {
-                  "test": "datum.cat == 'buildings'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'buildings'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 20
                 },
                 {
-                  "test": "datum.cat == 'roads_and_bridges'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'roads_and_bridges'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 35
@@ -553,37 +608,43 @@
               ],
               "yc": [
                 {
-                  "test": "datum.cat == 'shake_intensity'",
+                  "test": "ShowCategory == 'Single'",
+                  "scale": "yPosNum",
+                  "field": "loc",
+                  "offset": 25
+                },
+                {
+                  "test": "ShowCategory == 'All' & datum.cat == 'shake_intensity'",
                   "scale": "yPosNum",
                   "field": "loc",
                   "offset": 15
                 },
                 {
-                  "test": "datum.cat == 'medical'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'medical'",
                   "scale": "yPosNum",
                   "field": "loc",
                   "offset": 15
                 },
                 {
-                  "test": "datum.cat == 'power'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'power'",
                   "scale": "yPosNum",
                   "field": "loc",
                   "offset": 15
                 },
                 {
-                  "test": "datum.cat == 'sewer_and_water'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'sewer_and_water'",
                   "scale": "yPosNum",
                   "field": "loc",
                   "offset": 30
                 },
                 {
-                  "test": "datum.cat == 'buildings'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'buildings'",
                   "scale": "yPosNum",
                   "field": "loc",
                   "offset": 30
                 },
                 {
-                  "test": "datum.cat == 'roads_and_bridges'",
+                  "test": "ShowCategory == 'All' & datum.cat == 'roads_and_bridges'",
                   "scale": "yPosNum",
                   "field": "loc",
                   "offset": 30
