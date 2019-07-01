@@ -1,6 +1,7 @@
 <template>
   <div
     v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="With massive quakes come massive data ... that is being loaded and analyzed."
     element-loading-background="rgba(0, 0, 0, 0.8)"
   ></div>
 </template>
