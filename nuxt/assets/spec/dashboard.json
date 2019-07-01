@@ -54,6 +54,14 @@
       }
     },
     {
+      "name": "FillMap",
+      "value": "True",
+      "bind": {
+        "input": "radio",
+        "options": ["True", "False"]
+      }
+    },
+    {
       "name": "SelectCategory",
       "value": "shake_intensity",
       "bind": {
@@ -158,23 +166,29 @@
           "as": "time"
         }
       ]
+    },
+    {
+      "name": "StHimarkGeo",
+      "url": "data/StHimark.geo.json",
+      "format": {
+        "type": "json",
+        "property": "features"
+      },
+      "transform": [
+        {
+          "type": "lookup",
+          "from": "selectedCategorySummary",
+          "key": "loc",
+          "fields": ["properties['loc']"],
+          "values": ["MAP", "CIR"]
+        }
+      ]
     }
   ],
 
   "scales": [
     {
       "name": "cscale",
-      "type": "threshold",
-      "range": [
-        "hsl(184, 30%, 84%)",
-        "hsl(26, 100%, 66%)",
-        "hsl(2, 95%, 48%)",
-        "hsl(4, 87%, 16%)"
-      ],
-      "domain": [2.5, 5, 7.5, 10]
-    },
-    {
-      "name": "cscaleDark",
       "type": "threshold",
       "range": [
         "hsl(184, 30%, 84%)",
@@ -259,16 +273,6 @@
           "y": { "value": 0 }
         }
       },
-      "data": [
-        {
-          "name": "locNames",
-          "source": "locNames"
-        },
-        {
-          "name": "allSummaryAtTime",
-          "source": "allSummaryAtTime"
-        }
-      ],
       "scales": [
         {
           "name": "xPosNum",
@@ -295,25 +299,25 @@
             19
           ],
           "range": [
-            100,
-            220,
-            360,
-            550,
-            220,
-            220,
-            758,
+            70,
+            190,
+            340,
+            480,
+            190,
+            190,
+            755,
             660,
-            450,
-            590,
+            425,
+            575,
             660,
             660,
-            550,
-            360,
-            290,
-            290,
-            450,
-            450,
-            360
+            540,
+            340,
+            265,
+            265,
+            425,
+            425,
+            340
           ]
         },
         {
@@ -341,19 +345,19 @@
             19
           ],
           "range": [
-            140,
-            140,
-            140,
-            220,
+            130,
+            130,
+            130,
+            175,
             330,
             260,
-            350,
-            560,
-            500,
-            460,
-            460,
-            350,
-            330,
+            360,
+            570,
+            520,
+            470,
+            470,
+            360,
+            360,
             220,
             220,
             300,
@@ -363,15 +367,90 @@
           ]
         }
       ],
+      "projections": [
+        {
+          "name": "projection",
+          "type": "identity",
+          "reflectY": true,
+          "size": [800, 662],
+          "fit": { "signal": "data('StHimarkGeo')" }
+        }
+      ],
       "marks": [
         {
-          "type": "image",
-          "name": "border",
+          "type": "shape",
+          "from": {
+            "data": "StHimarkGeo"
+          },
           "encode": {
-            "enter": {
-              "url": { "value": "img/mc1-neighborhoods-border.png" }
+            "update": {
+              "strokeWidth": {
+                "value": 0.5
+              },
+              "stroke": {
+                "value": "grey"
+              },
+              "fill": [
+                {
+                  "test": "FillMap == 'False' | ShowCategory == 'All'",
+                  "value": null
+                },
+                {
+                  "test": "Colour == 'VSUP' & datum.CIR <= 3.75",
+                  "scale": "vsup0",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP' & datum.CIR <= 7.5",
+                  "scale": "vsup1",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP' & datum.CIR > 7.5",
+                  "scale": "vsup2",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 1.875",
+                  "scale": "vsup0_",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 3.75",
+                  "scale": "vsup1_",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 7.5",
+                  "scale": "vsup2_",
+                  "field": "MAP"
+                },
+                {
+                  "test": "Colour == 'VSUP_' & datum.CIR > 7.5",
+                  "scale": "vsup3_",
+                  "field": "MAP"
+                },
+                { "scale": "cscale", "field": "MAP" }
+              ],
+              "fillOpacity": {
+                "value": 1
+              }
+            },
+            "hover": {
+              "strokeWidth": {
+                "value": 2
+              },
+              "stroke": {
+                "value": "black"
+              }
             }
-          }
+          },
+          "transform": [
+            {
+              "type": "geoshape",
+              "projection": "projection"
+            }
+          ]
         },
         {
           "type": "text",
@@ -398,6 +477,8 @@
                 },
                 { "value": 200 }
               ],
+              "stroke": { "value": "white" },
+              "strokeWidth": { "value": 0.5 },
               "fill": [
                 {
                   "test": "ShowCategory == 'Single' & datum.cat != SelectCategory",
@@ -667,12 +748,6 @@
           "y": { "value": 0 }
         }
       },
-      "data": [
-        {
-          "name": "selectedCategorySummary",
-          "source": "selectedCategorySummary"
-        }
-      ],
       "scales": [
         {
           "name": "yscale",
@@ -972,12 +1047,6 @@
           "y": { "value": 670 }
         }
       },
-      "data": [
-        {
-          "name": "timepoints",
-          "source": "timepoints"
-        }
-      ],
       "scales": [
         {
           "name": "xTime",
