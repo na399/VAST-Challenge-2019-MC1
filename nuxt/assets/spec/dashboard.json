@@ -62,6 +62,14 @@
       }
     },
     {
+      "name": "ShowFacilities",
+      "value": "True",
+      "bind": {
+        "input": "radio",
+        "options": ["True", "False"]
+      }
+    },
+    {
       "name": "SelectCategory",
       "value": "shake_intensity",
       "bind": {
@@ -495,6 +503,18 @@
           }
         },
         {
+          "type": "image",
+          "encode": {
+            "enter": {
+              "url": { "value": "img/ruler.png" },
+              "width": { "value": 800 },
+              "height": { "value": 662 },
+              "x": { "value": 0 },
+              "y": { "value": 0 }
+            }
+          }
+        },
+        {
           "type": "text",
           "from": { "data": "locNames" },
           "encode": {
@@ -772,6 +792,27 @@
                   "field": "loc",
                   "offset": 30
                 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "image",
+          "encode": {
+            "enter": {
+              "url": { "value": "img/facilities.png" },
+              "width": { "value": 800 },
+              "height": { "value": 662 },
+              "x": { "value": 0 },
+              "y": { "value": 0 }
+            },
+            "update": {
+              "opacity": [
+                {
+                  "test": "ShowFacilities == 'True'",
+                  "value": 1
+                },
+                { "value": 0 }
               ]
             }
           }
