@@ -453,6 +453,48 @@
           ]
         },
         {
+          "type": "image",
+          "encode": {
+            "enter": {
+              "url": { "value": "img/mc1-majorquake-shakemap-transparent.png" },
+              "width": { "value": 800 },
+              "height": { "value": 662 },
+              "x": { "value": 0 },
+              "y": { "value": 0 }
+            },
+            "update": {
+              "opacity": [
+                {
+                  "test": "time('Apr 8 2020 08:35') < indexTime & indexTime < time('Apr 8 2020 18:35')",
+                  "value": 0.6
+                },
+                { "value": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "image",
+          "encode": {
+            "enter": {
+              "url": { "value": "img/mc1-prequake-shakemap-transparent.png" },
+              "width": { "value": 800 },
+              "height": { "value": 662 },
+              "x": { "value": 0 },
+              "y": { "value": 0 }
+            },
+            "update": {
+              "opacity": [
+                {
+                  "test": "time('Apr 9 2020 15:00') < indexTime & indexTime < time('Apr 10 2020 05:00')",
+                  "value": 0.6
+                },
+                { "value": 0 }
+              ]
+            }
+          }
+        },
+        {
           "type": "text",
           "from": { "data": "locNames" },
           "encode": {
