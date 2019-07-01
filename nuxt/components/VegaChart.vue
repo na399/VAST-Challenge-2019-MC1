@@ -1,9 +1,14 @@
 <template>
-  <div></div>
+  <div
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
+  ></div>
 </template>
 
 <script>
 import * as vega from 'vega'
+
+import { Loading } from 'element-ui'
 
 export default {
   name: 'VegaChart',
@@ -21,10 +26,12 @@ export default {
   },
   data: function() {
     return {
-      view: null
+      view: null,
+      fullscreenLoading: false
     }
   },
   mounted: function() {
+    this.fullscreenLoading = true
     this.view = this.createView(this.spec)
   },
   beforeDestroy: function() {
@@ -43,6 +50,7 @@ export default {
   methods: {
     createView: function(spec) {
       const runtime = vega.parse(spec)
+
       const view = new vega.View(runtime)
         .renderer(this.renderer)
         .hover(this.hover)
@@ -54,7 +62,9 @@ export default {
         this.addSignalEmitter(spec, view)
       }
 
-      view.run()
+      view.runAsync().then(() => {
+        this.fullscreenLoading = false
+      })
 
       return view
     },
