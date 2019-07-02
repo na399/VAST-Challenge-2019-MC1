@@ -38,7 +38,11 @@
         }
       ]
     },
-    { "name": "detailDomain", "update": "[minDate, indexTime]" },
+    {
+      "name": "detailDomain",
+      "update": "heatmapBrush ? heatmapBrush : [minDate, indexTime]"
+    },
+    { "name": "heatmapBrush", "value": null },
     { "name": "rangeStep", "value": 100 },
     { "name": "height", "update": "rangeStep * 6" },
     {
@@ -1258,6 +1262,20 @@
           ]
         },
         {
+          "name": "heatmapBrush",
+          "push": "outer",
+          "on": [
+            {
+              "events": { "signal": "brush" },
+              "update": "invert('xHeatmap', brush)"
+            },
+            {
+              "events": { "signal": "indexTime" },
+              "update": "invert('xHeatmap', brush)"
+            }
+          ]
+        },
+        {
           "name": "anchor",
           "value": null,
           "on": [{ "events": "@brush:mousedown", "update": "slice(brush)" }]
@@ -1329,7 +1347,7 @@
       ],
       "axes": [
         {
-          "orient": "bottom",
+          "orient": "top",
           "scale": "xHeatmap",
           "zindex": 1,
           "labelFontSize": 14
@@ -1427,8 +1445,8 @@
           "encode": {
             "enter": {
               "y": { "value": 100 },
-              "height": { "value": 5 },
-              "fill": { "value": "hsla(0, 0%, 0%, 0.2)" }
+              "height": { "value": 10 },
+              "fill": { "value": "hsla(0, 0%, 0%, 0)" }
             },
             "update": {
               "x": { "signal": "brush[0]" },
@@ -1443,8 +1461,8 @@
             "enter": {
               "y": { "value": 0 },
               "height": { "value": 100 },
-              "width": { "value": 1 },
-              "fill": { "value": "hsl(120, 50%, 30%)" }
+              "width": { "value": 2 },
+              "fill": { "value": "hsla(120, 50%, 30%, 0.5)" }
             },
             "update": {
               "x": { "signal": "brush[0]" }
@@ -1458,11 +1476,43 @@
             "enter": {
               "y": { "value": 0 },
               "height": { "value": 100 },
-              "width": { "value": 1 },
-              "fill": { "value": "hsl(120, 50%, 30%)" }
+              "width": { "value": 2 },
+              "fill": { "value": "hsla(120, 50%, 30%, 0.5)" }
             },
             "update": {
               "x": { "signal": "brush[1]" }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "interactive": false,
+          "encode": {
+            "enter": {
+              "y": { "value": 100 },
+              "y2": { "value": 130 },
+              "x2": { "value": 1 },
+              "strokeWidth": { "value": 2 },
+              "stroke": { "value": "hsla(120, 50%, 30%, 0.5)" }
+            },
+            "update": {
+              "x": { "signal": "brush[0] + 1" }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "interactive": false,
+          "encode": {
+            "enter": {
+              "y": { "value": 100 },
+              "y2": { "value": 130 },
+              "x2": { "value": 801 },
+              "strokeWidth": { "value": 2 },
+              "stroke": { "value": "hsla(120, 50%, 30%, 0.5)" }
+            },
+            "update": {
+              "x": { "signal": "brush[1] + 1" }
             }
           }
         }
