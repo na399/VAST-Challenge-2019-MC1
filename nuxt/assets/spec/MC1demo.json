@@ -1194,11 +1194,11 @@
               "stroke": [
                 {
                   "test": "time('Apr 8 2020 08:35') < datum.time && datum.time < time('Apr 8 2020 09:35')",
-                  "value": "hsla(250, 80%, 30%, 1)"
+                  "value": "hsla(220, 80%, 30%, 1)"
                 },
                 {
                   "test": "time('Apr 9 2020 15:00') < datum.time && datum.time < time('Apr 9 2020 16:00')",
-                  "value": "hsla(250, 80%, 30%, 0.9)"
+                  "value": "hsla(220, 80%, 30%, 0.9)"
                 },
                 { "value": "hsla(0, 0%, 80%, 0.2)" }
               ]
@@ -1212,7 +1212,7 @@
               "x": { "scale": "xTime", "signal": "indexTime" },
               "y": { "value": 0 },
               "y2": { "field": { "group": "height" } },
-              "stroke": { "value": "hsl(120, 50%, 30%)" }
+              "stroke": { "value": "hsl(180, 50%, 30%)" }
             }
           }
         },
@@ -1224,7 +1224,7 @@
               "y": { "value": 0, "offset": -5 },
               "align": { "value": "center" },
               "text": { "signal": "timeFormat(indexTime, '%x %H:%M')" },
-              "fill": { "value": "hsl(120, 50%, 30%)" }
+              "fill": { "value": "hsl(180, 50%, 30%)" }
             }
           }
         }
@@ -1253,7 +1253,7 @@
             },
             {
               "events": "[window:mousedown, window:mouseup] > window:mousemove!",
-              "update": "inrange(y(), [820, 920]) ? [brush[0], clamp(x() - 400, 0, 800)] : brush"
+              "update": "inrange(y(), [820, 920]) ? [brush[0], if(inrange(clamp(x() - 400, 0, 800), [brush[0] - 5, brush[0] + 5]), brush[0] + 10, clamp(x() - 400, 0, 800))] : brush"
             },
             {
               "events": { "signal": "delta" },
@@ -1292,16 +1292,6 @@
             {
               "events": "[@brush:mousedown, window:mouseup] > window:mousemove!",
               "update": "x() - xdown"
-            }
-          ]
-        },
-        {
-          "name": "detailDomain",
-          "push": "outer",
-          "on": [
-            {
-              "events": { "signal": "brush" },
-              "update": "span(brush) ? invert('xHeatmap', brush) : [minDate, indexTime]"
             }
           ]
         }
@@ -1356,7 +1346,8 @@
           "orient": "left",
           "scale": "rowHeatmap",
           "domain": false,
-          "tickSize": 0
+          "tickSize": 0,
+          "offset": 10
         }
       ],
       "marks": [
@@ -1462,7 +1453,7 @@
               "y": { "value": 0 },
               "height": { "value": 100 },
               "width": { "value": 2 },
-              "fill": { "value": "hsla(120, 50%, 30%, 0.5)" }
+              "fill": { "value": "hsla(180, 50%, 30%, 0.5)" }
             },
             "update": {
               "x": { "signal": "brush[0]" }
@@ -1477,7 +1468,7 @@
               "y": { "value": 0 },
               "height": { "value": 100 },
               "width": { "value": 2 },
-              "fill": { "value": "hsla(120, 50%, 30%, 0.5)" }
+              "fill": { "value": "hsla(180, 50%, 30%, 0.5)" }
             },
             "update": {
               "x": { "signal": "brush[1]" }
@@ -1493,10 +1484,10 @@
               "y2": { "value": 130 },
               "x2": { "value": 1 },
               "strokeWidth": { "value": 2 },
-              "stroke": { "value": "hsla(120, 50%, 30%, 0.5)" }
+              "stroke": { "value": "hsla(180, 50%, 30%, 0.5)" }
             },
             "update": {
-              "x": { "signal": "brush[0] + 1" }
+              "x": { "signal": "min(brush[0], brush[1]) + 1" }
             }
           }
         },
@@ -1509,10 +1500,10 @@
               "y2": { "value": 130 },
               "x2": { "value": 801 },
               "strokeWidth": { "value": 2 },
-              "stroke": { "value": "hsla(120, 50%, 30%, 0.5)" }
+              "stroke": { "value": "hsla(180, 50%, 30%, 0.5)" }
             },
             "update": {
-              "x": { "signal": "brush[1] + 1" }
+              "x": { "signal": "max(brush[0], brush[1]) + 1" }
             }
           }
         }
@@ -1663,17 +1654,21 @@
                   "y2": { "value": 90 },
                   "stroke": [
                     {
-                      "test": "datum.over60min == 1 && (indexTime < time('Apr 9 2020') ? datum.time % 3000000 == 0: datum.time % 3000000 == 0)",
-                      "value": "white"
+                      "test": "datum.over60min == 1 && floor(scale('xLine', datum.time)) % 1 == 0",
+                      "value": "hsla(0, 0%, 100%, 0.8)"
                     },
                     { "value": null }
                   ],
                   "strokeWidth": [
                     {
-                      "test": "indexTime < time('Apr 9 2020')",
+                      "test": "span(detailDomain) < 10000000",
                       "value": 3
                     },
-                    { "value": 1.5 }
+                    {
+                      "test": "span(detailDomain) < 20000000",
+                      "value": 2
+                    },
+                    { "value": 1 }
                   ]
                 }
               }
@@ -1688,13 +1683,22 @@
                 },
                 "update": {
                   "x": [
-                    { "test": "datum.time > detailDomain[1]", "value": 820 },
+                    {
+                      "test": "datum.time > time(detailDomain[1]) + 600000",
+                      "value": 820
+                    },
+                    {
+                      "test": "indexTime > time(detailDomain[1])",
+                      "scale": "xLine",
+                      "signal": "detailDomain[1]",
+                      "offset": 3
+                    },
                     { "scale": "xLine", "field": "time", "offset": 3 }
                   ],
                   "y": { "scale": "yLine", "field": "MAP" },
                   "fill": [
                     {
-                      "test": "datum.time > detailDomain[1]",
+                      "test": "datum.time > time(detailDomain[1]) + 300000",
                       "value": null
                     },
                     {
@@ -1752,7 +1756,16 @@
                 },
                 "update": {
                   "x": [
-                    { "test": "datum.time > detailDomain[1]", "value": 820 },
+                    {
+                      "test": "datum.time > time(detailDomain[1]) + 600000",
+                      "value": 820
+                    },
+                    {
+                      "test": "indexTime > time(detailDomain[1])",
+                      "scale": "xLine",
+                      "signal": "detailDomain[1]",
+                      "offset": 3
+                    },
                     { "scale": "xLine", "field": "time", "offset": 3 }
                   ],
                   "y": { "scale": "yLine", "field": "MAP" },
@@ -1766,7 +1779,7 @@
                   ],
                   "fill": [
                     {
-                      "test": "datum.time > detailDomain[1]",
+                      "test": "datum.time > time(detailDomain[1]) + 300000",
                       "value": null
                     },
                     {
