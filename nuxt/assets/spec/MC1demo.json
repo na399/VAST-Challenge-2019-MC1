@@ -23,7 +23,7 @@
         },
         {
           "events": "timer{1000}",
-          "update": "TimelineControl == 'Play' & indexTime < maxDate ? indexTime + 300000 : indexTime"
+          "update": "TimelineControl == 'Play' & indexTime + 300000 < maxDate ? indexTime + 300000 : indexTime"
         }
       ]
     },
@@ -38,6 +38,7 @@
         }
       ]
     },
+    { "name": "detailDomain" },
     { "name": "rangeStep", "value": 100 },
     { "name": "height", "update": "rangeStep * 6" },
     {
@@ -57,7 +58,7 @@
     },
     {
       "name": "SelectLocation",
-      "value": 3,
+      "value": 4,
       "bind": {
         "input": "select",
         "options": [1, 2, 3, 4]
@@ -450,37 +451,37 @@
                   "value": null
                 },
                 {
-                  "test": "Colour == 'VSUP' & datum.CIR <= 3.75",
+                  "test": "Colour == 'VSUP' & datum.CIR <= 2.5",
                   "scale": "vsup0",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP' & datum.CIR <= 7.5",
+                  "test": "Colour == 'VSUP' & datum.CIR <= 5",
                   "scale": "vsup1",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP' & datum.CIR > 7.5",
+                  "test": "Colour == 'VSUP' & datum.CIR > 5",
                   "scale": "vsup2",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.CIR <= 1.875",
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 1.25",
                   "scale": "vsup0_",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.CIR <= 3.75",
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 2.5",
                   "scale": "vsup1_",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.CIR <= 7.5",
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 5",
                   "scale": "vsup2_",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.CIR > 7.5",
+                  "test": "Colour == 'VSUP_' & datum.CIR > 5",
                   "scale": "vsup3_",
                   "field": "MAP"
                 },
@@ -597,7 +598,7 @@
           "type": "symbol",
           "from": { "data": "allSummaryAtTime" },
           "encode": {
-            "enter": {
+            "update": {
               "size": [
                 {
                   "test": "ShowCategory == 'Single'",
@@ -613,37 +614,37 @@
                   "value": null
                 },
                 {
-                  "test": "Colour == 'VSUP' & datum.CIR <= 3.75",
+                  "test": "Colour == 'VSUP' & datum.CIR <= 2.5",
                   "scale": "vsup0",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP' & datum.CIR <= 7.5",
+                  "test": "Colour == 'VSUP' & datum.CIR <= 5",
                   "scale": "vsup1",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP' & datum.CIR > 7.5",
+                  "test": "Colour == 'VSUP' & datum.CIR > 5",
                   "scale": "vsup2",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.CIR <= 1.875",
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 1.25",
                   "scale": "vsup0_",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.CIR <= 3.75",
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 2.5",
                   "scale": "vsup1_",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.CIR <= 7.5",
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 5",
                   "scale": "vsup2_",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.CIR > 7.5",
+                  "test": "Colour == 'VSUP_' & datum.CIR > 5",
                   "scale": "vsup3_",
                   "field": "MAP"
                 },
@@ -744,7 +745,7 @@
           "type": "symbol",
           "from": { "data": "allSummaryAtTime" },
           "encode": {
-            "enter": {
+            "update": {
               "size": [
                 {
                   "test": "ShowCategory == 'Single' & datum.in60min == 1",
@@ -1098,37 +1099,37 @@
               "yc": { "scale": "yscale", "field": "loc", "band": 0.5 },
               "fill": [
                 {
-                  "test": "Colour == 'VSUP' & datum.CIR <= 3.75",
+                  "test": "Colour == 'VSUP' & datum.CIR <= 2.5",
                   "scale": "vsup0",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP' & datum.CIR <= 7.5",
+                  "test": "Colour == 'VSUP' & datum.CIR <= 5",
                   "scale": "vsup1",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP' & datum.CIR > 7.5",
+                  "test": "Colour == 'VSUP' & datum.CIR > 5",
                   "scale": "vsup2",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.CIR <= 1.875",
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 1.25",
                   "scale": "vsup0_",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.CIR <= 3.75",
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 2.5",
                   "scale": "vsup1_",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.CIR <= 7.5",
+                  "test": "Colour == 'VSUP_' & datum.CIR <= 5",
                   "scale": "vsup2_",
                   "field": "MAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.CIR > 7.5",
+                  "test": "Colour == 'VSUP_' & datum.CIR > 5",
                   "scale": "vsup3_",
                   "field": "MAP"
                 },
@@ -1186,8 +1187,17 @@
               "x": { "scale": "xTime", "field": "time" },
               "y": { "value": 0 },
               "y2": { "field": { "group": "height" } },
-              "stroke": { "value": "hsl(0, 0%, 80%)" },
-              "opacity": { "value": 0.1 }
+              "stroke": [
+                {
+                  "test": "time('Apr 8 2020 08:35') < datum.time & datum.time < time('Apr 8 2020 09:35')",
+                  "value": "hsla(250, 80%, 30%, 1)"
+                },
+                {
+                  "test": "time('Apr 9 2020 15:00') < datum.time & datum.time < time('Apr 9 2020 16:00')",
+                  "value": "hsla(250, 80%, 30%, 0.9)"
+                },
+                { "value": "hsla(0, 0%, 80%, 0.2)" }
+              ]
             }
           }
         },
@@ -1195,7 +1205,7 @@
           "type": "rule",
           "encode": {
             "update": {
-              "x": { "scale": "xTime", "signal": "indexTime", "offset": 0.5 },
+              "x": { "scale": "xTime", "signal": "indexTime" },
               "y": { "value": 0 },
               "y2": { "field": { "group": "height" } },
               "stroke": { "value": "hsl(120, 50%, 30%)" }
@@ -1301,37 +1311,37 @@
               },
               "fill": [
                 {
-                  "test": "Colour == 'VSUP' & datum.maxCIR <= 3.75",
+                  "test": "Colour == 'VSUP' & datum.maxCIR <= 2.5",
                   "scale": "vsup0",
                   "field": "medianMAP"
                 },
                 {
-                  "test": "Colour == 'VSUP' & datum.maxCIR <= 7.5",
+                  "test": "Colour == 'VSUP' & datum.maxCIR <= 5",
                   "scale": "vsup1",
                   "field": "medianMAP"
                 },
                 {
-                  "test": "Colour == 'VSUP' & datum.maxCIR > 7.5",
+                  "test": "Colour == 'VSUP' & datum.maxCIR > 5",
                   "scale": "vsup2",
                   "field": "medianMAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.maxCIR <= 1.875",
+                  "test": "Colour == 'VSUP_' & datum.maxCIR <= 1.25",
                   "scale": "vsup0_",
                   "field": "medianMAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.maxCIR <= 3.75",
+                  "test": "Colour == 'VSUP_' & datum.maxCIR <= 2.5",
                   "scale": "vsup1_",
                   "field": "medianMAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.maxCIR <= 7.5",
+                  "test": "Colour == 'VSUP_' & datum.maxCIR <= 5",
                   "scale": "vsup2_",
                   "field": "medianMAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' & datum.maxCIR > 7.5",
+                  "test": "Colour == 'VSUP_' & datum.maxCIR > 5",
                   "scale": "vsup3_",
                   "field": "medianMAP"
                 },
@@ -1515,41 +1525,41 @@
                   "zindex": { "value": 998 }
                 },
                 "update": {
-                  "x": { "scale": "xLine", "field": "time" },
+                  "x": { "scale": "xLine", "field": "time", "offset": 3 },
                   "y": { "scale": "yLine", "field": "MAP" },
                   "fill": [
                     {
-                      "test": "datum.time == indexTime & Colour == 'VSUP' & datum.CIR <= 3.75",
+                      "test": "datum.time == indexTime & Colour == 'VSUP' & datum.CIR <= 2.5",
                       "scale": "vsup0",
                       "field": "MAP"
                     },
                     {
-                      "test": "datum.time == indexTime & Colour == 'VSUP' & datum.CIR <= 7.5",
+                      "test": "datum.time == indexTime & Colour == 'VSUP' & datum.CIR <= 5",
                       "scale": "vsup1",
                       "field": "MAP"
                     },
                     {
-                      "test": "datum.time == indexTime & Colour == 'VSUP' & datum.CIR > 7.5",
+                      "test": "datum.time == indexTime & Colour == 'VSUP' & datum.CIR > 5",
                       "scale": "vsup2",
                       "field": "MAP"
                     },
                     {
-                      "test": "datum.time == indexTime & Colour == 'VSUP_' & datum.CIR <= 1.875",
+                      "test": "datum.time == indexTime & Colour == 'VSUP_' & datum.CIR <= 1.25",
                       "scale": "vsup0_",
                       "field": "MAP"
                     },
                     {
-                      "test": "datum.time == indexTime & Colour == 'VSUP_' & datum.CIR <= 3.75",
+                      "test": "datum.time == indexTime & Colour == 'VSUP_' & datum.CIR <= 2.5",
                       "scale": "vsup1_",
                       "field": "MAP"
                     },
                     {
-                      "test": "datum.time == indexTime & Colour == 'VSUP_' & datum.CIR <= 7.5",
+                      "test": "datum.time == indexTime & Colour == 'VSUP_' & datum.CIR <= 5",
                       "scale": "vsup2_",
                       "field": "MAP"
                     },
                     {
-                      "test": "datum.time == indexTime & Colour == 'VSUP_' & datum.CIR > 7.5",
+                      "test": "datum.time == indexTime & Colour == 'VSUP_' & datum.CIR > 5",
                       "scale": "vsup3_",
                       "field": "MAP"
                     },
@@ -1572,10 +1582,10 @@
                   "zindex": { "value": 999 }
                 },
                 "update": {
-                  "x": { "scale": "xLine", "field": "time" },
+                  "x": { "scale": "xLine", "field": "time", "offset": 3 },
                   "y": { "scale": "yLine", "field": "MAP" },
                   "size": [
-                    { "test": "datum.in60min == 1", "value": 20 },
+                    { "test": "datum.in60min == 1", "value": 30 },
                     { "test": "datum.over60min == 1", "value": 40 }
                   ],
                   "opacity": [
@@ -1620,6 +1630,7 @@
                 "update": {
                   "x": { "scale": "xLine", "field": "time" },
                   "y": { "scale": "yLine", "field": "rating" },
+                  "zindex": { "value": 99 },
                   "size": { "scale": "radiusMark", "field": "count" },
                   "fill": [
                     {
