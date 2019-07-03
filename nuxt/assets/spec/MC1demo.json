@@ -150,6 +150,16 @@
       ]
     },
     {
+      "name": "CIRThreshold",
+      "values": [
+        { "id": 4, "CIR": "95% Credible Interval", "CIR_": "95% CIR" },
+        { "id": 3, "CIR": "Range (CIR)", "CIR_": "0 - 1.25" },
+        { "id": 2, "CIR": "0 - 2.50", "CIR_": "1.26 - 2.50" },
+        { "id": 1, "CIR": "2.51 - 5.00", "CIR_": "2.51 - 5.00" },
+        { "id": 0, "CIR": "> 5.00", "CIR_": "> 5.00" }
+      ]
+    },
+    {
       "name": "allSummary",
       "url": "data/demo/all_summary_processed.csv",
       "format": {
@@ -922,15 +932,15 @@
           "scale": "xscale",
           "zindex": 1,
           "title": "Rating",
-          "labelFontSize": 14,
-          "tickSize": 40
+          "labelFontSize": 16,
+          "tickSize": 60
         },
         {
           "orient": "left",
           "scale": "yscale",
           "zindex": 1,
           "title": "Neighborhood",
-          "labelFontSize": 14
+          "labelFontSize": 16
         }
       ],
       "marks": [
@@ -942,7 +952,7 @@
             "update": {
               "x": { "scale": "xscale", "field": "start" },
               "x2": { "scale": "xscale", "field": "end" },
-              "y": { "value": -10 },
+              "y": { "value": -15 },
               "y2": { "value": 0 },
               "fill": [
                 {
@@ -968,8 +978,8 @@
             "update": {
               "x": { "scale": "xscale", "field": "start" },
               "x2": { "scale": "xscale", "field": "end" },
-              "y": { "value": -20 },
-              "y2": { "value": -10 },
+              "y": { "value": -30 },
+              "y2": { "value": -15 },
               "fill": [
                 {
                   "test": "Colour == 'VSUP'",
@@ -994,8 +1004,8 @@
             "update": {
               "x": { "scale": "xscale", "field": "start" },
               "x2": { "scale": "xscale", "field": "end" },
-              "y": { "value": -30 },
-              "y2": { "value": -20 },
+              "y": { "value": -45 },
+              "y2": { "value": -30 },
               "fill": [
                 {
                   "test": "Colour == 'VSUP'",
@@ -1019,8 +1029,8 @@
             "update": {
               "x": { "scale": "xscale", "field": "start" },
               "x2": { "scale": "xscale", "field": "end" },
-              "y": { "value": -40 },
-              "y2": { "value": -30 },
+              "y": { "value": -60 },
+              "y2": { "value": -45 },
               "fill": [
                 {
                   "test": "Colour == 'VSUP_'",
@@ -1032,26 +1042,27 @@
           }
         },
         {
-          "name": "LocationNameLabel",
           "type": "text",
-          "from": { "data": "selectedCategorySummary" },
+          "from": { "data": "CIRThreshold" },
           "encode": {
             "enter": {
-              "align": { "value": "right" }
+              "x": { "value": 815 },
+              "fontSize": { "value": 15 }
             },
             "update": {
-              "text": [
+              "y": { "signal": "(-15) * datum.id" },
+              "fontWeight": [
                 {
-                  "test": "datum['hdi95\\.lower'] > 2",
-                  "field": "locName"
+                  "test": "Colour == 'VSUP' && datum.id >= 3",
+                  "value": "bold"
                 },
-                { "value": "" }
+                { "test": "Colour == 'VSUP_'&& datum.id == 4", "value": "bold" }
               ],
-              "y": { "scale": "yscale", "field": "loc", "band": 0.5 },
-              "x": {
-                "scale": "xscale",
-                "signal": "datum['hdi95\\.lower'] - 0.1"
-              }
+              "text": [
+                { "test": "Colour == 'VSUP'", "signal": "datum.CIR" },
+                { "test": "Colour == 'VSUP_'", "signal": "datum.CIR_" },
+                { "value": "" }
+              ]
             }
           }
         },
@@ -1177,6 +1188,30 @@
               ]
             }
           }
+        },
+        {
+          "name": "LocationNameLabel",
+          "type": "text",
+          "from": { "data": "selectedCategorySummary" },
+          "encode": {
+            "enter": {
+              "align": { "value": "right" }
+            },
+            "update": {
+              "text": [
+                {
+                  "test": "datum['hdi95\\.lower'] > 2",
+                  "field": "locName"
+                },
+                { "value": "" }
+              ],
+              "y": { "scale": "yscale", "field": "loc", "band": 0.5 },
+              "x": {
+                "scale": "xscale",
+                "signal": "datum['hdi95\\.lower'] - 0.1"
+              }
+            }
+          }
         }
       ]
     },
@@ -1190,7 +1225,14 @@
           "y": { "value": 670 }
         }
       },
-      "axes": [{ "orient": "bottom", "scale": "xTime", "grid": false }],
+      "axes": [
+        {
+          "orient": "bottom",
+          "scale": "xTime",
+          "grid": false,
+          "labelFontSize": 14
+        }
+      ],
       "marks": [
         {
           "type": "rule",
@@ -1229,12 +1271,15 @@
         {
           "type": "text",
           "encode": {
-            "update": {
-              "x": { "scale": "xTime", "signal": "indexTime" },
+            "enter": {
               "y": { "value": 0, "offset": -5 },
               "align": { "value": "center" },
-              "text": { "signal": "timeFormat(indexTime, '%x %H:%M')" },
+              "fontSize": { "value": 14 },
               "fill": { "value": "hsl(180, 50%, 30%)" }
+            },
+            "update": {
+              "x": { "scale": "xTime", "signal": "indexTime" },
+              "text": { "signal": "timeFormat(indexTime, '%x %H:%M')" }
             }
           }
         }
@@ -1252,16 +1297,18 @@
           "y": { "value": 820 }
         }
       },
-      "data": [{
-        "name": "aggregatedSummaryLocation",
-        "source": "aggregatedSummary",
-        "transform": [
-          {
-            "type": "filter",
-            "expr": "datum.loc == SelectLocation"
-          }
-        ]
-      }],
+      "data": [
+        {
+          "name": "aggregatedSummaryLocation",
+          "source": "aggregatedSummary",
+          "transform": [
+            {
+              "type": "filter",
+              "expr": "datum.loc == SelectLocation"
+            }
+          ]
+        }
+      ],
       "signals": [
         {
           "name": "brush",
@@ -1343,7 +1390,8 @@
           "scale": "rowHeatmap",
           "domain": false,
           "tickSize": 0,
-          "offset": 10
+          "offset": 10,
+          "labelFontSize": 14
         }
       ],
       "marks": [
@@ -1579,7 +1627,8 @@
           "scale": "row",
           "domain": false,
           "tickSize": 0,
-          "offset": 10
+          "offset": 10,
+          "labelFontSize": 14
         }
       ],
       "marks": [
