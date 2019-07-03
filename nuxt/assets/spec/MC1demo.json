@@ -1252,6 +1252,16 @@
           "y": { "value": 820 }
         }
       },
+      "data": [{
+        "name": "aggregatedSummaryLocation",
+        "source": "aggregatedSummary",
+        "transform": [
+          {
+            "type": "filter",
+            "expr": "datum.loc == SelectLocation"
+          }
+        ]
+      }],
       "signals": [
         {
           "name": "brush",
@@ -1340,7 +1350,7 @@
         {
           "type": "rect",
           "name": "heatmapRect",
-          "from": { "data": "aggregatedSummary" },
+          "from": { "data": "aggregatedSummaryLocation" },
           "clip": true,
           "encode": {
             "enter": {
