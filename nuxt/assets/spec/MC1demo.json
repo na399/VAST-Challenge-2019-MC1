@@ -65,7 +65,27 @@
       "value": 4,
       "bind": {
         "input": "select",
-        "options": [1, 2, 3, 4]
+        "options": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ]
       }
     },
     {
@@ -101,6 +121,14 @@
       }
     },
     {
+      "name": "ShowName",
+      "value": "False",
+      "bind": {
+        "input": "radio",
+        "options": ["True", "False"]
+      }
+    },
+    {
       "name": "ShowFacilities",
       "value": "False",
       "bind": {
@@ -123,6 +151,30 @@
         "input": "select",
         "options": ["hdi95\\.lower", "hdi90\\.lower", "hdi50\\.lower", "MAP"]
       }
+    },
+    {
+      "name": "lookupLocName",
+      "value": {
+        "1": "Palace Hills",
+        "2": "Northwest",
+        "3": "Old Town",
+        "4": "Safe Town",
+        "5": "Southwest",
+        "6": "Downtown",
+        "7": "Wilson Forest",
+        "8": "Scenic Vista",
+        "9": "Broadview",
+        "10": "Chapparal",
+        "11": "Terrapin",
+        "12": "Pepper Mill",
+        "13": "Cheddarford",
+        "14": "Easton",
+        "15": "Weston",
+        "16": "Southton",
+        "17": "Oak Willow",
+        "18": "East Parton",
+        "19": "West Parton"
+      }
     }
   ],
 
@@ -130,10 +182,25 @@
     {
       "name": "locNames",
       "values": [
-        { "loc": "1", "name": "PALACE HILLS" },
-        { "loc": "2", "name": "NORTHWEST" },
-        { "loc": "3", "name": "OLD TOWN" },
-        { "loc": "4", "name": "SAFE TOWN" }
+        { "loc": "1", "name": "Palace Hills" },
+        { "loc": "2", "name": "Northwest" },
+        { "loc": "3", "name": "Old Town" },
+        { "loc": "4", "name": "Safe Town" },
+        { "loc": "5", "name": "Southwest" },
+        { "loc": "6", "name": "Downtown" },
+        { "loc": "7", "name": "Wilson Forest" },
+        { "loc": "8", "name": "Scenic Vista" },
+        { "loc": "9", "name": "Broadview" },
+        { "loc": "10", "name": "Chapparal" },
+        { "loc": "11", "name": "Terrapin" },
+        { "loc": "12", "name": "Pepper Mill" },
+        { "loc": "13", "name": "Cheddarford" },
+        { "loc": "14", "name": "Easton" },
+        { "loc": "15", "name": "Weston" },
+        { "loc": "16", "name": "Southton" },
+        { "loc": "17", "name": "Oak Willow" },
+        { "loc": "18", "name": "East Parton" },
+        { "loc": "19", "name": "West Parton" }
       ]
     },
     {
@@ -177,6 +244,16 @@
         "type": "csv",
         "parse": {
           "dateHour": "date"
+        }
+      }
+    },
+    {
+      "name": "aggregatedReports",
+      "url": "data/demo/mc1-reports-data-aggregated.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "time": "date"
         }
       }
     },
@@ -238,16 +315,6 @@
           "values": ["MAP", "CIR"]
         }
       ]
-    },
-    {
-      "name": "aggregatedReports",
-      "url": "data/demo/mc1-reports-data-aggregated.csv",
-      "format": {
-        "type": "csv",
-        "parse": {
-          "time": "date"
-        }
-      }
     }
   ],
 
@@ -424,12 +491,12 @@
             19
           ],
           "range": [
-            130,
-            130,
-            130,
+            120,
+            120,
+            120,
             175,
             330,
-            260,
+            250,
             360,
             570,
             520,
@@ -440,7 +507,7 @@
             220,
             220,
             300,
-            420,
+            415,
             330,
             330
           ]
@@ -575,7 +642,7 @@
           "type": "image",
           "encode": {
             "enter": {
-              "url": { "value": "img/ruler.png" },
+              "url": { "value": "img/ruler-legend.png" },
               "width": { "value": 800 },
               "height": { "value": 662 },
               "x": { "value": 0 },
@@ -611,10 +678,47 @@
             "enter": {
               "text": { "field": "loc" },
               "fontSize": { "value": 14 },
-              "x": { "scale": "xPosNum", "field": "loc", "offset": 15 },
               "y": { "scale": "yPosNum", "field": "loc" },
               "align": { "value": "center" },
               "tooltip": { "field": "name" }
+            },
+            "update": {
+              "x": [
+                {
+                  "test": "ShowCategory == 'Single'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 15
+                },
+                { "scale": "xPosNum", "field": "loc", "offset": 22.5 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "text",
+          "from": { "data": "locNames" },
+          "encode": {
+            "enter": {
+              "text": { "field": "name" },
+              "fontSize": { "value": 14 },
+              "y": { "scale": "yPosNum", "field": "loc", "offset": 60 },
+              "align": { "value": "center" }
+            },
+            "update": {
+              "opacity": [
+                { "test": "ShowName == 'False'", "value": 0 },
+                { "value": 1 }
+              ],
+              "x": [
+                {
+                  "test": "ShowCategory == 'Single'",
+                  "scale": "xPosNum",
+                  "field": "loc",
+                  "offset": 15
+                },
+                { "scale": "xPosNum", "field": "loc", "offset": 22.5 }
+              ]
             }
           }
         },
@@ -905,7 +1009,7 @@
         {
           "name": "yscale",
           "type": "band",
-          "range": [0, 700],
+          "range": [0, 630],
           "domain": {
             "data": "selectedCategorySummary",
             "field": "loc",
@@ -1195,7 +1299,9 @@
           "from": { "data": "selectedCategorySummary" },
           "encode": {
             "enter": {
-              "align": { "value": "right" }
+              "align": { "value": "right" },
+              "fontSize": { "value": 14 },
+              "baseline": { "value": "middle" }
             },
             "update": {
               "text": [
@@ -1209,6 +1315,76 @@
               "x": {
                 "scale": "xscale",
                 "signal": "datum['hdi95\\.lower'] - 0.1"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": 0 },
+              "y": { "value": 660 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": {
+                "value": "The reported ratings are modelled with Bayesian structural time series. The model yields maximum a posteriori probability estimate (MAP,"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": 0 },
+              "y": { "value": 675 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": {
+                "value": "the mode of the posterior probability distribution) and credible intervals (CIs) of reported ratings at each given time point. The MAPs and"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": 0 },
+              "y": { "value": 690 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": {
+                "value": "95%, 90% & 50% CIs are visualized on the graded error bar chart above as the circle marks and the graded error bars, respectively. The"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": 0 },
+              "y": { "value": 705 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": {
+                "value": "colors from the value-suppressing uncertainty palette (VSUP) encode both the values and uncertainties of the MAPs. The same information"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": 0 },
+              "y": { "value": 720 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": {
+                "value": "is presented with geographical positions on the map to the left. You may move your cursor on the timeline to change the time."
               }
             }
           }
@@ -1395,6 +1571,130 @@
         }
       ],
       "marks": [
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": -400 },
+              "y": { "value": 10 },
+              "fontSize": { "value": 20 },
+              "opacity": { "value": 0.8 },
+              "text": { "value": "Neighborhood: " }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": -400 },
+              "y": { "value": 40 },
+              "fontSize": { "value": 20 },
+              "fontWeight": { "value": "bold" },
+              "opacity": { "value": 0.9 }
+            },
+            "update": {
+              "text": {
+                "signal": "SelectLocation + '  ' + lookupLocName[SelectLocation]"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": -400 },
+              "y": { "value": 90 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": { "value": "The heatmap displays the maximum" }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": -400 },
+              "y": { "value": 105 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": { "value": "values of hourly aggregated MAPs" }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": -400 },
+              "y": { "value": 120 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": { "value": "and CRIs of ratings. You may click" }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": -400 },
+              "y": { "value": 135 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": { "value": "and drag on the heatmap to visualize " }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": -400 },
+              "y": { "value": 150 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": { "value": "a section of the temporal data" }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": -400 },
+              "y": { "value": 165 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": { "value": "on the line charts below." }
+            }
+          }
+        },
+        {
+          "type": "image",
+          "encode": {
+            "enter": {
+              "x": { "value": 950 },
+              "y": { "value": -50 },
+              "width": { "value": 235 }
+            },
+            "update": {
+              "url": [
+                { "test": "Colour == 'VSUP'", "value": "img/VSUP.png" },
+                { "test": "Colour == 'VSUP_'", "value": "img/VSUP_.png" },
+                { "test": "Colour == 'Normal'", "value": "img/normal.png" },
+                { "value": null }
+              ],
+
+              "height": [
+                { "test": "Colour == 'Normal'", "value": 85 },
+                { "value": 234 }
+              ]
+            }
+          }
+        },
         {
           "type": "rect",
           "name": "heatmapRect",
@@ -1596,12 +1896,6 @@
           "range": [0, 800]
         },
         {
-          "name": "radiusMark",
-          "type": "linear",
-          "domain": { "data": "aggregatedReports", "field": "count" },
-          "range": [10, 150]
-        },
-        {
           "name": "row",
           "type": "band",
           "domain": [
@@ -1632,6 +1926,86 @@
         }
       ],
       "marks": [
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": -400 },
+              "y": { "value": 90 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": { "value": "The line charts display the MAP and" }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": -400 },
+              "y": { "value": 105 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": { "value": "95% CI of reported ratings. The square" }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": -400 },
+              "y": { "value": 120 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": {
+                "value": "marks show the counts of the reports. "
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": -400 },
+              "y": { "value": 135 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": {
+                "value": "at each time point. When there is no"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": -400 },
+              "y": { "value": 150 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": {
+                "value": "report within the last hour, the line"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": { "value": -400 },
+              "y": { "value": 165 },
+              "fontSize": { "value": 14 },
+              "opacity": { "value": 0.7 },
+              "text": {
+                "value": "charts are marked with white stripes."
+              }
+            }
+          }
+        },
         {
           "type": "group",
           "from": {
@@ -1848,6 +2222,14 @@
             }
           },
           "clip": true,
+          "scales": [
+            {
+              "name": "radiusMark",
+              "type": "linear",
+              "domain": { "data": "aggregatedReports", "field": "count" },
+              "range": [1, 150]
+            }
+          ],
           "encode": {
             "enter": {
               "x": { "value": 0 },
@@ -1875,7 +2257,10 @@
                     },
                     { "value": null }
                   ],
-                  "opacity": { "value": 0.5 }
+                  "opacity": { "value": 0.5 },
+                  "tooltip": {
+                    "signal": "timeFormat(datum.time, '%m/%d/%Y %H:%M:%S') + ' | Rating: ' + datum.rating + ' | Count: ' + datum.count"
+                  }
                 }
               }
             }
