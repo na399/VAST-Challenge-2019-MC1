@@ -54,8 +54,8 @@
           "shake_intensity",
           "medical",
           "power",
-          "sewer_and_water",
           "buildings",
+          "sewer_and_water",
           "roads_and_bridges"
         ]
       }
@@ -150,6 +150,17 @@
       "bind": {
         "input": "select",
         "options": ["hdi95\\.lower", "hdi90\\.lower", "hdi50\\.lower", "MAP"]
+      }
+    },
+    {
+      "name": "lookupCat",
+      "value": {
+        "shake_intensity": "Shake Intensity",
+        "medical": "Medical",
+        "power": "Power",
+        "buildings": "Buildings",
+        "sewer_and_water": "Sewer & Water",
+        "roads_and_bridges": "Roads & Bridges"
       }
     },
     {
@@ -804,13 +815,13 @@
                   "offset": 35
                 },
                 {
-                  "test": "ShowCategory == 'All' && datum.cat == 'sewer_and_water'",
+                  "test": "ShowCategory == 'All' && datum.cat == 'buildings'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 5
                 },
                 {
-                  "test": "ShowCategory == 'All' && datum.cat == 'buildings'",
+                  "test": "ShowCategory == 'All' && datum.cat == 'sewer_and_water'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 20
@@ -848,13 +859,13 @@
                   "offset": 15
                 },
                 {
-                  "test": "ShowCategory == 'All' && datum.cat == 'sewer_and_water'",
+                  "test": "ShowCategory == 'All' && datum.cat == 'buildings'",
                   "scale": "yPosNum",
                   "field": "loc",
                   "offset": 30
                 },
                 {
-                  "test": "ShowCategory == 'All' && datum.cat == 'buildings'",
+                  "test": "ShowCategory == 'All' && datum.cat == 'sewer_and_water'",
                   "scale": "yPosNum",
                   "field": "loc",
                   "offset": 30
@@ -926,13 +937,13 @@
                   "offset": 35
                 },
                 {
-                  "test": "ShowCategory == 'All' && datum.cat == 'sewer_and_water'",
+                  "test": "ShowCategory == 'All' && datum.cat == 'buildings'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 5
                 },
                 {
-                  "test": "ShowCategory == 'All' && datum.cat == 'buildings'",
+                  "test": "ShowCategory == 'All' && datum.cat == 'sewer_and_water'",
                   "scale": "xPosNum",
                   "field": "loc",
                   "offset": 20
@@ -1037,6 +1048,7 @@
           "zindex": 1,
           "title": "Rating",
           "labelFontSize": 16,
+          "titleFontSize": 14,
           "tickSize": 60
         },
         {
@@ -1044,7 +1056,8 @@
           "scale": "yscale",
           "zindex": 1,
           "title": "Neighborhood",
-          "labelFontSize": 16
+          "labelFontSize": 16,
+          "titleFontSize": 14
         }
       ],
       "marks": [
@@ -1547,8 +1560,8 @@
             "shake_intensity",
             "medical",
             "power",
-            "sewer_and_water",
             "buildings",
+            "sewer_and_water",
             "roads_and_bridges"
           ],
           "range": [0, 100]
@@ -1567,7 +1580,15 @@
           "domain": false,
           "tickSize": 0,
           "offset": 10,
-          "labelFontSize": 14
+          "labelFontSize": 14,
+          "encode": {
+            "labels": {
+              "interactive": false,
+              "update": {
+                "text": { "signal": "lookupCat[datum.value]" }
+              }
+            }
+          }
         }
       ],
       "marks": [
@@ -1632,7 +1653,7 @@
               "y": { "value": 120 },
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
-              "text": { "value": "and CRIs of ratings. You may click" }
+              "text": { "value": "and CIRs of ratings. You may click" }
             }
           }
         },
@@ -1902,8 +1923,8 @@
             "shake_intensity",
             "medical",
             "power",
-            "sewer_and_water",
             "buildings",
+            "sewer_and_water",
             "roads_and_bridges"
           ],
           "range": { "step": { "signal": "rangeStep" } }
@@ -1922,7 +1943,15 @@
           "domain": false,
           "tickSize": 0,
           "offset": 10,
-          "labelFontSize": 14
+          "labelFontSize": 14,
+          "encode": {
+            "labels": {
+              "interactive": false,
+              "update": {
+                "text": { "signal": "lookupCat[datum.value]" }
+              }
+            }
+          }
         }
       ],
       "marks": [
