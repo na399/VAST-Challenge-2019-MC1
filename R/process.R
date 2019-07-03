@@ -35,6 +35,7 @@ locNames = c(
 )
 
 all_summary <- tibble()
+all_aggregated <- tibble()
 
 for (cat in categories) {
   data_summary <-
@@ -70,13 +71,27 @@ for (cat in categories) {
     mutate(in60min = ifelse((15 * 60 < time_diff) &
                               (time_diff <= 60 * 60), 1, 0)) %>%
     mutate(over60min = ifelse(60 * 60 < time_diff, 1, 0)) %>%
-    mutate(locName = locNames[loc])
+    mutate(locName = locNames[loc]) 
+  
+  aggregated_data <- processed_data %>%
+    filter(time_diff == 0) %>% 
+    mutate(dateHour = format(time, "%Y-%m-%d %H:00:00")) %>%
+    group_by(loc, cat, dateHour) %>%
+    summarize(maxMAP = max(MAP), maxCIR = max(CIR))
   
   all_summary <- bind_rows(all_summary, processed_data)
+  all_aggregated <- bind_rows(all_aggregated, aggregated_data)
   
   write.csv(
     processed_data,
     paste("./out/", cat, "_summary_processed.csv", sep = ""),
+    quote = F,
+    row.names = F
+  )
+  
+  write.csv(
+    processed_data,
+    paste("./out/", cat, "_summary_aggregated.csv", sep = ""),
     quote = F,
     row.names = F
   )
@@ -85,6 +100,13 @@ for (cat in categories) {
 write.csv(
   all_summary,
   paste("./out/", "all", "_summary_processed.csv", sep = ""),
+  quote = F,
+  row.names = F
+)
+
+write.csv(
+  all_aggregated,
+  paste("./out/", "all", "_summary_aggregated.csv", sep = ""),
   quote = F,
   row.names = F
 )

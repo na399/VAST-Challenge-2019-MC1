@@ -161,6 +161,16 @@
       }
     },
     {
+      "name": "aggregatedSummary",
+      "url": "data/demo/all_summary_aggregated.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "dateHour": "date"
+        }
+      }
+    },
+    {
       "name": "allSummaryAtTime",
       "source": "allSummary",
       "transform": [
@@ -1296,30 +1306,6 @@
           ]
         }
       ],
-      "data": [
-        {
-          "name": "aggregatedSummary",
-          "source": "locationSummary",
-          "transform": [
-            {
-              "type": "filter",
-              "expr": "datum.time_diff == 0"
-            },
-            {
-              "type": "formula",
-              "as": "dateHour",
-              "expr": "utcParse(utcFormat(datum.time, '%Y-%m-%d %H'), '%Y-%m-%d %H')"
-            },
-            {
-              "type": "aggregate",
-              "groupby": ["loc", "cat", "dateHour"],
-              "fields": ["MAP", "CIR", "CIR"],
-              "ops": ["median", "median", "max"],
-              "as": ["medianMAP", "medianCIR", "maxCIR"]
-            }
-          ]
-        }
-      ],
       "scales": [
         {
           "name": "rowHeatmap",
@@ -1361,7 +1347,7 @@
               "y": { "scale": "rowHeatmap", "field": "cat" },
               "height": { "scale": "rowHeatmap", "band": 1 },
               "tooltip": {
-                "signal": "timeFormat(datum.dateHour, '%Y-%m-%d %H') + ': ' + datum.medianMAP + ' (' + datum.medianCIR + ')'"
+                "signal": "timeFormat(datum.dateHour, '%Y-%m-%d %H') + ': ' + datum.maxMAP + ' (' + datum.medianCIR + ')'"
               }
             },
             "update": {
@@ -1373,42 +1359,42 @@
                 {
                   "test": "Colour == 'VSUP' && datum.maxCIR <= 2.5",
                   "scale": "vsup0",
-                  "field": "medianMAP"
+                  "field": "maxMAP"
                 },
                 {
                   "test": "Colour == 'VSUP' && datum.maxCIR <= 5",
                   "scale": "vsup1",
-                  "field": "medianMAP"
+                  "field": "maxMAP"
                 },
                 {
                   "test": "Colour == 'VSUP' && datum.maxCIR > 5",
                   "scale": "vsup2",
-                  "field": "medianMAP"
+                  "field": "maxMAP"
                 },
                 {
                   "test": "Colour == 'VSUP_' && datum.maxCIR <= 1.25",
                   "scale": "vsup0_",
-                  "field": "medianMAP"
+                  "field": "maxMAP"
                 },
                 {
                   "test": "Colour == 'VSUP_' && datum.maxCIR <= 2.5",
                   "scale": "vsup1_",
-                  "field": "medianMAP"
+                  "field": "maxMAP"
                 },
                 {
                   "test": "Colour == 'VSUP_' && datum.maxCIR <= 5",
                   "scale": "vsup2_",
-                  "field": "medianMAP"
+                  "field": "maxMAP"
                 },
                 {
                   "test": "Colour == 'VSUP_' && datum.maxCIR > 5",
                   "scale": "vsup3_",
-                  "field": "medianMAP"
+                  "field": "maxMAP"
                 },
                 {
                   "test": "Colour == 'Normal'",
                   "scale": "cscale",
-                  "field": "medianMAP"
+                  "field": "maxMAP"
                 },
                 { "value": "white" }
               ]
