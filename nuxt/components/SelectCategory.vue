@@ -54,7 +54,7 @@ export default {
 
 <style>
 #categories {
-  margin-left: 690px;
+  margin: 10px 10px 10px 700px;
 }
 
 .el-radio {
