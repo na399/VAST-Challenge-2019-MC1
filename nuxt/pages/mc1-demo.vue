@@ -1,8 +1,12 @@
 <template>
   <section class="container">
+    <SelectCategory :default="signals['SelectCategory']" @change="changeSignal" />
     <div>
-      <VegaChart :spec="specMC1" :renderer="'canvas'"/>
-      <br>
+      <VegaChart :spec="spec" :signals="signals" :renderer="'canvas'" />
+      <br />
+      <p>
+        <i>Optimized for screen width of 1920px</i>
+      </p>
       <p>
         <i>Only tested on Chrome v75</i>
       </p>
@@ -12,28 +16,34 @@
 
 <script>
 import VegaChart from '~/components/VegaChart.vue'
+import SelectCategory from '~/components/SelectCategory.vue'
 
-import specMC1 from '~/assets/spec/MC1demo.json'
+import spec from '~/assets/spec/MC1demo.json'
 
 export default {
   components: {
-    VegaChart
+    VegaChart,
+    SelectCategory
   },
   data: function() {
     return {
-      specMC1: specMC1
+      spec: spec,
+      signals: {
+        SelectCategory: 'power'
+      }
     }
   },
-  head () {
+  head() {
     return {
-      meta: [
-        { hid: 'viewport', name: 'viewport', content: 'width=1920, initial-scale=1' }
-      ]
+      meta: [{ hid: 'viewport', name: 'viewport', content: 'width=1920' }]
     }
   },
   methods: {
-    logEvent: function(name, value) {
-      console.log(name, value)
+    logEvent: function(key, val) {
+      console.log(key, val)
+    },
+    changeSignal: function(key, val) {
+      this.signals[key] = val
     }
   }
 }
@@ -41,9 +51,10 @@ export default {
 
 <style>
 .container {
-  margin: 0 auto;
+  margin: 30px auto;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;

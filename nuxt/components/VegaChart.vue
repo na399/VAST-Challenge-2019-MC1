@@ -23,6 +23,10 @@ export default {
     },
     hover: {
       default: 'hover'
+    },
+    signals: {
+      type: Object,
+      default: null
     }
   },
   data: function() {
@@ -46,6 +50,12 @@ export default {
         this.view = this.createView(this.spec)
       },
       deep: true
+    },
+    signals: {
+      handler: function() {
+        this.signalsHandler()
+      },
+      deep: true
     }
   },
   methods: {
@@ -64,6 +74,7 @@ export default {
       }
 
       view.runAsync().then(() => {
+        this.signalsHandler()
         this.fullscreenLoading = false
       })
 
@@ -76,6 +87,18 @@ export default {
             this.$emit(name, value)
           )
         })
+      }
+    },
+    signalsHandler: function() {
+      let state = this.view.getState()
+
+      if (this.signals !== null) {
+        for (const key in this.signals) {
+          const val = this.signals[key]
+          state['signals'][key] = val
+        }
+
+        this.view.setState(state)
       }
     }
   }
