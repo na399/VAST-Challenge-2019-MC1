@@ -24,6 +24,13 @@ export default {
       specMC1: specMC1
     }
   },
+  head () {
+    return {
+      meta: [
+        { hid: 'viewport', name: 'viewport', content: 'width=1920, initial-scale=1' }
+      ]
+    }
+  },
   methods: {
     logEvent: function(name, value) {
       console.log(name, value)
@@ -40,6 +47,8 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
+  width: max-content;
+  overflow: scroll;
 }
 
 .vega-bind-name {
