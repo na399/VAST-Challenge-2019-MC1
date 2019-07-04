@@ -1,8 +1,8 @@
 <template>
   <section class="container">
-    <SelectCategory :default="signals['SelectCategory']" @change="changeSignal" />
+    <SelectCategory />
     <div>
-      <VegaChart :spec="spec" :signals="signals" :renderer="'canvas'" />
+      <VegaChart :spec="spec" :renderer="'canvas'" />
       <br />
       <p>
         <i>Optimized for screen width of 1920px</i>
@@ -28,9 +28,6 @@ export default {
   data: function() {
     return {
       spec: spec,
-      signals: {
-        SelectCategory: 'power'
-      }
     }
   },
   head() {
@@ -39,11 +36,8 @@ export default {
     }
   },
   methods: {
-    logEvent: function(key, val) {
-      console.log(key, val)
-    },
-    changeSignal: function(key, val) {
-      this.signals[key] = val
+    logEvent: function(name, val) {
+      console.log(name, val)
     }
   }
 }

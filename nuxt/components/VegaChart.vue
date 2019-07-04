@@ -23,16 +23,17 @@ export default {
     },
     hover: {
       default: 'hover'
-    },
-    signals: {
-      type: Object,
-      default: null
     }
   },
   data: function() {
     return {
       view: null,
       fullscreenLoading: false
+    }
+  },
+  computed: {
+    signals() {
+      return this.$store.state.signals
     }
   },
   mounted: function() {
