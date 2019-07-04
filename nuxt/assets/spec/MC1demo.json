@@ -691,18 +691,8 @@
               "fontSize": { "value": 14 },
               "y": { "scale": "yPosNum", "field": "loc" },
               "align": { "value": "center" },
-              "tooltip": { "field": "name" }
-            },
-            "update": {
-              "x": [
-                {
-                  "test": "ShowCategory == 'Single'",
-                  "scale": "xPosNum",
-                  "field": "loc",
-                  "offset": 15
-                },
-                { "scale": "xPosNum", "field": "loc", "offset": 22.5 }
-              ]
+              "tooltip": { "field": "name" },
+              "x": { "scale": "xPosNum", "field": "loc", "offset": 15 }
             }
           }
         },
@@ -714,21 +704,13 @@
               "text": { "field": "name" },
               "fontSize": { "value": 14 },
               "y": { "scale": "yPosNum", "field": "loc", "offset": 60 },
-              "align": { "value": "center" }
+              "align": { "value": "center" },
+              "x": { "scale": "xPosNum", "field": "loc", "offset": 15 }
             },
             "update": {
               "opacity": [
                 { "test": "ShowName == 'False'", "value": 0 },
                 { "value": 1 }
-              ],
-              "x": [
-                {
-                  "test": "ShowCategory == 'Single'",
-                  "scale": "xPosNum",
-                  "field": "loc",
-                  "offset": 15
-                },
-                { "scale": "xPosNum", "field": "loc", "offset": 22.5 }
               ]
             }
           }
@@ -1062,7 +1044,7 @@
       ],
       "marks": [
         {
-          "name": "colorScale",
+          "name": "colourScale",
           "type": "rect",
           "from": { "data": "colourThreshold" },
           "encode": {
@@ -1088,7 +1070,7 @@
           }
         },
         {
-          "name": "colorScale1",
+          "name": "colourScale1",
           "type": "rect",
           "from": { "data": "colourThreshold" },
           "encode": {
@@ -1114,7 +1096,7 @@
           }
         },
         {
-          "name": "colorScale2",
+          "name": "colourScale2",
           "type": "rect",
           "from": { "data": "colourThreshold" },
           "encode": {
@@ -1139,7 +1121,7 @@
           }
         },
         {
-          "name": "colorScale3",
+          "name": "colourScale3",
           "type": "rect",
           "from": { "data": "colourThreshold" },
           "encode": {
@@ -1383,7 +1365,7 @@
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
               "text": {
-                "value": "colors from the value-suppressing uncertainty palette (VSUP) encode both the values and uncertainties of the MAPs. The same information"
+                "value": "colours from the value-suppressing uncertainty palette (VSUP) encode both the values and uncertainties of the MAPs. The same information"
               }
             }
           }
@@ -1468,7 +1450,7 @@
             },
             "update": {
               "x": { "scale": "xTime", "signal": "indexTime" },
-              "text": { "signal": "timeFormat(indexTime, '%x %H:%M')" }
+              "text": { "signal": "timeFormat(indexTime, '%d/%m/%Y %H:%M')" }
             }
           }
         }
@@ -1726,7 +1708,7 @@
               "y": { "scale": "rowHeatmap", "field": "cat" },
               "height": { "scale": "rowHeatmap", "band": 1 },
               "tooltip": {
-                "signal": "timeFormat(datum.dateHour, '%Y-%m-%d %H') + ': ' + datum.maxMAP + ' (' + datum.medianCIR + ')'"
+                "signal": "timeFormat(datum.dateHour, '%d/%m/%Y %H') + ': ' + datum.maxMAP + ' (' + datum.medianCIR + ')'"
               }
             },
             "update": {
@@ -1963,7 +1945,7 @@
               "y": { "value": 90 },
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
-              "text": { "value": "The line charts display the MAP and" }
+              "text": { "value": "The line charts display the MAPs and" }
             }
           }
         },
@@ -1975,7 +1957,7 @@
               "y": { "value": 105 },
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
-              "text": { "value": "95% CI of reported ratings. The square" }
+              "text": { "value": "95% CIs of reported ratings. The square" }
             }
           }
         },
@@ -2288,7 +2270,7 @@
                   ],
                   "opacity": { "value": 0.5 },
                   "tooltip": {
-                    "signal": "timeFormat(datum.time, '%m/%d/%Y %H:%M:%S') + ' | Rating: ' + datum.rating + ' | Count: ' + datum.count"
+                    "signal": "timeFormat(datum.time, '%d/%m/%Y %H:%M:%S') + ' | Rating: ' + datum.rating + ' | Count: ' + datum.count"
                   }
                 }
               }
