@@ -23,6 +23,9 @@ export default {
     },
     hover: {
       default: 'hover'
+    },
+    useSignalsFromStore: {
+      default: false
     }
   },
   data: function() {
@@ -54,7 +57,9 @@ export default {
     },
     signals: {
       handler: function() {
-        this.signalsHandler()
+        if (this.useSignalsFromStore) {
+          this.signalsHandler()
+        }
       },
       deep: true
     }
@@ -75,7 +80,9 @@ export default {
       }
 
       view.runAsync().then(() => {
-        this.signalsHandler()
+        if (this.useSignalsFromStore) {
+          this.signalsHandler()
+        }
         this.fullscreenLoading = false
       })
 
@@ -93,7 +100,7 @@ export default {
     signalsHandler: function() {
       let state = this.view.getState()
 
-      if (this.signals !== null) {
+      if (this.useSignalsFromStore && this.signals !== null) {
         for (const key in this.signals) {
           const val = this.signals[key]
           state['signals'][key] = val

@@ -2,7 +2,7 @@
   <section class="container">
     <SelectCategory />
     <div>
-      <VegaChart :spec="spec" :renderer="'canvas'" />
+      <VegaChart :spec="spec" :renderer="'canvas'" :useSignalsFromStore="true" />
       <br />
       <p>
         <i>Optimized for screen width of 1920px</i>
