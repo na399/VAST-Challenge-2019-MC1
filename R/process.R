@@ -13,25 +13,25 @@ categories = c(
 )
 
 locNames = c(
-  "PALACE HILLS",
-  "NORTHWEST",
-  "OLD TOWN",
-  "SAFE TOWN",
-  "SOUTHWEST",
-  "DOWNTOWN",
-  "WILSON FOREST",
-  "SCENIC VISTA",
-  "BROADVIEW",
-  "CHAPPARAL",
-  "TERRAPIN",
-  "PEPPER MILL",
-  "CHEDDARFORD",
-  "EASTON",
-  "WESTON",
-  "SOUTHTON",
-  "OAK WILLOW",
-  "EAST PARTON",
-  "WEST PARTON"
+  "Palace Hills",
+  "Northwest",
+  "Old Town",
+  "Safe Town",
+  "Southwest",
+  "Downtown",
+  "Wilson Forest",
+  "Scenic Vista",
+  "Broadview",
+  "Chapparal",
+  "Terrapin",
+  "Pepper Mill",
+  "Cheddarford",
+  "Easton",
+  "Weston",
+  "Southton",
+  "Oak Willow",
+  "East Parton",
+  "West Parton"
 )
 
 all_summary <- tibble()
@@ -77,7 +77,7 @@ for (cat in categories) {
     filter(time_diff == 0) %>% 
     mutate(dateHour = format(time, "%Y-%m-%d %H:00:00")) %>%
     group_by(loc, cat, dateHour) %>%
-    summarize(maxMAP = max(MAP), maxCIR = max(CIR))
+    summarize(maxMAP = max(MAP), maxCIR = max(CIR), CIRatMaxMAP = mean(CIR[which(MAP == max(MAP))]))
   
   all_summary <- bind_rows(all_summary, processed_data)
   all_aggregated <- bind_rows(all_aggregated, aggregated_data)
