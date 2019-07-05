@@ -683,6 +683,27 @@
           }
         },
         {
+          "type": "image",
+          "encode": {
+            "enter": {
+              "url": { "value": "img/categories.png" },
+              "width": { "value": 800 },
+              "height": { "value": 662 },
+              "x": { "value": 0 },
+              "y": { "value": 0 }
+            },
+            "update": {
+              "opacity": [
+                {
+                  "test": "ShowCategory == 'All'",
+                  "value": 1
+                },
+                { "value": 0 }
+              ]
+            }
+          }
+        },
+        {
           "type": "text",
           "from": { "data": "locNames" },
           "encode": {
