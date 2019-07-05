@@ -114,34 +114,34 @@
     },
     {
       "name": "FillMap",
-      "value": "True",
+      "value": true,
       "bind": {
         "input": "radio",
-        "options": ["True", "False"]
+        "options": [true, false]
       }
     },
     {
       "name": "ShowName",
-      "value": "False",
+      "value": false,
       "bind": {
         "input": "radio",
-        "options": ["True", "False"]
+        "options": [true, false]
       }
     },
     {
       "name": "ShowFacilities",
-      "value": "False",
+      "value": false,
       "bind": {
         "input": "radio",
-        "options": ["True", "False"]
+        "options": [true, false]
       }
     },
     {
       "name": "ShowRawReports",
-      "value": "True",
+      "value": true,
       "bind": {
         "input": "radio",
-        "options": ["True", "False"]
+        "options": [true, false]
       }
     },
     {
@@ -149,7 +149,7 @@
       "value": "hdi95\\.lower",
       "bind": {
         "input": "select",
-        "options": ["hdi95\\.lower", "hdi90\\.lower", "hdi50\\.lower", "MAP"]
+        "options": ["hdi95\\.lower", "hdi80\\.lower", "hdi50\\.lower", "MAP"]
       }
     },
     {
@@ -549,7 +549,7 @@
               },
               "fill": [
                 {
-                  "test": "FillMap == 'False' || ShowCategory == 'All' || datum.MAP == null || datum.CIR == null",
+                  "test": "FillMap == false || ShowCategory == 'All' || datum.MAP == null || datum.CIR == null",
                   "value": null
                 },
                 {
@@ -674,7 +674,7 @@
             "update": {
               "opacity": [
                 {
-                  "test": "ShowFacilities == 'True'",
+                  "test": "ShowFacilities == true",
                   "value": 1
                 },
                 { "value": 0 }
@@ -709,7 +709,7 @@
             },
             "update": {
               "opacity": [
-                { "test": "ShowName == 'False'", "value": 0 },
+                { "test": "ShowName == false", "value": 0 },
                 { "value": 1 }
               ]
             }
@@ -1190,8 +1190,8 @@
             },
             "update": {
               "yc": { "scale": "yscale", "field": "loc", "band": 0.5 },
-              "x": { "scale": "xscale", "field": "hdi90\\.lower" },
-              "x2": { "scale": "xscale", "field": "hdi90\\.upper" }
+              "x": { "scale": "xscale", "field": "hdi80\\.lower" },
+              "x2": { "scale": "xscale", "field": "hdi80\\.upper" }
             }
           }
         },
@@ -1260,7 +1260,10 @@
                 { "scale": "cscale", "field": "MAP" }
               ],
               "stroke": { "value": "white" },
-              "size": { "value": 300 }
+              "size": { "value": 300 },
+              "tooltip": {
+                "signal": "timeFormat(datum.time, '%d/%m/%Y %H:%M') + ' | MAP: '  + datum.MAP + ' | 95% CIR: '  + datum.CIR"
+              }
             }
           }
         },
@@ -1323,7 +1326,7 @@
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
               "text": {
-                "value": "The reported ratings are modelled with Bayesian structural time series. The model yields maximum a posteriori probability estimate (MAP,"
+                "value": "The reported ratings are modelled with Bayesian structural time series. The model yields maximum a posteriori probability estimates (MAPs,"
               }
             }
           }
@@ -1351,7 +1354,7 @@
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
               "text": {
-                "value": "95%, 90% & 50% CIs are visualized on the graded error bar chart above as the circle marks and the graded error bars, respectively. The"
+                "value": "95%, 80% & 50% CIs are visualized on the graded error bar chart above as the circle marks and the graded error bars, respectively. The"
               }
             }
           }
@@ -1708,7 +1711,7 @@
               "y": { "scale": "rowHeatmap", "field": "cat" },
               "height": { "scale": "rowHeatmap", "band": 1 },
               "tooltip": {
-                "signal": "timeFormat(datum.dateHour, '%d/%m/%Y %H') + ': ' + datum.maxMAP + ' (' + datum.medianCIR + ')'"
+                "signal": "timeFormat(datum.dateHour, '%d/%m/%Y %H') + ' | Maximum MAP: '  + datum.maxMAP + ' | Maximum CIR: '  + datum.maxCIR"
               }
             },
             "update": {
@@ -2262,7 +2265,7 @@
                   "size": { "scale": "radiusMark", "field": "count" },
                   "fill": [
                     {
-                      "test": "ShowRawReports == 'True'",
+                      "test": "ShowRawReports == true",
                       "scale": "vsup0_",
                       "field": "rating"
                     },

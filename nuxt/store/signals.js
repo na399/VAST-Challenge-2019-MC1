@@ -4,10 +4,10 @@ export const state = () => ({
   TimelineControl: 'Play',
   Colour: 'VSUP',
   ShowCategory: 'Single',
-  FillMap: 'True',
-  ShowName: 'False',
-  ShowFacilities: 'False',
-  ShowRawReports: 'True',
+  FillMap: true,
+  ShowName: false,
+  ShowFacilities: false,
+  ShowRawReports: true,
   SortOption: 'hdi95\\.lower'
 })
 
