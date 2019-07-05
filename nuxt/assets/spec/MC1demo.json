@@ -1292,7 +1292,7 @@
           "type": "symbol",
           "from": { "data": "selectedCategorySummary" },
           "encode": {
-            "enter": {
+            "update": {
               "xc": { "scale": "xscale", "field": "MAP" },
               "yc": { "scale": "yscale", "field": "loc", "band": 0.5 },
               "size": [
