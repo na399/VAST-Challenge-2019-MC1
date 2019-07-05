@@ -1,5 +1,5 @@
 <template>
-  <div id="group-radio">
+  <div class="group-radio">
     <el-radio-group @change="changeSignal" v-model="val" size="small">
       <el-radio-button
         v-for="val in values"
@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style>
-#group-radio {
+.group-radio {
   margin: 10px;
 }
 </style>

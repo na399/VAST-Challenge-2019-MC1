@@ -1,5 +1,5 @@
 <template>
-  <div id="categories">
+  <div class="categories">
     <div>
       <el-radio @change="changeSignal" v-model="val" label="shake_intensity" border>Shake Intensity</el-radio>
       <el-radio @change="changeSignal" v-model="val" label="medical" border>Medical</el-radio>
@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style>
-#categories {
+.categories {
   margin: 10px 10px 10px 700px;
 }
 
