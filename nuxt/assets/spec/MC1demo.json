@@ -13,6 +13,8 @@
   },
 
   "signals": [
+    { "name": "minDate", "update": "time('Apr 8 2020')" },
+    { "name": "maxDate", "update": "time('Apr 10 2020')" },
     {
       "name": "indexTime",
       "update": "time('Apr 9 2020')",
@@ -27,8 +29,6 @@
         }
       ]
     },
-    { "name": "minDate", "update": "time('Apr 8 2020')" },
-    { "name": "maxDate", "update": "time('Apr 10 2020')" },
     {
       "name": "timeSpan",
       "on": [
@@ -1058,7 +1058,7 @@
           "orient": "left",
           "scale": "yscale",
           "zindex": 1,
-          "title": "Neighborhood",
+          "title": "Neighbourhood",
           "labelFontSize": 16,
           "titleFontSize": 14
         }
@@ -1606,7 +1606,7 @@
               "y": { "value": 10 },
               "fontSize": { "value": 20 },
               "opacity": { "value": 0.8 },
-              "text": { "value": "Neighborhood: " }
+              "text": { "value": "Neighbourhood: " }
             }
           }
         },
@@ -1659,7 +1659,7 @@
               "y": { "value": 120 },
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
-              "text": { "value": "and CIRs of ratings. You may click" }
+              "text": { "value": "of ratings and their respective 95% CIRs." }
             }
           }
         },
@@ -1671,7 +1671,7 @@
               "y": { "value": 135 },
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
-              "text": { "value": "and drag on the heatmap to visualize " }
+              "text": { "value": "You may click and drag on the heatmap" }
             }
           }
         },
@@ -1683,7 +1683,7 @@
               "y": { "value": 150 },
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
-              "text": { "value": "a section of the temporal data" }
+              "text": { "value": "to visualize a section of the temporal" }
             }
           }
         },
@@ -1695,7 +1695,7 @@
               "y": { "value": 165 },
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
-              "text": { "value": "on the line charts below." }
+              "text": { "value": "data on the line charts below." }
             }
           }
         },
@@ -1732,7 +1732,7 @@
               "y": { "scale": "rowHeatmap", "field": "cat" },
               "height": { "scale": "rowHeatmap", "band": 1 },
               "tooltip": {
-                "signal": "timeFormat(datum.dateHour, '%d/%m/%Y %H') + ' | Maximum MAP: '  + datum.maxMAP + ' | Maximum CIR: '  + datum.maxCIR"
+                "signal": "timeFormat(datum.dateHour, '%d/%m/%Y %H') + ' | Maximum MAP: '  + datum.maxMAP + ' | CIR of maximum MAP: '  + datum.CIRatMaxMAP"
               }
             },
             "update": {
@@ -1742,37 +1742,37 @@
               },
               "fill": [
                 {
-                  "test": "Colour == 'VSUP' && datum.maxCIR <= 2.5",
+                  "test": "Colour == 'VSUP' && datum.CIRatMaxMAP <= 2.5",
                   "scale": "vsup0",
                   "field": "maxMAP"
                 },
                 {
-                  "test": "Colour == 'VSUP' && datum.maxCIR <= 5",
+                  "test": "Colour == 'VSUP' && datum.CIRatMaxMAP <= 5",
                   "scale": "vsup1",
                   "field": "maxMAP"
                 },
                 {
-                  "test": "Colour == 'VSUP' && datum.maxCIR > 5",
+                  "test": "Colour == 'VSUP' && datum.CIRatMaxMAP > 5",
                   "scale": "vsup2",
                   "field": "maxMAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' && datum.maxCIR <= 1.25",
+                  "test": "Colour == 'VSUP_' && datum.CIRatMaxMAP <= 1.25",
                   "scale": "vsup0_",
                   "field": "maxMAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' && datum.maxCIR <= 2.5",
+                  "test": "Colour == 'VSUP_' && datum.CIRatMaxMAP <= 2.5",
                   "scale": "vsup1_",
                   "field": "maxMAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' && datum.maxCIR <= 5",
+                  "test": "Colour == 'VSUP_' && datum.CIRatMaxMAP <= 5",
                   "scale": "vsup2_",
                   "field": "maxMAP"
                 },
                 {
-                  "test": "Colour == 'VSUP_' && datum.maxCIR > 5",
+                  "test": "Colour == 'VSUP_' && datum.CIRatMaxMAP > 5",
                   "scale": "vsup3_",
                   "field": "maxMAP"
                 },
