@@ -1913,6 +1913,12 @@
             "roads_and_bridges"
           ],
           "range": { "step": { "signal": "rangeStep" } }
+        },
+        {
+          "name": "radiusMark",
+          "type": "log",
+          "domain": [1, 3000],
+          "range": [5, 120]
         }
       ],
       "axes": [
@@ -1937,6 +1943,24 @@
               }
             }
           }
+        }
+      ],
+      "legends": [
+        {
+          "title": "Number of Reports",
+          "size": "radiusMark",
+          "direction": "vertical",
+          "orient": "none",
+          "legendX": 950,
+          "legendY": 470,
+          "padding": 20,
+          "fillColor": "hsl(0, 0%, 95%)",
+          "symbolType": "square",
+          "symbolFillColor": "hsl(0, 0%, 50%)",
+          "symbolStrokeWidth": 0,
+          "values": [1, 10, 100, 1000],
+          "titleFontSize": 15,
+          "labelFontSize": 14
         }
       ],
       "marks": [
@@ -2236,14 +2260,6 @@
             }
           },
           "clip": true,
-          "scales": [
-            {
-              "name": "radiusMark",
-              "type": "linear",
-              "domain": { "data": "aggregatedReports", "field": "count" },
-              "range": [1, 150]
-            }
-          ],
           "encode": {
             "enter": {
               "x": { "value": 0 },
