@@ -427,7 +427,7 @@
           "width": { "value": 800 },
           "height": { "value": 662 },
           "x": { "value": 0 },
-          "y": { "value": 0 }
+          "y": { "value": -50 }
         }
       },
       "scales": [
@@ -1489,7 +1489,7 @@
           "height": { "value": 100 },
           "width": { "value": 800 },
           "x": { "value": 400 },
-          "y": { "value": 820 }
+          "y": { "value": 930 }
         }
       },
       "data": [
@@ -1511,11 +1511,11 @@
           "on": [
             {
               "events": "window:mousedown",
-              "update": "inrange(x(), [400, 1200]) && inrange(y(), [820, 920]) ? [x() - 400, x() - 400] : brush"
+              "update": "inrange(x(), [400, 1200]) && inrange(y(), [930, 1030]) ? [x() - 400, x() - 400] : brush"
             },
             {
               "events": "[window:mousedown, window:mouseup] > window:mousemove!",
-              "update": "inrange(y(), [820, 920]) ? [brush[0], if(inrange(clamp(x() - 400, 0, 800), [brush[0] - 5, brush[0] + 5]), brush[0] + 10, clamp(x() - 400, 0, 800))] : brush"
+              "update": "inrange(y(), [930, 1040]) ? [brush[0], if(inrange(clamp(x() - 400, 0, 800), [brush[0] - 5, brush[0] + 5]), brush[0] + 10, clamp(x() - 400, 0, 800))] : brush"
             },
             {
               "events": { "signal": "delta" },
@@ -1889,7 +1889,7 @@
           "height": { "value": 600 },
           "width": { "value": 800 },
           "x": { "value": 400 },
-          "y": { "value": 940 }
+          "y": { "value": 1050 }
         }
       },
       "data": [

@@ -7,7 +7,7 @@
         </b>
       </p>
       <p>
-        <i>Optimized for screen width of 1920px</i>
+        <i>Optimized for screen resolution of 1920 x 1080px</i>
       </p>
       <p>
         <i>Require at least 300 MB of RAM</i>
@@ -19,19 +19,35 @@
         <i>May not work on Mobile</i>
       </p>
     </div>
-    <SelectCategory />
-    <GroupRadio :param="'TimelineControl'" />
-    <GroupRadio :param="'Colour'" :values="colourRadioVal" />
-    <SwitchSlider :param="'FillMap'" />
-    <SwitchSlider :param="'ShowCategory'" :values="showCatVal" />
-    <SwitchSlider :param="'ShowName'" :values="showNameVal" />
-    <SwitchSlider :param="'ShowFacilities'" :values="showFacilitiesVal" />
-    <SwitchSlider :param="'ShowRawReports'" :values="showRawReportsVal" />
-    <SelectList :param="'SelectLocation'" />
-    <SelectList :param="'SortOption'" :values="sortOptionVal" />
+
     <div>
+      <SelectCategory />
+    </div>
+
+    <div>
+      <div class="option-bar">
+        <div class="left-group">
+          <SwitchSlider :param="'FillMap'" />
+          <SwitchSlider :param="'ShowCategory'" :values="showCatVal" />
+          <SwitchSlider :param="'ShowName'" :values="showNameVal" />
+          <SwitchSlider :param="'ShowFacilities'" :values="showFacilitiesVal" />
+        </div>
+
+        <div class="middle-group">
+          <GroupRadio :param="'TimelineControl'" />
+          <SelectList :param="'SelectLocation'" />
+        </div>
+
+        <div class="right-group">
+          <SelectList :param="'SortOption'" :values="sortOptionVal" />
+          <GroupRadio :param="'Colour'" :values="colourRadioVal" />
+        </div>
+      </div>
       <VegaChart :spec="spec" :renderer="'canvas'" :useSignalsFromStore="true" />
-      <br />
+    </div>
+
+    <div>
+      <SwitchSlider :param="'ShowRawReports'" :values="showRawReportsVal" />
     </div>
   </section>
 </template>
@@ -80,10 +96,10 @@ export default {
         inactiveText: ''
       },
       sortOptionVal: [
-        { value: "hdi95\\.lower", label: '95% CI lower bound' },
-        { value: "hdi80\\.lower", label: '80% CI lower bound' },
-        { value: "hdi50\\.lower", label: '50% CI lower bound' },
-        { value: "MAP", label: 'MAP' }
+        { value: 'hdi95\\.lower', label: '95% CI lower bound' },
+        { value: 'hdi80\\.lower', label: '80% CI lower bound' },
+        { value: 'hdi50\\.lower', label: '50% CI lower bound' },
+        { value: 'MAP', label: 'MAP' }
       ]
     }
   },
@@ -115,13 +131,42 @@ export default {
 
 .caution {
   margin: 20px;
+  color: salmon;
 }
 
-.vega-bind-name {
-  padding: 0px 10px;
+.vega-bindings {
+  display: none;
 }
 
-.vega-bind-radio * {
-  padding: 0px 5px;
+.option-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 1600px;
+  position: absolute;
+  top: 1120px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.left-group,
+.middle-group {
+  flex-grow: 1;
+}
+
+.right-group {
+  flex-grow: 2;
+}
+
+.left-group > * {
+  display: flex;
+  align-self: flex-start;
+}
+
+.middle-group > *,
+.right-group > * {
+  margin: 30px 0px;
 }
 </style>
