@@ -2,7 +2,9 @@
   <section class="container">
     <div class="caution">
       <p>
-        <b><i>WORK IN PROGRESS</i></b>
+        <b>
+          <i>WORK IN PROGRESS</i>
+        </b>
       </p>
       <p>
         <i>Optimized for screen width of 1920px</i>
@@ -20,7 +22,11 @@
     <SelectCategory />
     <GroupRadio :param="'TimelineControl'" />
     <GroupRadio :param="'Colour'" :values="colourRadioVal" />
-    <GroupRadio :param="'ShowCategory'" :values="showCatRadioVal" />
+    <SwitchSlider :param="'FillMap'" />
+    <SwitchSlider :param="'ShowCategory'" :values="showCatVal" />
+    <SwitchSlider :param="'ShowName'" :values="showNameVal" />
+    <SwitchSlider :param="'ShowFacilities'" :values="showFacilitiesVal" />
+    <SwitchSlider :param="'ShowRawReports'" :values="showRawReportsVal" />
     <div>
       <VegaChart :spec="spec" :renderer="'canvas'" :useSignalsFromStore="true" />
       <br />
@@ -32,6 +38,7 @@
 import VegaChart from '~/components/VegaChart.vue'
 import SelectCategory from '~/components/SelectCategory.vue'
 import GroupRadio from '~/components/GroupRadio.vue'
+import SwitchSlider from '~/components/SwitchSlider.vue'
 
 import spec from '~/assets/spec/MC1demo.json'
 
@@ -39,7 +46,8 @@ export default {
   components: {
     VegaChart,
     SelectCategory,
-    GroupRadio
+    GroupRadio,
+    SwitchSlider
   },
   data: function() {
     return {
@@ -49,10 +57,24 @@ export default {
         { label: 'VSUP_', text: 'VSUP Extended' },
         { label: 'Normal', text: 'Normal' }
       ],
-      showCatRadioVal: [
-        { label: 'Single', text: 'Show ONLY the selected category' },
-        { label: 'All', text: 'Show ALL categories on the map' }
-      ]
+      showCatVal: {
+        activeVal: 'All',
+        inactiveVal: 'Single',
+        activeText: 'Show all categories on the map',
+        inactiveText: ''
+      },
+      showNameVal: {
+        activeText: 'Show neighbourhood names',
+        inactiveText: ''
+      },
+      showFacilitiesVal: {
+        activeText: 'Show hospitals and the nuclear plant',
+        inactiveText: ''
+      },
+      showRawReportsVal: {
+        activeText: 'Show raw reports on the line charts',
+        inactiveText: ''
+      },
     }
   },
   head() {
