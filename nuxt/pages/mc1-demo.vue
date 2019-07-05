@@ -27,6 +27,8 @@
     <SwitchSlider :param="'ShowName'" :values="showNameVal" />
     <SwitchSlider :param="'ShowFacilities'" :values="showFacilitiesVal" />
     <SwitchSlider :param="'ShowRawReports'" :values="showRawReportsVal" />
+    <SelectList :param="'SelectLocation'" />
+    <SelectList :param="'SortOption'" :values="sortOptionVal" />
     <div>
       <VegaChart :spec="spec" :renderer="'canvas'" :useSignalsFromStore="true" />
       <br />
@@ -39,6 +41,7 @@ import VegaChart from '~/components/VegaChart.vue'
 import SelectCategory from '~/components/SelectCategory.vue'
 import GroupRadio from '~/components/GroupRadio.vue'
 import SwitchSlider from '~/components/SwitchSlider.vue'
+import SelectList from '~/components/SelectList.vue'
 
 import spec from '~/assets/spec/MC1demo.json'
 
@@ -47,7 +50,8 @@ export default {
     VegaChart,
     SelectCategory,
     GroupRadio,
-    SwitchSlider
+    SwitchSlider,
+    SelectList
   },
   data: function() {
     return {
@@ -75,6 +79,12 @@ export default {
         activeText: 'Show raw reports on the line charts',
         inactiveText: ''
       },
+      sortOptionVal: [
+        { value: "hdi95\\.lower", label: '95% CI lower bound' },
+        { value: "hdi80\\.lower", label: '80% CI lower bound' },
+        { value: "hdi50\\.lower", label: '50% CI lower bound' },
+        { value: "MAP", label: 'MAP' }
+      ]
     }
   },
   head() {
