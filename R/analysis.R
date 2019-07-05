@@ -58,33 +58,19 @@ run_bsts <-
       arrange(time) %>%
       dplyr::filter(time <= time_end)
     
+    # only run when there are 5 or more time points
     stopifnot(dim(dataset_filtered)[1] >= 5)
     
-    # y = log(dataset_filtered[[cat]] + 0.1)
     y = dataset_filtered[[cat]]
     
-    sdy <- sd(as.numeric(y), na.rm = TRUE)
-    initial.y <- y[1]
-    
-    small_sigma_prior <- SdPrior(0.1 * sdy, upper.limit = 0.5 * sdy)
-    large_sigma_prior <- SdPrior(0.5 * sdy, upper.limit = 2 * sdy)
-    
     ss <- AddLocalLevel(list(), y)
-    # ss <- AddLocalLevel(ss, y, SdPrior(sdy, upper.limit = 3 * sdy), NormalPrior(initial.y, 3 * sdy))
-    # ss <- AddLocalLevel(list(), y, sigma_prior, NormalPrior(initial.y, 0.5 * sdy))
-    
-    #ss <- AddLocalLinearTrend(list(), y)
-    #ss <- AddLocalLinearTrend(list(), y, level.sigma.prior = large_sigma_prior, slope.sigma.prior = small_sigma_prior)
-    
-    # ss <- AddLocalLinearTrend(list(), y,  SdPrior(sdy, upper.limit = sdy), SdPrior(sdy, upper.limit = sdy), NormalPrior(initial.y, 3 * sdy))
-    # ss <- AddStudentLocalLinearTrend(list(), y)
     
     model <-
       bsts(
         y,
         ss,
         niter = 300,
-        # ping = 0,
+        ping = 0,
         timestamps = dataset_filtered$time,
         seed = 0,
         family = 'poisson'
@@ -99,7 +85,6 @@ run_bsts <-
     state <- state[-(1:burn), , , drop = FALSE]
     state <- rowSums(aperm(state, c(1, 3, 2)), dims = 2)
     if (model$family == "poisson") {
-      # state <- t(t(exp(state)) * model$exposure)
       state <- exp(state)
     }
     
@@ -107,30 +92,10 @@ run_bsts <-
     
     maps <- unlist(apply(state, 2, map_estimate))
     
-    # hdi95 <- apply(state, 2, hdi, ci=0.95)
-    # hdi95.lower <- unlist(lapply(hdi95, function(x) { return(x$CI_low) }))
-    # hdi95.upper <- unlist(lapply(hdi95, function(x) { return(x$CI_high) }))
-    # hdi90 <- apply(state, 2, hdi, ci=0.90)
-    # hdi90.lower <- unlist(lapply(hdi90, function(x) { return(x$CI_low) }))
-    # hdi90.upper <- unlist(lapply(hdi90, function(x) { return(x$CI_high) }))
-    # hdi80 <- apply(state, 2, hdi, ci=0.80)
-    # hdi80.lower <- unlist(lapply(hdi80, function(x) { return(x$CI_low) }))
-    # hdi80.upper <- unlist(lapply(hdi80, function(x) { return(x$CI_high) }))
-    # hdi50 <- apply(state, 2, hdi, ci=0.50)
-    # hdi50.lower <- unlist(lapply(hdi50, function(x) { return(x$CI_low) }))
-    # hdi50.upper <- unlist(lapply(hdi50, function(x) { return(x$CI_high) }))
-    
-    # modes <- rowMeans(HPDinterval(as.mcmc(state), prob = 0.0))
-    
     hdi95 <- HPDinterval(as.mcmc(state), prob = 0.95)
     hdi90 <- HPDinterval(as.mcmc(state), prob = 0.9)
     hdi80 <- HPDinterval(as.mcmc(state), prob = 0.8)
     hdi50 <- HPDinterval(as.mcmc(state), prob = 0.5)
-    
-    quantile.step <- .025
-    qtl <- seq(0, 1, by = quantile.step)
-    quantile.matrix <-
-      t(apply(state, 2, quantile, probs = qtl, na.rm = TRUE))
     
     time_min <- min(dataset_filtered$time)
     time_max <- max(dataset_filtered$time)
@@ -156,7 +121,6 @@ run_bsts <-
         hdi90 = hdi90,
         hdi80 = hdi80,
         hdi50 = hdi50,
-        q = quantile.matrix
       )
     
     
@@ -165,15 +129,6 @@ run_bsts <-
         dir.create(out_dir)
         dir.create(paste(out_dir, "summary", sep = "/"))
       }
-      
-      # out_file = gzfile(paste(out_dir, "/", format(time_end,"%Y-%m-%d_%H-%M-%OS"), ".csv.gz", sep = ""),
-      #                  compression = 9)
-      # out_file = paste(out_dir, "/", format(time_end,"%Y-%m-%d_%H-%M-%OS"), ".csv", sep="")
-      
-      # write.csv(mcmc_results,
-      #           out_file,
-      #           quote = F,
-      #           row.names = F)
       
       
       out_summary = paste(
@@ -201,8 +156,8 @@ run_bsts <-
 
 run_parallel <- function(pop, fun) {
   registerDoFuture()
-  cl <- parallel::makeCluster(availableCores() - 1)
-  # cl <- parallel::makeCluster(8)
+  # cl <- parallel::makeCluster(availableCores() - 1)
+  cl <- parallel::makeCluster(32)
   old_plan <- plan(cluster, workers = cl)
   on.exit({
     plan(old_plan)
@@ -210,7 +165,7 @@ run_parallel <- function(pop, fun) {
   })
   
   foreach(i = pop,
-          .verbose = TRUE,
+          .verbose = F,
           .errorhandling = "remove") %dopar% fun(i)
 }
 
@@ -226,8 +181,8 @@ categories = c(
 i <- 0
 time_start_loop <- Sys.time()
 
-for (loc in loc_ids[1]) {
-  for (cat in categories[2]) {
+for (loc in loc_ids[1:19]) {
+  for (cat in categories[1:6]) {
     print(loc)
     print(cat)
     
@@ -238,6 +193,8 @@ for (loc in loc_ids[1]) {
         drop_na(cat) %>%
         pull(time)
     ))
+    
+    print(length(time_points))
     
     
     dir.create(paste(".", "out", sep = "/"))
@@ -325,7 +282,6 @@ for (loc in loc_ids[1]) {
     
     print("Average time per loop")
     print((time_end - time_start_loop) / i)
-    
     
   }
 }
