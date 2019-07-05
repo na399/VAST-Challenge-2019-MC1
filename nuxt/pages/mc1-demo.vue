@@ -24,7 +24,7 @@
       <SelectCategory />
     </div>
 
-    <div>
+    <div class="chart">
       <div class="option-bar">
         <div class="left-group">
           <SwitchSlider :param="'FillMap'" />
@@ -138,13 +138,17 @@ export default {
   display: none;
 }
 
+.chart{
+  position: relative;
+}
+
 .option-bar {
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 1600px;
   position: absolute;
-  top: 1120px;
+  top: 850px;
   left: 0;
   right: 0;
   margin-left: auto;
