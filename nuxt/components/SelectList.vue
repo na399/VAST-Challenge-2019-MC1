@@ -47,6 +47,16 @@ export default {
   computed: {
     storedVal() {
       return this.$store.state.signals[this.param]
+    },
+    selectLocationSignal() {
+      return this.$store.state.signals.SelectLocation
+    }
+  },
+  watch: {
+    selectLocationSignal: function() {
+      if (this.param == 'SelectLocation') {
+        this.val = this.selectLocationSignal
+      }
     }
   },
   created: function() {

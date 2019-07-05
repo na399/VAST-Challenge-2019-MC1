@@ -53,11 +53,8 @@ export default {
 </script>
 
 <style>
-.categories {
-  margin: 10px 10px 10px 700px;
-}
-
 .el-radio {
   width: 200px;
+  background-color: white;
 }
 </style>

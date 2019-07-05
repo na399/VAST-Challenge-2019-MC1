@@ -4,6 +4,7 @@ export const state = () => ({
   TimelineControl: 'Play',
   Colour: 'VSUP',
   ShowCategory: 'Single',
+  HighlightSelectedLoc: true,
   FillMap: true,
   ShowName: false,
   ShowFacilities: false,

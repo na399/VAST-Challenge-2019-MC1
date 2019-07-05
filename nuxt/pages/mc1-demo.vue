@@ -20,13 +20,14 @@
       </p>
     </div>
 
-    <div>
+    <div class="cat-option">
       <SelectCategory />
     </div>
 
     <div class="chart">
       <div class="option-bar">
         <div class="left-group">
+          <SwitchSlider :param="'HighlightSelectedLoc'" :values="highlightVal" />
           <SwitchSlider :param="'FillMap'" />
           <SwitchSlider :param="'ShowCategory'" :values="showCatVal" />
           <SwitchSlider :param="'ShowName'" :values="showNameVal" />
@@ -35,7 +36,7 @@
 
         <div class="middle-group">
           <GroupRadio :param="'TimelineControl'" />
-          <SelectList :param="'SelectLocation'" />
+          <SelectList :param="'SelectLocation'" :values="selectLocationVal" />
         </div>
 
         <div class="right-group">
@@ -43,7 +44,12 @@
           <GroupRadio :param="'Colour'" :values="colourRadioVal" />
         </div>
       </div>
-      <VegaChart :spec="spec" :renderer="'canvas'" :useSignalsFromStore="true" />
+      <VegaChart
+        :spec="spec"
+        :renderer="'canvas'"
+        :useSignalsFromStore="true"
+        @SelectLocation="handleSelectLocation"
+      />
     </div>
 
     <div>
@@ -77,6 +83,10 @@ export default {
         { label: 'VSUP_', text: 'VSUP Extended' },
         { label: 'Normal', text: 'Normal' }
       ],
+      highlightVal: {
+        activeText: 'Highlight the selected neighbourhood',
+        inactiveText: ''
+      },
       showCatVal: {
         activeVal: 'All',
         inactiveVal: 'Single',
@@ -100,6 +110,12 @@ export default {
         { value: 'hdi80\\.lower', label: '80% CI lower bound' },
         { value: 'hdi50\\.lower', label: '50% CI lower bound' },
         { value: 'MAP', label: 'MAP' }
+      ],
+      selectLocationVal: [
+        { value: 1, label: '1 Palace Hills' },
+        { value: 2, label: '2 Northwest' },
+        { value: 3, label: '3 Old Town' },
+        { value: 4, label: '4 Safe Town' }
       ]
     }
   },
@@ -111,6 +127,12 @@ export default {
   methods: {
     logEvent: function(name, val) {
       console.log(name, val)
+    },
+    handleSelectLocation: function(val) {
+      this.$store.commit('signals/changeSignal', {
+        key: 'SelectLocation',
+        val: val
+      })
     }
   }
 }
@@ -134,11 +156,14 @@ export default {
   color: salmon;
 }
 
-.vega-bindings {
-  display: none;
+.cat-option {
+  margin-left: 700px;
+  padding: 10px;
+  background-color: hsl(0, 0%, 98%);
+  border-radius: 10px;
 }
 
-.chart{
+.chart {
   position: relative;
 }
 
@@ -146,22 +171,29 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 1600px;
+  width: 1800px;
   position: absolute;
   top: 850px;
   left: 0;
   right: 0;
   margin-left: auto;
   margin-right: auto;
+  background-color: hsl(0, 0%, 98%);
+  border-radius: 10px;
 }
 
-.left-group,
-.middle-group {
+.left-group {
+  margin-left: 100px;
   flex-grow: 1;
 }
 
-.right-group {
+.middle-group {
   flex-grow: 2;
+}
+
+.right-group {
+  margin-left: 50px;
+  flex-grow: 3;
 }
 
 .left-group > * {
@@ -172,5 +204,9 @@ export default {
 .middle-group > *,
 .right-group > * {
   margin: 30px 0px;
+}
+
+.vega-bindings {
+  display: none;
 }
 </style>
