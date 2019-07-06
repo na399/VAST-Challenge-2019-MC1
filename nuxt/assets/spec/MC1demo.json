@@ -13,19 +13,27 @@
   },
 
   "signals": [
-    { "name": "minDate", "update": "time('Apr 8 2020')" },
-    { "name": "maxDate", "update": "time('Apr 10 2020')" },
+    { "name": "MIN_DATE", "update": "time('Apr 8 2020')" },
+    { "name": "MAX_DATE", "update": "time('Apr 10 2020')" },
+    { "name": "FIRST_QUAKE_TIME", "update": "time('Apr 8 2020 08:35')" },
+    { "name": "SECOND_QUAKE_TIME", "update": "time('Apr 9 2020 15:00')" },
+    { "name": "ONE_HOUR", "update": "60 * 60 * 1000" },
+    { "name": "FIVE_MIN", "update": "5 * 60 * 1000" },
+    { "name": "LINE_CHARTS_X_POS", "value": 400 },
+    { "name": "LINE_CHARTS_Y_POS", "value": 1050 },
+    { "name": "LINE_CHARTS_WIDTH", "value": 800 },
+    { "name": "LINE_CHARTS_HEIGHT", "value": 600 },
     {
       "name": "indexTime",
-      "update": "time('Apr 9 2020')",
+      "update": "FIRST_QUAKE_TIME",
       "on": [
         {
           "events": "@timeInTimeline:mouseover",
-          "update": "round(invert('xTime', clamp(x(), 0, 800)) / 300000) * 300000"
+          "update": "round(invert('xTime', clamp(x(), 0, 800)) / FIVE_MIN) * FIVE_MIN"
         },
         {
           "events": "timer{1000}",
-          "update": "TimelineControl == 'Play' && indexTime + 300000 < maxDate ? indexTime + 300000 : indexTime"
+          "update": "TimelineControl == 'Play' && indexTime + FIVE_MIN < MAX_DATE ? indexTime + FIVE_MIN : indexTime"
         }
       ]
     },
@@ -34,17 +42,17 @@
       "on": [
         {
           "events": { "signal": "indexTime" },
-          "update": "[minDate, indexTime]"
+          "update": "[MIN_DATE, indexTime]"
         }
       ]
     },
     {
       "name": "detailDomain",
-      "update": "heatmapBrush ? heatmapBrush : [minDate, indexTime]"
+      "update": "heatmapBrush ? heatmapBrush : [MIN_DATE, indexTime]"
     },
     { "name": "heatmapBrush", "value": null },
-    { "name": "rangeStep", "value": 100 },
-    { "name": "height", "update": "rangeStep * 6" },
+    { "name": "RANGE_STEP", "value": 100 },
+    { "name": "height", "update": "RANGE_STEP * 6" },
     {
       "name": "SelectCategory",
       "value": "shake_intensity",
@@ -320,9 +328,9 @@
       "transform": [
         {
           "type": "sequence",
-          "start": { "signal": "minDate" },
-          "stop": { "signal": "maxDate" },
-          "step": 300000,
+          "start": { "signal": "MIN_DATE" },
+          "stop": { "signal": "MAX_DATE" },
+          "step": { "signal": "FIVE_MIN" },
           "as": "time"
         }
       ]
@@ -645,7 +653,7 @@
             "update": {
               "opacity": [
                 {
-                  "test": "time('Apr 8 2020 08:35') < indexTime && indexTime < time('Apr 8 2020 18:35')",
+                  "test": "inrange(indexTime, [FIRST_QUAKE_TIME, FIRST_QUAKE_TIME + 10 * ONE_HOUR])",
                   "value": 0.6
                 },
                 { "value": 0 }
@@ -666,7 +674,7 @@
             "update": {
               "opacity": [
                 {
-                  "test": "time('Apr 9 2020 15:00') < indexTime && indexTime < time('Apr 10 2020 05:00')",
+                  "test": "inrange(indexTime, [SECOND_QUAKE_TIME, SECOND_QUAKE_TIME + 10 * ONE_HOUR])",
                   "value": 0.6
                 },
                 { "value": 0 }
@@ -1476,11 +1484,11 @@
               "y2": { "field": { "group": "height" } },
               "stroke": [
                 {
-                  "test": "time('Apr 8 2020 08:35') < datum.time && datum.time < time('Apr 8 2020 09:35')",
+                  "test": "inrange(datum.time, [FIRST_QUAKE_TIME, FIRST_QUAKE_TIME + ONE_HOUR])",
                   "value": "hsla(220, 80%, 30%, 1)"
                 },
                 {
-                  "test": "time('Apr 9 2020 15:00') < datum.time && datum.time < time('Apr 9 2020 16:00')",
+                  "test": "inrange(datum.time, [SECOND_QUAKE_TIME, SECOND_QUAKE_TIME + ONE_HOUR])",
                   "value": "hsla(220, 80%, 30%, 0.9)"
                 },
                 { "value": "hsla(0, 0%, 80%, 0.2)" }
@@ -1774,7 +1782,7 @@
             "update": {
               "x": { "scale": "xHeatmap", "field": "dateHour" },
               "width": {
-                "signal": "scale('xHeatmap', minDate + 3600000)"
+                "signal": "scale('xHeatmap', MIN_DATE + 3600000)"
               },
               "fill": [
                 {
@@ -1922,10 +1930,10 @@
       "description": "Line Charts of all data categories for a given location",
       "encode": {
         "enter": {
-          "height": { "value": 600 },
-          "width": { "value": 800 },
-          "x": { "value": 400 },
-          "y": { "value": 1050 }
+          "x": { "signal": "LINE_CHARTS_X_POS" },
+          "y": { "signal": "LINE_CHARTS_Y_POS" },
+          "width": { "signal": "LINE_CHARTS_WIDTH" },
+          "height": { "signal": "LINE_CHARTS_HEIGHT" }
         }
       },
       "data": [
@@ -1969,7 +1977,7 @@
             "sewer_and_water",
             "roads_and_bridges"
           ],
-          "range": { "step": { "signal": "rangeStep" } }
+          "range": { "step": { "signal": "RANGE_STEP" } }
         },
         {
           "name": "radiusMark",
@@ -2115,7 +2123,7 @@
               "x": { "value": 0 },
               "y": { "scale": "row", "field": "cat" },
               "width": { "value": 800 },
-              "height": { "signal": "rangeStep" }
+              "height": { "signal": "RANGE_STEP" }
             }
           },
           "axes": [
@@ -2212,7 +2220,7 @@
                   "y": { "scale": "yLine", "field": "MAP" },
                   "fill": [
                     {
-                      "test": "datum.time > time(detailDomain[1]) + 300000",
+                      "test": "datum.time > time(detailDomain[1]) + FIVE_MIN",
                       "value": null
                     },
                     {
@@ -2293,7 +2301,7 @@
                   ],
                   "fill": [
                     {
-                      "test": "datum.time > time(detailDomain[1]) + 300000",
+                      "test": "datum.time > time(detailDomain[1]) + FIVE_MIN",
                       "value": null
                     },
                     {
@@ -2322,7 +2330,7 @@
               "x": { "value": 0 },
               "y": { "scale": "row", "field": "cat" },
               "width": { "value": 800 },
-              "height": { "signal": "rangeStep" }
+              "height": { "signal": "RANGE_STEP" }
             }
           },
           "marks": [
