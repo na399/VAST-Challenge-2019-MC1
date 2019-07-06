@@ -20,7 +20,7 @@
       "update": "time('Apr 9 2020')",
       "on": [
         {
-          "events": "@timeInTimeline:mousemove",
+          "events": "@timeInTimeline:mouseover",
           "update": "round(invert('xTime', clamp(x(), 0, 800)) / 300000) * 300000"
         },
         {
@@ -86,6 +86,20 @@
           18,
           19
         ]
+      },
+      "on": [
+        {
+          "events": "@MAPmark:click, @MAPtimemark:click, @hdi95mark:click, @hdi80mark:click, @hdi50mark:click",
+          "update": "datum.loc"
+        }
+      ]
+    },
+    {
+      "name": "HighlightSelectedLoc",
+      "value": false,
+      "bind": {
+        "input": "radio",
+        "options": [true, false]
       }
     },
     {
@@ -243,6 +257,7 @@
       "format": {
         "type": "csv",
         "parse": {
+          "loc": "number",
           "time": "date",
           "time_end": "date"
         }
@@ -254,6 +269,7 @@
       "format": {
         "type": "csv",
         "parse": {
+          "loc": "number",
           "dateHour": "date"
         }
       }
@@ -264,6 +280,7 @@
       "format": {
         "type": "csv",
         "parse": {
+          "loc": "number",
           "time": "date"
         }
       }
@@ -541,12 +558,20 @@
           },
           "encode": {
             "update": {
-              "strokeWidth": {
-                "value": 0.5
-              },
-              "stroke": {
-                "value": "grey"
-              },
+              "strokeWidth": [
+                {
+                  "test": "HighlightSelectedLoc == true && datum.properties['loc'] == SelectLocation",
+                  "value": 3
+                },
+                { "value": 0.5 }
+              ],
+              "stroke": [
+                {
+                  "test": "HighlightSelectedLoc == true && datum.loc == SelectLocation",
+                  "value": "black"
+                },
+                { "value": "grey" }
+              ],
               "fill": [
                 {
                   "test": "FillMap == false || ShowCategory == 'All' || datum.MAP == null || datum.CIR == null",
@@ -1187,6 +1212,7 @@
           }
         },
         {
+          "name": "hdi95mark",
           "type": "rect",
           "from": { "data": "selectedCategorySummary" },
           "encode": {
@@ -1202,6 +1228,7 @@
           }
         },
         {
+          "name": "hdi80mark",
           "type": "rect",
           "from": { "data": "selectedCategorySummary" },
           "encode": {
@@ -1217,6 +1244,7 @@
           }
         },
         {
+          "name": "hdi50mark",
           "type": "rect",
           "from": { "data": "selectedCategorySummary" },
           "encode": {
@@ -1232,6 +1260,7 @@
           }
         },
         {
+          "name": "MAPmark",
           "type": "symbol",
           "from": { "data": "selectedCategorySummary" },
           "encode": {
@@ -1280,7 +1309,13 @@
                 },
                 { "scale": "cscale", "field": "MAP" }
               ],
-              "stroke": { "value": "white" },
+              "stroke": [
+                {
+                  "test": "HighlightSelectedLoc == true && datum.loc == SelectLocation",
+                  "value": "black"
+                },
+                { "value": "white" }
+              ],
               "size": { "value": 300 },
               "tooltip": {
                 "signal": "timeFormat(datum.time, '%d/%m/%Y %H:%M') + ' | MAP: '  + datum.MAP + ' | 95% CIR: '  + datum.CIR"
@@ -1289,6 +1324,7 @@
           }
         },
         {
+          "name": "MAPtimemark",
           "type": "symbol",
           "from": { "data": "selectedCategorySummary" },
           "encode": {
@@ -1347,7 +1383,7 @@
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
               "text": {
-                "value": "The reported ratings are modelled with Bayesian structural time series. The model yields maximum a posteriori probability estimates (MAPs,"
+                "value": "The reported ratings are modelled with Bayesian structural time series. The model yields a maximum a posteriori probability estimate (MAP,"
               }
             }
           }
@@ -1361,7 +1397,7 @@
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
               "text": {
-                "value": "the mode of the posterior probability distribution) and credible intervals (CIs) of reported ratings at each given time point. The MAPs and"
+                "value": "the mode of the posterior probability distribution) and a credible interval (CI) of the mean of reported ratings at each given time point. The MAPs"
               }
             }
           }
@@ -1375,7 +1411,7 @@
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
               "text": {
-                "value": "95%, 80% & 50% CIs are visualized on the graded error bar chart above as the circle marks and the graded error bars, respectively. The"
+                "value": "and 95%, 80% & 50% CIs are visualized on the Graded Error Bar Chart above as the circle marks and the graded error bars, respectively. The"
               }
             }
           }
@@ -1403,7 +1439,7 @@
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
               "text": {
-                "value": "is presented with geographical positions on the map to the left. You may move your cursor on the timeline to change the time."
+                "value": "is presented with geographical positions on the Map to the left. You may move your cursor on the timeline to change the time."
               }
             }
           }
@@ -1483,7 +1519,7 @@
     {
       "type": "group",
       "name": "heatMap",
-      "description": "Heat map of all data categories for a given location",
+      "description": "Heat Map of all data categories for a given location",
       "encode": {
         "enter": {
           "height": { "value": 100 },
@@ -1635,7 +1671,7 @@
               "y": { "value": 90 },
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
-              "text": { "value": "The heatmap displays the maximum" }
+              "text": { "value": "The Heat Map displays the maximum" }
             }
           }
         },
@@ -1671,7 +1707,7 @@
               "y": { "value": 135 },
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
-              "text": { "value": "You may click and drag on the heatmap" }
+              "text": { "value": "You may click and drag on the Heat Map" }
             }
           }
         },
@@ -1695,7 +1731,7 @@
               "y": { "value": 165 },
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
-              "text": { "value": "data on the line charts below." }
+              "text": { "value": "data on the Line Charts below." }
             }
           }
         },
@@ -1883,7 +1919,7 @@
     {
       "type": "group",
       "name": "lineCharts",
-      "description": "Line charts of all data categories for a given location",
+      "description": "Line Charts of all data categories for a given location",
       "encode": {
         "enter": {
           "height": { "value": 600 },
@@ -1968,7 +2004,7 @@
       ],
       "legends": [
         {
-          "title": "Number of Reports",
+          "title": "Number of reports",
           "size": "radiusMark",
           "direction": "vertical",
           "orient": "none",
@@ -1993,7 +2029,7 @@
               "y": { "value": 90 },
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
-              "text": { "value": "The line charts display the MAPs and" }
+              "text": { "value": "The Line Charts display the MAPs and" }
             }
           }
         },
@@ -2046,7 +2082,7 @@
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
               "text": {
-                "value": "report within the last hour, the line"
+                "value": "report within the last hour, the Line"
               }
             }
           }
@@ -2060,7 +2096,7 @@
               "fontSize": { "value": 14 },
               "opacity": { "value": 0.7 },
               "text": {
-                "value": "charts are marked with white stripes."
+                "value": "Charts are marked with white stripes."
               }
             }
           }
@@ -2308,7 +2344,7 @@
                     },
                     { "value": null }
                   ],
-                  "opacity": { "value": 0.5 },
+                  "opacity": { "value": 0.3 },
                   "tooltip": {
                     "signal": "timeFormat(datum.time, '%d/%m/%Y %H:%M:%S') + ' | Rating: ' + datum.rating + ' | Count: ' + datum.count"
                   }
