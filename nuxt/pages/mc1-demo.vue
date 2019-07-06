@@ -1,35 +1,21 @@
 <template>
   <section class="container">
-    <div class="caution">
-      <p>
-        <b>
-          <i>WORK IN PROGRESS</i>
-        </b>
-      </p>
-      <p>
-        <i>Optimized for screen resolution of 1920 x 1080px</i>
-      </p>
-      <p>
-        <i>Require at least 300 MB of RAM</i>
-      </p>
-      <p>
-        <i>Only tested on Chrome v75</i>
-      </p>
-      <p>
-        <i>May not work on Mobile</i>
-      </p>
-    </div>
-
-    <div class="cat-option">
-      <SelectCategory />
+    <div class="top-bar">
+      <div class="header">
+        <h1>Earthquake Damage Report Interactive Dashboard</h1>
+        <h2>VAST Challenge 2019</h2>
+      </div>
+      <div class="cat-option">
+        <SelectCategory />
+      </div>
     </div>
 
     <div class="chart">
       <div class="option-bar">
         <div class="left-group">
-          <SwitchSlider :param="'HighlightSelectedLoc'" :values="highlightVal" />
           <SwitchSlider :param="'FillMap'" />
           <SwitchSlider :param="'ShowCategory'" :values="showCatVal" />
+          <SwitchSlider :param="'HighlightSelectedLoc'" :values="highlightVal" />
           <SwitchSlider :param="'ShowName'" :values="showNameVal" />
           <SwitchSlider :param="'ShowFacilities'" :values="showFacilitiesVal" />
         </div>
@@ -138,7 +124,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+h1,
+h2,
+h3 {
+  margin: 15px 0px;
+  color: hsl(215, 99%, 14%);
+  font-weight: 300;
+  font-size: 30px;
+}
+
 .container {
   margin: 30px auto;
   min-height: 100vh;
@@ -151,16 +146,24 @@ export default {
   overflow: scroll;
 }
 
-.caution {
-  margin: 20px;
-  color: salmon;
+.top-bar {
+  display: flex;
+  width: 1800px;
+}
+
+.header {
+  margin-left: 20px;
+  width: 600px;
+  text-align: left;
+  flex-grow: 1;
 }
 
 .cat-option {
-  margin-left: 700px;
+  margin: 0px 190px 0px 0px;
   padding: 10px;
   background-color: hsl(0, 0%, 98%);
   border-radius: 10px;
+  flex-grow: 0;
 }
 
 .chart {
@@ -205,7 +208,9 @@ export default {
 .right-group > * {
   margin: 30px 0px;
 }
+</style>
 
+<style>
 .vega-bindings {
   display: none;
 }
