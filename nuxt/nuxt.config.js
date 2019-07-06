@@ -10,7 +10,11 @@ export default {
     title: pkg.name,
     meta: [
       { charset: 'utf-8' },
-      { hid: 'viewport', name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        hid: 'viewport',
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1'
+      },
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
@@ -24,7 +28,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['element-ui/lib/theme-chalk/index.css'],
+  css: ['element-ui/lib/theme-chalk/index.css', '~/assets/main.css'],
 
   /*
    ** Plugins to load before mounting the App
