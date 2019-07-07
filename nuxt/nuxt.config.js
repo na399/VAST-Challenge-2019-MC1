@@ -13,7 +13,7 @@ export default {
       {
         hid: 'viewport',
         name: 'viewport',
-        content: 'width=device-width, initial-scale=1'
+        content: 'width=1920px'
       },
       { hid: 'description', name: 'description', content: pkg.description }
     ],

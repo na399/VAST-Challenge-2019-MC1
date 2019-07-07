@@ -79,6 +79,13 @@
 </template>
 
 <script>
+export default {
+  head() {
+    return {
+      meta: [{ hid: 'viewport', name: 'viewport', content: 'width=device-width' }]
+    }
+  }
+}
 </script>
 
 <style scoped>

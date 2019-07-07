@@ -105,11 +105,6 @@ export default {
       ]
     }
   },
-  head() {
-    return {
-      meta: [{ hid: 'viewport', name: 'viewport', content: 'width=1920' }]
-    }
-  },
   methods: {
     logEvent: function(name, val) {
       console.log(name, val)

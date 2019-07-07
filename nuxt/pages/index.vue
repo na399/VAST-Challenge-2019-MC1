@@ -23,7 +23,7 @@
       <div class="caution">
         <p></p>
         <p>
-          <i>Optimized for screen resolution of 1920 x 1080px</i>
+          <i>Optimized for screen resolution of 1920 x 1080 viewport pixel</i>
         </p>
         <p>
           <i>Some interactions may not function properly on the dashboards rendered as canvas</i>
@@ -42,7 +42,15 @@
   </section>
 </template>
 
+
 <script>
+export default {
+  head() {
+    return {
+      meta: [{ hid: 'viewport', name: 'viewport', content: 'width=device-width' }]
+    }
+  }
+}
 </script>
 
 <style scoped>
