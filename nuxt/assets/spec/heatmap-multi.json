@@ -17,7 +17,7 @@
     { "name": "maxDate", "update": "time('Apr 11 2020')" },
     {
       "name": "indexTime",
-      "update": "time('Apr 7 2020')",
+      "update": "maxDate",
       "on": [
         {
           "events": "@timeInTimeline:mousemove",
@@ -133,7 +133,7 @@
     },
     {
       "name": "allSummary",
-      "url": "data/all_summary_processed.csv",
+      "url": "/data/all_summary_processed.csv",
       "format": {
         "type": "csv",
         "parse": {
@@ -144,7 +144,7 @@
     },
     {
       "name": "aggregatedSummary",
-      "url": "data/all_summary_aggregated.csv",
+      "url": "/data/all_summary_aggregated.csv",
       "format": {
         "type": "csv",
         "parse": {
@@ -446,9 +446,9 @@
             },
             "update": {
               "url": [
-                { "test": "Colour == 'VSUP'", "value": "img/VSUP.png" },
-                { "test": "Colour == 'VSUP_'", "value": "img/VSUP_.png" },
-                { "test": "Colour == 'Normal'", "value": "img/normal.png" },
+                { "test": "Colour == 'VSUP'", "value": "/img/VSUP.png" },
+                { "test": "Colour == 'VSUP_'", "value": "/img/VSUP_.png" },
+                { "test": "Colour == 'Normal'", "value": "/img/normal.png" },
                 { "value": null }
               ],
 

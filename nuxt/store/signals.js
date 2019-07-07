@@ -1,6 +1,6 @@
 export const state = () => ({
   SelectCategory: 'shake_intensity',
-  SelectLocation: 4,
+  SelectLocation: 1,
   TimelineControl: 'Play',
   Colour: 'VSUP',
   ShowCategory: 'Single',

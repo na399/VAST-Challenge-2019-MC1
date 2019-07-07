@@ -275,7 +275,7 @@
     },
     {
       "name": "allSummary",
-      "url": "data/demo/all_summary_processed.csv",
+      "url": "/data/demo/all_summary_processed.csv",
       "format": {
         "type": "csv",
         "parse": {
@@ -287,7 +287,7 @@
     },
     {
       "name": "aggregatedSummary",
-      "url": "data/demo/all_summary_aggregated.csv",
+      "url": "/data/demo/all_summary_aggregated.csv",
       "format": {
         "type": "csv",
         "parse": {
@@ -298,7 +298,7 @@
     },
     {
       "name": "aggregatedReports",
-      "url": "data/demo/mc1-reports-data-aggregated.csv",
+      "url": "/data/demo/mc1-reports-data-aggregated.csv",
       "format": {
         "type": "csv",
         "parse": {
@@ -351,7 +351,7 @@
     },
     {
       "name": "StHimarkGeo",
-      "url": "data/StHimark.geo.json",
+      "url": "/data/StHimark.geo.json",
       "format": {
         "type": "json",
         "property": "features"
@@ -664,7 +664,7 @@
           "type": "image",
           "encode": {
             "enter": {
-              "url": { "value": "img/mc1-majorquake-shakemap-transparent.png" },
+              "url": { "value": "/img/mc1-majorquake-shakemap-transparent.png" },
               "width": { "value": 800 },
               "height": { "value": 662 },
               "x": { "value": 0 },
@@ -685,7 +685,7 @@
           "type": "image",
           "encode": {
             "enter": {
-              "url": { "value": "img/mc1-prequake-shakemap-transparent.png" },
+              "url": { "value": "/img/mc1-prequake-shakemap-transparent.png" },
               "width": { "value": 800 },
               "height": { "value": 662 },
               "x": { "value": 0 },
@@ -706,7 +706,7 @@
           "type": "image",
           "encode": {
             "enter": {
-              "url": { "value": "img/ruler-legend.png" },
+              "url": { "value": "/img/ruler-legend.png" },
               "width": { "value": 800 },
               "height": { "value": 662 },
               "x": { "value": 0 },
@@ -718,7 +718,7 @@
           "type": "image",
           "encode": {
             "enter": {
-              "url": { "value": "img/facilities.png" },
+              "url": { "value": "/img/facilities.png" },
               "width": { "value": 800 },
               "height": { "value": 662 },
               "x": { "value": 0 },
@@ -739,7 +739,7 @@
           "type": "image",
           "encode": {
             "enter": {
-              "url": { "value": "img/categories.png" },
+              "url": { "value": "/img/categories.png" },
               "width": { "value": 800 },
               "height": { "value": 662 },
               "x": { "value": 0 },
@@ -1780,9 +1780,9 @@
             },
             "update": {
               "url": [
-                { "test": "Colour == 'VSUP'", "value": "img/VSUP.png" },
-                { "test": "Colour == 'VSUP_'", "value": "img/VSUP_.png" },
-                { "test": "Colour == 'Normal'", "value": "img/normal.png" },
+                { "test": "Colour == 'VSUP'", "value": "/img/VSUP.png" },
+                { "test": "Colour == 'VSUP_'", "value": "/img/VSUP_.png" },
+                { "test": "Colour == 'Normal'", "value": "/img/normal.png" },
                 { "value": null }
               ],
 
