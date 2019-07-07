@@ -32,7 +32,7 @@
       </div>
       <VegaChart
         :spec="spec"
-        :renderer="'canvas'"
+        :renderer="'svg'"
         :useSignalsFromStore="true"
         @SelectLocation="handleSelectLocation"
       />

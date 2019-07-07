@@ -20,7 +20,7 @@
     { "name": "ONE_HOUR", "update": "60 * 60 * 1000" },
     { "name": "FIVE_MIN", "update": "5 * 60 * 1000" },
     { "name": "LINE_CHARTS_X_POS", "value": 400 },
-    { "name": "LINE_CHARTS_Y_POS", "value": 1050 },
+    { "name": "LINE_CHARTS_Y_POS", "value": 1080 },
     { "name": "LINE_CHARTS_WIDTH", "value": 800 },
     { "name": "LINE_CHARTS_HEIGHT", "value": 600 },
     {
@@ -34,6 +34,20 @@
         {
           "events": "timer{1000}",
           "update": "TimelineControl == 'Play' && indexTime + FIVE_MIN < MAX_DATE ? indexTime + FIVE_MIN : indexTime"
+        }
+      ]
+    },
+    {
+      "name": "indexTimeLC",
+      "update": "{ active: false, time: indexTime }",
+      "on": [
+        {
+          "events": "@xLineAxis:mousemove",
+          "update": "{ active: true, time: round(invert('xTimeLC', clamp(x() - LINE_CHARTS_X_POS , 0, 800)) / FIVE_MIN) * FIVE_MIN }"
+        },
+        {
+          "events": "@xLineAxis:mouseout",
+          "update": "{ active: false, time: indexTime }"
         }
       ]
     },
@@ -359,8 +373,14 @@
       "name": "xTime",
       "type": "time",
       "domain": { "data": "timepoints", "field": "time" },
-      "range": [0, 800],
-      "nice": true
+      "range": [0, 800]
+    },
+    {
+      "name": "xTimeLC",
+      "type": "time",
+      "domain": { "data": "timepoints", "field": "time" },
+      "domainRaw": { "signal": "detailDomain" },
+      "range": [0, 800]
     },
     {
       "name": "cscale",
@@ -1498,7 +1518,8 @@
                   "value": "hsla(220, 80%, 30%, 0.9)"
                 },
                 { "value": "hsla(0, 0%, 80%, 0.2)" }
-              ]
+              ],
+              "cursor": { "value": "pointer" }
             }
           }
         },
@@ -1932,6 +1953,79 @@
     },
     {
       "type": "group",
+      "name": "timelineLC",
+      "clip": true,
+      "encode": {
+        "enter": {
+          "x": { "signal": "LINE_CHARTS_X_POS" },
+          "y": { "signal": "LINE_CHARTS_Y_POS - 10" },
+          "width": { "signal": "LINE_CHARTS_WIDTH" },
+          "height": { "signal": "15" }
+        }
+      },
+      "axes": [
+        {
+          "orient": "bottom",
+          "scale": "xTimeLC",
+          "grid": false,
+          "labelFontSize": 14
+        }
+      ],
+      "marks": [
+        {
+          "type": "rule",
+          "name": "timeInTimelineLC",
+          "from": { "data": "timepoints" },
+          "encode": {
+            "enter": {
+              "x": { "scale": "xTimeLC", "field": "time" },
+              "y": { "value": 0 },
+              "y2": { "field": { "group": "height" } },
+              "stroke": [
+                {
+                  "test": "inrange(datum.time, [FIRST_QUAKE_TIME, FIRST_QUAKE_TIME + ONE_HOUR])",
+                  "value": "hsla(220, 80%, 30%, 1)"
+                },
+                {
+                  "test": "inrange(datum.time, [SECOND_QUAKE_TIME, SECOND_QUAKE_TIME + ONE_HOUR])",
+                  "value": "hsla(220, 80%, 30%, 0.9)"
+                },
+                { "value": "hsla(0, 0%, 80%, 0.2)" }
+              ],
+              "strokeWidth": { "value": 10 }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": { "scale": "xTimeLC", "signal": "indexTimeLC" },
+              "y": { "value": 10 },
+              "y2": { "field": { "group": "height" } },
+              "stroke": { "value": "hsl(180, 50%, 30%)" }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "y": { "value": 0 },
+              "align": { "value": "center" },
+              "fontSize": { "value": 14 },
+              "fill": { "value": "hsl(180, 50%, 30%)" }
+            },
+            "update": {
+              "x": { "scale": "xTimeLC", "signal": "indexTimeLC" },
+              "text": { "signal": "timeFormat(indexTimeLC, '%d/%m/%Y %H:%M')" }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
       "name": "lineCharts",
       "description": "Line Charts of all data categories for a given location",
       "encode": {
@@ -1995,9 +2089,21 @@
       "axes": [
         {
           "orient": "bottom",
-          "scale": "xLine",
-          "zindex": 1,
-          "labelFontSize": 14
+          "scale": "xTimeLC",
+          "offset": 15,
+          "labelFontSize": 14,
+          "encode": {
+            "domain": {
+              "name": "xLineAxis",
+              "interactive": true,
+              "enter": {
+                "y": { "value": -10 },
+                "stroke": { "value": "hsla(0, 0%, 90%, 0.5)" },
+                "strokeWidth": { "value": 15 },
+                "cursor": { "value": "pointer" }
+              }
+            }
+          }
         },
         {
           "orient": "left",
@@ -2366,6 +2472,40 @@
               }
             }
           ]
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "y": { "value": 0, "offset": -5 },
+              "align": { "value": "center" },
+              "fontSize": { "value": 14 },
+              "fill": { "value": "hsl(180, 50%, 30%)" }
+            },
+            "update": {
+              "x": { "scale": "xTimeLC", "signal": "indexTimeLC.time" },
+              "text": { "signal": "timeFormat(indexTimeLC.time, '%d/%m/%Y %H:%M')" },
+              "opacity": [
+                { "test": "indexTimeLC.active == true", "value": 1 },
+                { "value": 0 }
+              ]
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": { "scale": "xLine", "signal": "indexTimeLC.time" },
+              "y": { "value": 0 },
+              "y2": { "signal": "LINE_CHARTS_HEIGHT + 14" },
+              "stroke": { "value": "hsla(180, 50%, 30%)" },
+              "opacity": [
+                { "test": "indexTimeLC.active == true", "value": 0.6 },
+                { "value": 0 }
+              ]
+            }
+          }
         }
       ]
     }
