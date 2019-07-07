@@ -1775,7 +1775,7 @@
           "encode": {
             "enter": {
               "x": { "value": 950 },
-              "y": { "value": -50 },
+              "y": { "value": -15 },
               "width": { "value": 235 }
             },
             "update": {
@@ -2464,7 +2464,7 @@
                     },
                     { "value": null }
                   ],
-                  "opacity": { "value": 0.3 },
+                  "opacity": { "value": 0.5 },
                   "tooltip": {
                     "signal": "timeFormat(datum.time, '%d/%m/%Y %H:%M:%S') + ' | Rating: ' + datum.rating + ' | Count: ' + datum.count"
                   }

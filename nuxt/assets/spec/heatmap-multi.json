@@ -13,11 +13,15 @@
   },
 
   "signals": [
-    { "name": "minDate", "update": "time('Apr 6 2020')" },
-    { "name": "maxDate", "update": "time('Apr 11 2020')" },
+    { "name": "MIN_DATE", "update": "time('Apr 8 2020')" },
+    { "name": "MAX_DATE", "update": "time('Apr 10 2020')" },
+    { "name": "FIRST_QUAKE_TIME", "update": "time('Apr 8 2020 08:35')" },
+    { "name": "SECOND_QUAKE_TIME", "update": "time('Apr 9 2020 15:00')" },
+    { "name": "ONE_HOUR", "update": "60 * 60 * 1000" },
+    { "name": "FIVE_MIN", "update": "5 * 60 * 1000" },
     {
       "name": "indexTime",
-      "update": "maxDate",
+      "update": "MAX_DATE - ONE_HOUR",
       "on": [
         {
           "events": "@timeInTimeline:mousemove",
@@ -25,7 +29,7 @@
         },
         {
           "events": "timer{1000}",
-          "update": "TimelineControl == 'Play' && indexTime + 300000 < maxDate ? indexTime + 300000 : indexTime"
+          "update": "TimelineControl == 'Play' && indexTime + 300000 < MAX_DATE ? indexTime + 300000 : indexTime"
         }
       ]
     },
@@ -34,7 +38,7 @@
       "on": [
         {
           "events": { "signal": "indexTime" },
-          "update": "[minDate, indexTime]"
+          "update": "[MIN_DATE, indexTime]"
         }
       ]
     },
@@ -157,8 +161,8 @@
       "transform": [
         {
           "type": "sequence",
-          "start": { "signal": "minDate" },
-          "stop": { "signal": "maxDate" },
+          "start": { "signal": "MIN_DATE" },
+          "stop": { "signal": "MAX_DATE" },
           "step": 300000,
           "as": "time"
         }
@@ -512,7 +516,7 @@
                 "update": {
                   "x": { "scale": "xHeatmap", "field": "dateHour" },
                   "width": {
-                    "signal": "scale('xHeatmap', minDate + 3600000)"
+                    "signal": "scale('xHeatmap', MIN_DATE + 3600000)"
                   },
                   "fill": [
                     {
