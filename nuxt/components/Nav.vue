@@ -23,7 +23,7 @@
       </el-submenu>
       <el-menu-item index="/about">
         <i class="el-icon-reading"></i>
-        <span slot="title">About Project</span>
+        <span slot="title">About the Project</span>
       </el-menu-item>
     </el-menu>
   </div>

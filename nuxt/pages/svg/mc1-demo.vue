@@ -1,5 +1,7 @@
 <template>
   <section class="container">
+    <WarningCard />
+
     <div class="top-bar">
       <div class="header">
         <h1>Earthquake Damage Report Interactive Dashboard [DEMO]</h1>
@@ -50,6 +52,7 @@ import SelectCategory from '~/components/SelectCategory.vue'
 import GroupRadio from '~/components/GroupRadio.vue'
 import SwitchSlider from '~/components/SwitchSlider.vue'
 import SelectList from '~/components/SelectList.vue'
+import WarningCard from '~/components/WarningCard.vue'
 
 import spec from '~/assets/spec/MC1demo.json'
 
@@ -59,7 +62,8 @@ export default {
     SelectCategory,
     GroupRadio,
     SwitchSlider,
-    SelectList
+    SelectList,
+    WarningCard
   },
   data: function() {
     return {

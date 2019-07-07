@@ -13,7 +13,7 @@ export default {
       {
         hid: 'viewport',
         name: 'viewport',
-        content: 'width=1920px'
+        content: 'width=1920'
       },
       { hid: 'description', name: 'description', content: pkg.description }
     ],
@@ -23,7 +23,7 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff' },
+  loading: { color: '#35495e' },
 
   /*
    ** Global CSS
@@ -40,8 +40,9 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    // '@nuxtjs/axios',
+    '@nuxtjs/pwa',
+    'nuxt-vuex-localstorage'
   ],
   /*
    ** Axios module configuration

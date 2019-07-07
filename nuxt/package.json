@@ -19,6 +19,7 @@
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.11",
     "nuxt": "^2.4.0",
+    "nuxt-vuex-localstorage": "^1.2.6",
     "vega": "^5.4.0"
   },
   "devDependencies": {

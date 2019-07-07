@@ -20,34 +20,44 @@
           />
         </a>
       </div>
-      <div class="caution">
-        <p></p>
-        <p>
-          <i>Optimized for screen resolution of 1920 x 1080 viewport pixel</i>
-        </p>
-        <p>
-          <i>Some interactions may not function properly on the dashboards rendered as canvas</i>
-        </p>
-        <p>
-          <i>Full Dashboard & Multiple Heatmap require at least 2 GB of available RAM</i>
-        </p>
-        <p>
-          <i>Only tested on Chrome v75 and Firefox v67</i>
-        </p>
-        <p>
-          <i>May not work on Safari v12 or Mobile</i>
-        </p>
-      </div>
     </div>
   </section>
 </template>
 
 
 <script>
+import { Notification } from 'element-ui'
+
 export default {
   head() {
     return {
-      meta: [{ hid: 'viewport', name: 'viewport', content: 'width=device-width' }]
+      meta: [
+        { hid: 'viewport', name: 'viewport', content: 'width=device-width' }
+      ]
+    }
+  },
+  mounted() {
+    this.caution()
+  },
+  methods: {
+    caution() {
+      setTimeout(function() {
+        Notification({
+          title: 'Warning',
+          dangerouslyUseHTMLString: true,
+          message: `<div style="text-align: left;">
+            <ul>
+              <li>Optimized for screen (viewport) resolution of 1920 x 1080 pixels</li>
+              <li>Required at least 2 GB of available RAM for Full Dashboard & Multiple Heatmap</li>
+              <li>Only tested on Chrome v75 and Firefox v67</li>
+              <li>May not work on Safari v12 or Mobile</li>
+            </ul>
+            </div>`,
+          type: 'warning',
+          position: 'bottom-right',
+          duration: 15000
+        })
+      }, 3000)
     }
   }
 }
@@ -88,14 +98,5 @@ a {
 
 .links {
   padding-top: 15px;
-}
-
-.caution {
-  margin: 40px;
-  color: salmon;
-}
-
-.caution * {
-  margin: 10px;
 }
 </style>
