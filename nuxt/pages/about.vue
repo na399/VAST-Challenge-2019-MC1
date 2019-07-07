@@ -15,6 +15,40 @@
         >Natthawut Adulyanukosol.</a>
       </p>
 
+      <p>The presentation video below shows the background information and functionalities of the visual analytics.</p>
+
+      <div class="video">
+        <b>VIDEO TO BE REPLACED</b>
+      </div>
+
+      <div class="video">
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube-nocookie.com/embed/tu_Dw1eOAwo"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <p>
+        There are some further mathematical and theoretical concepts that should be comprehended to interpret the visual analytics efficiently. On top of that, numerous design decisions were considered. For detailed information, please read
+        <a
+          href="https://"
+          target="_blank"
+        >the write-up for the challenge</a>
+        and references therein.
+      </p>
+
+      <p>
+        The project is open-sourced and hosted on
+        <a
+          href="https://github.com/na399/VAST-Challenge-2019-MC1"
+          target="_blank"
+        >GitHub.</a>
+      </p>
+
       <div class="quote">
         <p>The VAST Challenge 2019 presents three mini-challenges and a grand challenge for you to apply your visual analytics research and technologies to help a city grapple with the aftermath of an earthquake that damages their nuclear power plant.</p>
         <p>These challenges are open to participation by individuals and teams in industry, government, and academia. We encourage your submissions and look forward to seeing your innovative approaches to solving these challenges using visual analytics.</p>
@@ -52,7 +86,7 @@ h1,
 h2,
 h3 {
   margin: 15px 0px;
-  color: hsl(215, 99%, 14%);
+  color: #35495e;
   font-weight: 300;
   font-size: 30px;
 }
@@ -60,6 +94,10 @@ h3 {
 a {
   color: #526488;
   text-decoration: none;
+}
+
+p {
+  margin-bottom: 1rem;
 }
 
 .container {
@@ -75,6 +113,11 @@ a {
   max-width: 800px;
   margin-top: 5px;
   padding: 20px;
+}
+
+.video {
+  text-align: center;
+  margin: 20px;
 }
 
 .quote {

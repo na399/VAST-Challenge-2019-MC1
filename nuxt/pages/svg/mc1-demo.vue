@@ -129,7 +129,7 @@ h1,
 h2,
 h3 {
   margin: 15px 0px;
-  color: hsl(215, 99%, 14%);
+  color: #35495e;
   font-weight: 300;
   font-size: 30px;
 }

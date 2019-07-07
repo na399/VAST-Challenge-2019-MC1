@@ -9,8 +9,16 @@
       </a>
       <div class="links">
         <a href="svg/MC1-demo" class="button--blue">Demo Dashboard</a>
-        <a href="svg/MC1" class="button--blue">Full Dashboard</a>
+        <a href="canvas/MC1" class="button--blue">Full Dashboard</a>
         <a href="canvas/heatmap-multi" class="button--blue">Multiple Heatmap</a>
+      </div>
+      <div class="thumbnail">
+        <a href="svg/MC1-demo" class="button--blue">
+          <img
+            src="~/assets/img/screenshot-full-dashboard.png"
+            style="width: 100%; max-width: 542px; height: auto;"
+          />
+        </a>
       </div>
       <div class="caution">
         <p></p>
@@ -18,10 +26,10 @@
           <i>Optimized for screen resolution of 1920 x 1080px</i>
         </p>
         <p>
-          <i>Require at least 300 MB of RAM for Demo Dashboard</i>
+          <i>Some interactions may not function properly on the dashboards rendered as canvas</i>
         </p>
         <p>
-          <i>Require at least 2 GB of RAM for Full Dashboard & Multiple Heatmap</i>
+          <i>Full Dashboard & Multiple Heatmap require at least 2 GB of available RAM</i>
         </p>
         <p>
           <i>Only tested on Chrome v75 and Firefox v67</i>
