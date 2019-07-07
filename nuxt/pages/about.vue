@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <div class="content">
-      <h1 class="title">About Project</h1>
+      <h1 class="title">About the Project</h1>
       <p>
         This project is a submission to
         <a
@@ -18,18 +18,7 @@
       <p>The presentation video below shows the background information and functionalities of the visual analytics.</p>
 
       <div class="video">
-        <b>VIDEO TO BE REPLACED</b>
-      </div>
-
-      <div class="video">
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube-nocookie.com/embed/tu_Dw1eOAwo"
-          frameborder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
+        <b>VIDEO TO BE PLACED HERE</b>
       </div>
 
       <p>
@@ -82,7 +71,9 @@
 export default {
   head() {
     return {
-      meta: [{ hid: 'viewport', name: 'viewport', content: 'width=device-width' }]
+      meta: [
+        { hid: 'viewport', name: 'viewport', content: 'width=device-width' }
+      ]
     }
   }
 }
@@ -122,9 +113,23 @@ p {
   padding: 20px;
 }
 
+
 .video {
+  position: relative;
+  width: 80%;
+  height: 0;
+  padding-bottom: 56%; /* The height of the item will now be 56% of the width. */
+  background-color: grey;
   text-align: center;
-  margin: 20px;
+  margin: 20px auto;
+}
+
+.video iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
 }
 
 .quote {
