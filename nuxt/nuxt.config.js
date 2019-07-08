@@ -15,7 +15,12 @@ export default {
         name: 'viewport',
         content: 'width=1920'
       },
-      { hid: 'description', name: 'description', content: 'VAST Challenge 2019 MC1 submission by Natthawut Adulyanukosol' },
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          'Visual Analytics Science and Technology (VAST) Challenge 2019 submission by Natthawut Adulyanukosol'
+      },
       { hid: 'author', name: 'author', content: pkg.author }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
@@ -43,13 +48,26 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     // '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    'nuxt-vuex-localstorage'
+    '@nuxtjs/google-analytics',
+    'nuxt-vuex-localstorage',
+    [
+      'nuxt-social-meta',
+      {
+        title: 'VAST Challenge 2019 MC1 by N. Adulyanukosol',
+        description:
+          'Visual Analytics Science and Technology (VAST) Challenge 2019 submission by Natthawut Adulyanukosol',
+        img: 'img/screenshot-full-dashboard-top.png',
+        locale: 'en_gb',
+        twitter: '@MaxNAdul',
+        themeColor: '#35495e'
+      }
+    ]
   ],
   /*
-   ** Axios module configuration
+   ** Analytics module configuration
    */
-  axios: {
-    // See https://github.com/nuxt-community/axios-module#options
+  googleAnalytics: {
+    id: 'UA-98889378-3'
   },
 
   /*
