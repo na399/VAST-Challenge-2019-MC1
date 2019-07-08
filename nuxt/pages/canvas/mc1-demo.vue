@@ -1,5 +1,7 @@
 <template>
   <section class="container">
+    <WarningCard />
+
     <div class="top-bar">
       <div class="header">
         <h1>Earthquake Damage Report Interactive Dashboard [DEMO]</h1>
@@ -26,8 +28,14 @@
         </div>
 
         <div class="right-group">
-          <SelectList :param="'SortOption'" :values="sortOptionVal" />
-          <GroupRadio :param="'Colour'" :values="colourRadioVal" />
+          <div class="text-option">
+            <span style="margin-right: 30px">Error Bar Chart sort options</span>
+            <SelectList :param="'SortOption'" :values="sortOptionVal" />
+          </div>
+          <div class="text-option">
+            <span>Colour palette</span>
+            <GroupRadio :param="'Colour'" :values="colourRadioVal" />
+          </div>
         </div>
       </div>
       <VegaChart
@@ -50,6 +58,7 @@ import SelectCategory from '~/components/SelectCategory.vue'
 import GroupRadio from '~/components/GroupRadio.vue'
 import SwitchSlider from '~/components/SwitchSlider.vue'
 import SelectList from '~/components/SelectList.vue'
+import WarningCard from '~/components/WarningCard.vue'
 
 import spec from '~/assets/spec/MC1demo.json'
 
@@ -59,7 +68,8 @@ export default {
     SelectCategory,
     GroupRadio,
     SwitchSlider,
-    SelectList
+    SelectList,
+    WarningCard
   },
   data: function() {
     return {
@@ -186,12 +196,12 @@ h3 {
 }
 
 .middle-group {
-  flex-grow: 2;
+  flex-grow: 3;
 }
 
 .right-group {
-  margin-left: 50px;
-  flex-grow: 3;
+  margin-left: 100px;
+  flex-grow: 1;
 }
 
 .left-group > * {
@@ -199,14 +209,15 @@ h3 {
   align-self: flex-start;
 }
 
-.middle-group > *,
-.right-group > * {
+.middle-group > * {
   margin: 30px 0px;
 }
-</style>
 
-<style>
-.vega-bindings {
-  display: none;
+.text-option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px 0px;
+  font-size: 14px;
 }
 </style>

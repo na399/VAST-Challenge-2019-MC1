@@ -510,7 +510,7 @@
                   "y": { "scale": "rowHeatmap", "field": "cat" },
                   "height": { "scale": "rowHeatmap", "band": 1 },
                   "tooltip": {
-                    "signal": "timeFormat(datum.dateHour, '%d/%m/%Y %H') + ' | Maximum MAP: '  + datum.maxMAP + ' | CIR of maximum MAP: '  + datum.CIRatMaxMAP"
+                    "signal": "timeFormat(datum.dateHour, '%d/%m/%Y %I %p') + ' | Maximum MAP: '  + datum.maxMAP + ' | CIR of maximum MAP: '  + datum.CIRatMaxMAP"
                   }
                 },
                 "update": {

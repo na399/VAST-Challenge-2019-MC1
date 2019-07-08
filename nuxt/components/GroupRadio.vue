@@ -1,6 +1,6 @@
 <template>
   <div class="group-radio">
-    <el-radio-group @change="changeSignal" v-model="val" size="small">
+    <el-radio-group @change="changeSignal" v-model="val" size="medium">
       <el-radio-button
         v-for="val in values"
         v-bind:key="val.label"
@@ -21,8 +21,8 @@ export default {
     },
     values: {
       default: () => [
-        { label: 'Play', text: 'Play' },
-        { label: 'Pause', text: 'Pause' }
+        { label: 'Play', text: 'Play ▶︎' },
+        { label: 'Pause', text: '|| Pause' }
       ]
     }
   },

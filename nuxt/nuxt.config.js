@@ -7,7 +7,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: pkg.name,
+    title: 'VAST Challenge 2019 MC1',
     meta: [
       { charset: 'utf-8' },
       {
@@ -15,7 +15,8 @@ export default {
         name: 'viewport',
         content: 'width=1920'
       },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { hid: 'description', name: 'description', content: 'VAST Challenge 2019 MC1 submission by Natthawut Adulyanukosol' },
+      { hid: 'author', name: 'author', content: pkg.author }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },

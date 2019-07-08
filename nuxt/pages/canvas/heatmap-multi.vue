@@ -1,27 +1,49 @@
 <template>
   <section class="container">
+    <WarningCard />
+
+    <div class="top-bar">
+      <div class="header">
+        <h1>Earthquake Damage Report Heat Map of Neighbourhoods</h1>
+        <h2>VAST Challenge 2019</h2>
+      </div>
+    </div>
+
+    <div class="options">
+      <GroupRadio :param="'TimelineControl'" />
+      <div class="text-option">
+        <span>Colour palette</span>
+        <GroupRadio :param="'Colour'" :values="colourRadioVal" />
+      </div>
+    </div>
+
     <div>
-      <VegaChart :spec="specHeatmap" :renderer="'canvas'"/>
-      <br>
-      <p>
-        <i>Only tested on Chrome v75</i>
-      </p>
+      <VegaChart :spec="specHeatmap" :renderer="'canvas'" :useSignalsFromStore="true" />
     </div>
   </section>
 </template>
 
 <script>
 import VegaChart from '~/components/VegaChart.vue'
+import GroupRadio from '~/components/GroupRadio.vue'
+import WarningCard from '~/components/WarningCard.vue'
 
 import specHeatmap from '~/assets/spec/heatmap-multi.json'
 
 export default {
   components: {
-    VegaChart
+    VegaChart,
+    GroupRadio,
+    WarningCard
   },
   data: function() {
     return {
-      specHeatmap: specHeatmap
+      specHeatmap: specHeatmap,
+      colourRadioVal: [
+        { label: 'VSUP', text: 'VSUP' },
+        { label: 'VSUP_', text: 'VSUP Extended' },
+        { label: 'Normal', text: 'Normal' }
+      ]
     }
   },
   methods: {
@@ -32,21 +54,49 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+h1,
+h2,
+h3 {
+  margin: 15px 0px;
+  color: #35495e;
+  font-weight: 300;
+  font-size: 30px;
+}
+
 .container {
-  margin: 0 auto;
+  margin: 30px auto;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
 }
 
-.vega-bind-name {
-  padding: 0px 10px;
+.top-bar {
+  display: flex;
+  width: 1800px;
+  height: 100px;
 }
 
-.vega-bind-radio * {
-  padding: 0px 5px;
+.header {
+  margin-left: 20px;
+  width: 600px;
+  text-align: left;
+  flex-grow: 1;
+}
+
+.options {
+  display: flex;
+  flex-direction: row;
+}
+
+.text-option {
+  margin-left: 150px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 14px;
 }
 </style>

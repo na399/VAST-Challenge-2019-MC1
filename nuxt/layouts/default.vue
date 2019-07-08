@@ -64,4 +64,8 @@ html {
   color: #fff;
   background-color: #35495e;
 }
+
+.vega-bindings {
+  display: none;
+}
 </style>
