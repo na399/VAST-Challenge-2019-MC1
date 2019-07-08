@@ -4,20 +4,28 @@
       <a href="https://vast-challenge.github.io/2019/MC1" target="_blank">
         <h1 class="title">VAST Challenge 2019 MC1</h1>
       </a>
-      <a href="https://natthawut.adulyanukosol.com" target="_blank">
-        <h2 class="subtitle">Natthawut Adulyanukosol</h2>
-      </a>
+      <h2 class="subtitle">
+        Visual Analytics Science and Technology (VAST) Challenge 2019 submission by
+        <a
+          href="https://natthawut.adulyanukosol.com"
+          target="_blank"
+        >Natthawut Adulyanukosol</a>
+      </h2>
       <div class="links">
-        <n-link to="/svg/MC1-demo" class="button--blue">Demo Dashboard</n-link>
-        <n-link to="/canvas/MC1" class="button--blue">Full Dashboard</n-link>
-        <n-link to="/canvas/heatmap-multi-demo" class="button--blue">Demo Multiple Heatmap</n-link>
-        <n-link to="/canvas/heatmap-multi" class="button--blue">Multiple Heatmap</n-link>
+        <div>
+          <n-link to="/svg/MC1-demo" class="button--blue page-link">Demo Dashboard</n-link>
+          <n-link to="/canvas/MC1" class="button--blue page-link">Full Dashboard</n-link>
+        </div>
+        <div>
+          <n-link to="/canvas/heatmap-multi-demo" class="button--blue page-link">Demo Multiple Heatmap</n-link>
+          <n-link to="/canvas/heatmap-multi" class="button--blue page-link">Multiple Heatmap</n-link>
+        </div>
       </div>
       <div class="thumbnail">
         <n-link to="/svg/MC1-demo" class="button--blue">
           <img
             src="~/assets/img/screenshot-full-dashboard.png"
-            style="width: 100%; max-width: 555px; height: auto;"
+            style="width: 100%; max-width: 522px; height: auto;"
           />
         </n-link>
       </div>
@@ -87,7 +95,7 @@ export default {
 
 .subtitle {
   font-weight: 300;
-  font-size: 22px;
+  font-size: 20px;
   color: #526488;
   word-spacing: 5px;
   padding-bottom: 15px;
@@ -99,5 +107,9 @@ a {
 
 .links {
   padding-top: 15px;
+}
+
+.page-link {
+  width: 280px
 }
 </style>
