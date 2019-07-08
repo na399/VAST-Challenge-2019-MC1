@@ -5,11 +5,9 @@
         <h1 class="title">VAST Challenge 2019 MC1</h1>
       </a>
       <h2 class="subtitle">
-        Visual Analytics Science and Technology (VAST) Challenge 2019 submission by
-        <a
-          href="https://natthawut.adulyanukosol.com"
-          target="_blank"
-        >Natthawut Adulyanukosol</a>
+        Visual Analytics Science and Technology (VAST) Challenge 2019 submission
+        <br />by
+        <a href="https://natthawut.adulyanukosol.com" target="_blank">Natthawut Adulyanukosol</a>
       </h2>
       <div class="links">
         <div>
@@ -17,16 +15,31 @@
           <n-link to="/canvas/MC1" class="button--blue page-link">Full Dashboard</n-link>
         </div>
         <div>
-          <n-link to="/canvas/heatmap-multi-demo" class="button--blue page-link">Demo Multiple Heatmap</n-link>
-          <n-link to="/canvas/heatmap-multi" class="button--blue page-link">Multiple Heatmap</n-link>
+          <n-link
+            to="/canvas/heatmap-multi-demo"
+            class="button--blue page-link"
+          >Demo Multiple Heat Maps</n-link>
+          <n-link to="/canvas/heatmap-multi" class="button--blue page-link">Multiple Heat Maps</n-link>
         </div>
       </div>
       <div class="thumbnail">
         <n-link to="/svg/MC1-demo" class="button--blue">
-          <img
-            src="~/assets/img/screenshot-full-dashboard.png"
-            style="width: 100%; max-width: 522px; height: auto;"
-          />
+          <video
+            id="gif-mp4"
+            poster="~/assets/img/dashboard-thumbnail-s.gif"
+            style="margin: 0; padding: 0; width: 100%; max-width: 480px; height: auto;"
+            autoplay
+            loop
+          >
+            <source
+              src="~/assets/img/dashboard-thumbnail.mp4"
+              type="video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;"
+            />
+            <img
+              src="~/assets/img/dashboard-thumbnail.gif"
+              title="Your browser does not support the mp4 video codec."
+            />
+          </video>
         </n-link>
       </div>
     </div>
@@ -102,6 +115,7 @@ export default {
   margin: 10px;
 }
 a {
+  color: #409eff;
   text-decoration: none;
 }
 
@@ -110,6 +124,6 @@ a {
 }
 
 .page-link {
-  width: 280px
+  width: 260px;
 }
 </style>
