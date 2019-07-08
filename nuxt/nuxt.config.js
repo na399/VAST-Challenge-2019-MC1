@@ -56,7 +56,8 @@ export default {
         title: 'VAST Challenge 2019 MC1 by N. Adulyanukosol',
         description:
           'Visual Analytics Science and Technology (VAST) Challenge 2019 submission by Natthawut Adulyanukosol',
-        img: 'img/screenshot-full-dashboard-top.png',
+        img:
+          'https://vast2019.maxnadul.com/img/screenshot-full-dashboard-top.png',
         locale: 'en_gb',
         twitter: '@MaxNAdul',
         themeColor: '#35495e'
