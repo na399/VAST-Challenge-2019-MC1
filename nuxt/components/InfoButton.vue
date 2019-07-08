@@ -27,7 +27,7 @@
         </el-table-column>
       </el-table>
       <br />
-      <a id="about-link" href="/about">More information about the dashboard</a>
+      <n-link id="about-link" to="/about">More information about the dashboard</n-link>
     </el-popover>
   </div>
 </template>

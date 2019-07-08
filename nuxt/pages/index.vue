@@ -8,18 +8,18 @@
         <h2 class="subtitle">Natthawut Adulyanukosol</h2>
       </a>
       <div class="links">
-        <a href="svg/MC1-demo" class="button--blue">Demo Dashboard</a>
-        <a href="canvas/MC1" class="button--blue">Full Dashboard</a>
-        <a href="canvas/heatmap-multi-demo" class="button--blue">Demo Multiple Heatmap</a>
-        <a href="canvas/heatmap-multi" class="button--blue">Multiple Heatmap</a>
+        <n-link to="/svg/MC1-demo" class="button--blue">Demo Dashboard</n-link>
+        <n-link to="/canvas/MC1" class="button--blue">Full Dashboard</n-link>
+        <n-link to="/canvas/heatmap-multi-demo" class="button--blue">Demo Multiple Heatmap</n-link>
+        <n-link to="/canvas/heatmap-multi" class="button--blue">Multiple Heatmap</n-link>
       </div>
       <div class="thumbnail">
-        <a href="svg/MC1-demo" class="button--blue">
+        <n-link to="/svg/MC1-demo" class="button--blue">
           <img
             src="~/assets/img/screenshot-full-dashboard.png"
             style="width: 100%; max-width: 555px; height: auto;"
           />
-        </a>
+        </n-link>
       </div>
     </div>
   </section>
