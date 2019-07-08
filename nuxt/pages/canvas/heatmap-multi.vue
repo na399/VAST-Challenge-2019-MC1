@@ -4,7 +4,7 @@
 
     <div class="top-bar">
       <div class="header">
-        <h1>Earthquake Damage Report Heat Map of Neighbourhoods</h1>
+        <h1>Earthquake Damage Report Heat Maps of Neighbourhoods</h1>
         <h2>VAST Challenge 2019</h2>
       </div>
     </div>
@@ -20,6 +20,10 @@
     <div>
       <VegaChart :spec="specHeatmap" :renderer="'canvas'" :useSignalsFromStore="true" />
     </div>
+
+    <div>
+      <InfoButton :isWide="true" />
+    </div>
   </section>
 </template>
 
@@ -27,6 +31,7 @@
 import VegaChart from '~/components/VegaChart.vue'
 import GroupRadio from '~/components/GroupRadio.vue'
 import WarningCard from '~/components/WarningCard.vue'
+import InfoButton from '~/components/InfoButton.vue'
 
 import specHeatmap from '~/assets/spec/heatmap-multi.json'
 
@@ -34,7 +39,8 @@ export default {
   components: {
     VegaChart,
     GroupRadio,
-    WarningCard
+    WarningCard,
+    InfoButton
   },
   data: function() {
     return {

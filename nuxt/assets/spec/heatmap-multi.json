@@ -398,6 +398,9 @@
         {
           "orient": "right",
           "scale": "rowLoc",
+          "title": "Neighbourhood",
+          "titleFontSize": 16,
+          "titlePadding": 10,
           "offset": 10,
           "grid": true,
           "labelFontSize": 16

@@ -1,0 +1,42 @@
+[
+  {
+    "locID": 1,
+    "locName": " Palace Hills",
+    "overview": "Luxury condominiums and gated housing communities with private beaches",
+    "hospital": "",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": "Repairing work on Friday Bridge & Magritte Bridge"
+  },
+  {
+    "locID": 2,
+    "locName": " Northwest",
+    "overview": "Upscale condominiums, modern apartment buildings, and townhouses",
+    "hospital": "",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": ""
+  },
+  {
+    "locID": 3,
+    "locName": " Old Town",
+    "overview": "Historic centre of our city and the structures with affordable housing",
+    "hospital": "Old Town H (diabetes and endocrinology, digestive health, oncology, and orthopedics)",
+    "power": "Modernizing the electrical distribution system, power outages expected lasting 30-60 minutes throughout the week",
+    "buildings": "(Historic structures here)",
+    "sewer_and_water": "Replacing old water supply lines",
+    "roads_and_bridges": ""
+  },
+  {
+    "locID": 4,
+    "locName": " Safe Town",
+    "overview": "Older single-family homes ",
+    "hospital": "",
+    "power": "(Nuclear plant here)",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": "Repairing bridge decking on Jade Bridge"
+  }
+ ]

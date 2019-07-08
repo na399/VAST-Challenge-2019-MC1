@@ -49,6 +49,10 @@
     <div>
       <SwitchSlider :param="'ShowRawReports'" :values="showRawReportsVal" />
     </div>
+
+    <div>
+      <InfoButton />
+    </div>
   </section>
 </template>
 
@@ -59,6 +63,7 @@ import GroupRadio from '~/components/GroupRadio.vue'
 import SwitchSlider from '~/components/SwitchSlider.vue'
 import SelectList from '~/components/SelectList.vue'
 import WarningCard from '~/components/WarningCard.vue'
+import InfoButton from '~/components/InfoButton.vue'
 
 import spec from '~/assets/spec/MC1.json'
 
@@ -69,7 +74,8 @@ export default {
     GroupRadio,
     SwitchSlider,
     SelectList,
-    WarningCard
+    WarningCard,
+    InfoButton
   },
   data: function() {
     return {

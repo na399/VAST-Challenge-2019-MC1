@@ -1,0 +1,192 @@
+[
+  {
+    "locID": 1,
+    "locName": " Palace Hills",
+    "overview": "Luxury condominiums and gated housing communities with private beaches",
+    "hospital": "",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": "Repairing work on Friday Bridge & Magritte Bridge"
+  },
+  {
+    "locID": 2,
+    "locName": " Northwest",
+    "overview": "Upscale condominiums, modern apartment buildings, and townhouses",
+    "hospital": "",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": ""
+  },
+  {
+    "locID": 3,
+    "locName": " Old Town",
+    "overview": "Historic centre of our city and the structures with affordable housing",
+    "hospital": "Old Town H (diabetes and endocrinology, digestive health, oncology, and orthopedics)",
+    "power": "Modernizing the electrical distribution system, power outages expected lasting 30-60 minutes throughout the week",
+    "buildings": "(Historic structures here)",
+    "sewer_and_water": "Replacing old water supply lines",
+    "roads_and_bridges": ""
+  },
+  {
+    "locID": 4,
+    "locName": " Safe Town",
+    "overview": "Older single-family homes ",
+    "hospital": "",
+    "power": "(Nuclear plant here)",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": "Repairing bridge decking on Jade Bridge"
+  },
+  {
+    "locID": 5,
+    "locName": " Southwest",
+    "overview": "Light industry, single-family homes and garden apartments",
+    "hospital": "",
+    "power": "Repairing substation, causing intermittent power outages",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": ""
+  },
+  {
+    "locID": 6,
+    "locName": " Downtown",
+    "overview": "Heart of the city with luxury lofts and modest apartments",
+    "hospital": "Trauma H (only Level 1 Trauma Center in the area, burn centre, Neuroscience Intensive Care Unit), Children H (pediatric) ",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": "Resurfacing collector roads, Repairing traffic signal"
+  },
+  {
+    "locID": 7,
+    "locName": " Wilson Forest",
+    "overview": "New single-family homes",
+    "hospital": "",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": "Repairing shoulder of Wilson Hwy"
+  },
+  {
+    "locID": 8,
+    "locName": " Scenic Vista",
+    "overview": "Large, custom-built single-family homes to secure, gated communities, trendy apartments, and exclusive condominiums",
+    "hospital": "",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": "Resurfacing residential streets "
+  },
+  {
+    "locID": 9,
+    "locName": " Broadview",
+    "overview": "Older single-family homes",
+    "hospital": "Community H (full spectrum)",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": "Resurfacing residential streets "
+  },
+  {
+    "locID": 10,
+    "locName": " Chapparal",
+    "overview": "Rustic 18th and 19th century farmhouses",
+    "hospital": "",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": "Resurfacing collector roads"
+  },
+  {
+    "locID": 11,
+    "locName": " Terrapin Springs",
+    "overview": "Farm houses with newer, custom homes",
+    "hospital": "Goldcare H (comprehensive medical, surgical and therapeutic services)",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": ""
+  },
+  {
+    "locID": 12,
+    "locName": " Pepper Mill",
+    "overview": "Low-density housing",
+    "hospital": "",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": ""
+  },
+  {
+    "locID": 13,
+    "locName": " Cheddarford",
+    "overview": "Quiet residential areas",
+    "hospital": "",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": "Resurfacing collector roads"
+  },
+  {
+    "locID": 14,
+    "locName": " Easton",
+    "overview": "Single-family brick homes",
+    "hospital": "",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "Reparing a broken water main",
+    "roads_and_bridges": ""
+  },
+  {
+    "locID": 15,
+    "locName": " Weston",
+    "overview": "Cozy condos and apartment, and lofts above businesses",
+    "hospital": "",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": ""
+  },
+  {
+    "locID": 16,
+    "locName": " Southton",
+    "overview": "Older homes and modern garden-style apartments",
+    "hospital": "Eaglepeak H (critical care, neurology, gastrointestinal, and orthopedics)",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": "Resurfacing residential streets "
+  },
+  {
+    "locID": 17,
+    "locName": " Oak Willow",
+    "overview": "Educated couples and young single professionals",
+    "hospital": "",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "",
+    "roads_and_bridges": ""
+  },
+  {
+    "locID": 18,
+    "locName": " East Parton",
+    "overview": "Masonry facades",
+    "hospital": "",
+    "power": "",
+    "buildings": "(Masonry facades here)",
+    "sewer_and_water": "",
+    "roads_and_bridges": ""
+  },
+  {
+    "locID": 19,
+    "locName": " West Parton",
+    "overview": "Heart of the city with St. Himark Museum",
+    "hospital": "",
+    "power": "",
+    "buildings": "",
+    "sewer_and_water": "Ongoing routine maintenance on the sewer lines",
+    "roads_and_bridges": ""
+  }
+ ]
