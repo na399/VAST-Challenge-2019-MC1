@@ -6,15 +6,15 @@ locID,locName,overview,hospital,power,buildings,sewer_and_water,roads_and_bridge
 5, Southwest,"Light industry, single-family homes and garden apartments",,"Repairing substation, causing intermittent power outages",,,
 6, Downtown,Heart of the city with luxury lofts and modest apartments,"Trauma H (only Level 1 Trauma Center in the area, burn centre, Neuroscience Intensive Care Unit), Children H (pediatric) ",,,,"Resurfacing collector roads, Repairing traffic signal"
 7, Wilson Forest,New single-family homes,,,,,Repairing shoulder of Wilson Hwy
-8, Scenic Vista,"Large, custom-built single-family homes to secure, gated communities, trendy apartments, and exclusive condominiums",,,,,Resurfacing residential streets 
-9, Broadview,Older single-family homes,Community H (full spectrum),,,,Resurfacing residential streets 
-10, Chapparal,Rustic 18th and 19th century farmhouses,,,,,Resurfacing collector roads
+8, Scenic Vista,"Large, custom-built single-family homes to secure, gated communities, trendy apartments, and exclusive condominiums",,,,,Resurfacing residential streets
+9, Broadview,Older single-family homes,Community H (full spectrum),,,,Resurfacing residential streets
+10, Chapparal,Rustic 18th and 19th century farmhouses,,,(Rustic 18th and 19th century farmhouses here),,Resurfacing collector roads
 11, Terrapin Springs,"Farm houses with newer, custom homes","Goldcare H (comprehensive medical, surgical and therapeutic services)",,,,
 12, Pepper Mill,Low-density housing,,,,,
 13, Cheddarford,Quiet residential areas,,,,,Resurfacing collector roads
 14, Easton,Single-family brick homes,,,,Reparing a broken water main,
 15, Weston,"Cozy condos and apartment, and lofts above businesses",,,,,
-16, Southton,Older homes and modern garden-style apartments,"Eaglepeak H (critical care, neurology, gastrointestinal, and orthopedics)",,,,Resurfacing residential streets 
+16, Southton,Older homes and modern garden-style apartments,"Eaglepeak H (critical care, neurology, gastrointestinal, and orthopedics)",,,,Resurfacing residential streets
 17, Oak Willow,Educated couples and young single professionals,,,,,
 18, East Parton,Masonry facades,,,(Masonry facades here),,
 19, West Parton,Heart of the city with St. Himark Museum,,,,Ongoing routine maintenance on the sewer lines,
