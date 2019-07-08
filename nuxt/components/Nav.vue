@@ -13,11 +13,13 @@
         <el-menu-item-group title="SVG">
           <el-menu-item index="/svg/MC1-demo">Demo Dashboard</el-menu-item>
           <el-menu-item index="/svg/MC1">Full Dashboard</el-menu-item>
+          <el-menu-item index="/svg/Heatmap-multi-demo">Demo Multiple Heat Maps</el-menu-item>
           <el-menu-item index="/svg/Heatmap-multi">Multiple Heat Maps</el-menu-item>
         </el-menu-item-group>
         <el-menu-item-group title="Canvas">
           <el-menu-item index="/canvas/MC1-demo">Demo Dashboard</el-menu-item>
           <el-menu-item index="/canvas/MC1">Full Dashboard</el-menu-item>
+          <el-menu-item index="/canvas/Heatmap-multi-demo">Demo Multiple Heat Maps</el-menu-item>
           <el-menu-item index="/canvas/Heatmap-multi">Multiple Heat Maps</el-menu-item>
         </el-menu-item-group>
       </el-submenu>

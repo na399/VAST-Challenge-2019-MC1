@@ -10,13 +10,14 @@
       <div class="links">
         <a href="svg/MC1-demo" class="button--blue">Demo Dashboard</a>
         <a href="canvas/MC1" class="button--blue">Full Dashboard</a>
+        <a href="canvas/heatmap-multi-demo" class="button--blue">Demo Multiple Heatmap</a>
         <a href="canvas/heatmap-multi" class="button--blue">Multiple Heatmap</a>
       </div>
       <div class="thumbnail">
         <a href="svg/MC1-demo" class="button--blue">
           <img
             src="~/assets/img/screenshot-full-dashboard.png"
-            style="width: 100%; max-width: 542px; height: auto;"
+            style="width: 100%; max-width: 555px; height: auto;"
           />
         </a>
       </div>
