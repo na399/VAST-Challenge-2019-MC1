@@ -26,7 +26,7 @@
         <n-link to="/svg/MC1-demo" class="button--blue">
           <video
             id="gif-mp4"
-            poster="~/assets/img/dashboard-thumbnail-s.gif"
+            poster="/img/dashboard-thumbnail-s.gif"
             style="margin: 0; padding: 0; width: 100%; max-width: 480px; height: auto;"
             autoplay
             loop
