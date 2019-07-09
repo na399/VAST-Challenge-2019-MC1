@@ -1,10 +1,22 @@
-# VAST Challenge 2019 MC1
+# Earthquake Damage Report Interactive Dashboard
+
+This project is a submission to Visual Analytics Science and Technology (VAST) Challenge 2019 (Mini Challege 1).
+
+![Dashboard](assets/dashboard.gif)
+
+Live website: [https://vast2019.maxnadul.com](https://vast2019.maxnadul.com)
+
+The majority of codebase can be found in [`nuxt`](nuxt) directory.
+
+
+
+
+## Overview
 
 [Source](https://vast-challenge.github.io/2019/index.html)
 
 _Note: This scenario and all the people, places, groups, technologies, contained therein are fictitious. Any resemblance to real people, places, groups, or technologies is purely coincidental._
 
-## Overview
 
 St. Himark is a vibrant community located in the Oceanus Sea. Home to the world-renowned St. Himark Museum, beautiful beaches, and the Wilson Forest Nature Preserve, St. Himark is one of the region’s best cities for raising a family and provides employment across a number of industries including the Always Safe Nuclear Power Plant. Well, all that was true before the disastrous earthquake that hits the area during the course of this year’s challenge. Mayor Jordan, city officials, and emergency services are overwhelmed and are desperate for assistance in understanding the true situation on the ground and how best to deploy the limited resources available to this relatively small community.
 
@@ -19,13 +31,6 @@ In a prescient move of community engagement, the city had released a new damage 
 With emergency services stretched thin, officials are relying on citizens to provide them with much needed information about the effects of the quake to help focus recovery efforts.
 
 By combining seismic readings of the quake, responses from the app, and background knowledge of the city, help the city triage their efforts for rescue and recovery.
-
-### Tasks and Questions
-
-1. Emergency responders will base their initial response on the earthquake shake map. Use visual analytics to determine how their response should change based on damage reports from citizens on the ground. How would you prioritize neighborhoods for response? Which parts of the city are hardest hit?
-2. Use visual analytics to show uncertainty in the data. Compare the reliability of neighborhood reports. Which neighborhoods are providing reliable reports? Provide a rationale for your response.
-3. How do conditions change over time? How does uncertainty in change over time? Describe the key changes you see.
-4. The data for this challenge can be analyzed either as a static collection or as a dynamic stream of data, as it would occur in a real emergency. Describe how you analyzed the data - as a static collection or a stream. How do you think this choice affected your analysis?
 
 #### Data description
 
