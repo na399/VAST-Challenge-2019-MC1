@@ -3,6 +3,7 @@ library(tidyr)
 library(dplyr)
 library(ggplot2)
 library(zoo)
+library(svglite)
 
 
 dataset <-
@@ -19,6 +20,15 @@ dataset <-
       location = col_factor(levels = loc_ids)
     )
   )
+
+data_processed <-
+  read_csv("out/all_summary_processed.csv",
+           col_types = cols(time = col_datetime(format = "%Y-%m-%d %H:%M:%S")))
+
+
+data_summary <-
+  read_csv("out/3/shake_intensity/summary/summary-2020-04-10_23-50-00.csv",
+           col_types = cols(time = col_datetime(format = "%Y-%m-%d %H:%M:%S")))
 
 dataset_3 <- dataset %>%
   dplyr::filter(location == 3) %>%
@@ -51,6 +61,13 @@ dataset_3_long <-
 #   count(rating, sort=T, name="count") %>%
 #   right_join(tibble(time=dataset_3$time), by="time")
 
+
+data_processed_3 <- data_processed %>%
+  dplyr::filter(loc == 3) %>%
+  dplyr::filter(cat == "shake_intensity") %>%
+  full_join(tibble(time=dataset_3$time), by="time")
+
+
 #with(dataset_3, scatter.smooth(x = time, y = shake_intensity, span = 2/3))
 
 loess <- loess(shake_intensity ~ time_num, dataset_3, span = 2 / 3)
@@ -65,8 +82,11 @@ ggplot(dataset_3, aes(time, shake_intensity)) +
     high = "#ff3b12",
     midpoint = 3
   ) +
+  ylim(0, 10) + 
   labs(x = "Time", y = "Shake Intensity") +
-  theme_minimal() +
+  scale_y_continuous(breaks = seq(0,10, 2)) +
+  theme_minimal() + 
+  theme(text = element_text(size=16)) +
   geom_line(aes(y = predict(loess)),
             alpha = 0.7,
             color = "salmon",
@@ -84,4 +104,14 @@ ggplot(dataset_3, aes(time, shake_intensity)) +
     color = "turquoise",
     alpha = 0.7,
     size = 1
+  ) +
+  geom_line(
+    data = data_processed_3,
+    aes(y = MAP),
+    color = "navyblue",
+    alpha = 0.7,
+    size = 1
   ) 
+
+
+ggsave("out/fig4-1.svg", device = "svg", width = 18, height = 9)
