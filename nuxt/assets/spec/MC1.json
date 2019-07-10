@@ -15,6 +15,7 @@
   "signals": [
     { "name": "MIN_DATE", "update": "time('Apr 6 2020')" },
     { "name": "MAX_DATE", "update": "time('Apr 11 2020')" },
+    { "name": "PRE_QUAKE_TIME", "update": "time('Apr 6 2020 14:40')" },
     { "name": "FIRST_QUAKE_TIME", "update": "time('Apr 8 2020 08:35')" },
     { "name": "SECOND_QUAKE_TIME", "update": "time('Apr 9 2020 15:00')" },
     { "name": "ONE_HOUR", "update": "60 * 60 * 1000" },
@@ -673,7 +674,7 @@
             "update": {
               "opacity": [
                 {
-                  "test": "inrange(indexTime, [FIRST_QUAKE_TIME, FIRST_QUAKE_TIME + 10 * ONE_HOUR])",
+                  "test": "inrange(indexTime, [FIRST_QUAKE_TIME, FIRST_QUAKE_TIME + ONE_HOUR])",
                   "value": 0.6
                 },
                 { "value": 0 }
@@ -694,7 +695,7 @@
             "update": {
               "opacity": [
                 {
-                  "test": "inrange(indexTime, [SECOND_QUAKE_TIME, SECOND_QUAKE_TIME + 10 * ONE_HOUR])",
+                  "test": "inrange(indexTime, [PRE_QUAKE_TIME, PRE_QUAKE_TIME + ONE_HOUR])",
                   "value": 0.6
                 },
                 { "value": 0 }
@@ -1510,12 +1511,16 @@
               "y2": { "field": { "group": "height" } },
               "stroke": [
                 {
+                  "test": "inrange(datum.time, [PRE_QUAKE_TIME, PRE_QUAKE_TIME + ONE_HOUR])",
+                  "value": "hsla(220, 60%, 50%, 1)"
+                },
+                {
                   "test": "inrange(datum.time, [FIRST_QUAKE_TIME, FIRST_QUAKE_TIME + ONE_HOUR])",
                   "value": "hsla(220, 80%, 30%, 1)"
                 },
                 {
                   "test": "inrange(datum.time, [SECOND_QUAKE_TIME, SECOND_QUAKE_TIME + ONE_HOUR])",
-                  "value": "hsla(220, 80%, 30%, 0.9)"
+                  "value": "hsla(220, 70%, 40%, 1)"
                 },
                 { "value": "hsla(0, 0%, 80%, 0.2)" }
               ],
