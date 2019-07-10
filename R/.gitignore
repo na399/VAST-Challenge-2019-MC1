@@ -3,5 +3,5 @@
 .RData
 .Rhistory
 analysis-in-R.Rproj
-out/
 out1/
+tmp/
