@@ -1196,6 +1196,11 @@
       .question {
         background-color: hsla(181, 52%, 61%, 0.5);
       }
+      .warning {
+        background-color: hsla(11, 82%, 64%, 1);
+        padding: 10pt;
+        margin: 10pt;
+      }
     </style>
     <link href="vendor/zoom.css" rel="stylesheet" />
   </head>
@@ -1395,7 +1400,9 @@
       <p class="c4"><span>&nbsp;</span></p>
       <p class="c4"><span class="c9 c27">Video </span></p>
       <p class="c4"><span class="c1">4-min summary: LINK TO BE ADDED</span></p>
-      <p class="c4"><span class="c1">Data sonification: LINK TO BE ADDED</span></p>
+      <p class="c4">
+        <span class="c1">Data sonification: LINK TO BE ADDED</span>
+      </p>
       <p class="c4 c14"><span class="c24 c19"></span></p>
       <p class="c4"><span class="c27 c9">Live Dashboard</span></p>
       <p class="c4">
@@ -1433,15 +1440,13 @@
         >
       </p>
       <p class="c4"><span>&nbsp;</span></p>
-      <p class="c4" style="text-align: center;">
-        <span
-          class="c1"
-          style="color: hsla(11, 100%, 53%, 1.00); font-size: 13pt"
-          ><b
-            ><u>Please click on the figures to view them in full size.</u></b
-          ></span
-        >
-      </p>
+      <div class="section warning">
+        <p class="c4" style="text-align: center; margin-top: 10pt">
+          <span class="c1" style="color: white; font-size: 14pt"
+            ><b>Please click on the figures to view them in full size.</b></span
+          >
+        </p>
+      </div>
       <p class="c4">
         <span class="c1"
           >The answers are structured following the four-level nested model for
@@ -2089,7 +2094,7 @@
         ><span class="c9">Fig 1.5</span
         ><span
           >) to approximately quantify the uncertainties and compare them among
-          neighbourhoods visually. In contrast to the normal colour palette, as
+          neighbourhoods visually. In contrast, the normal colour palette, as
           in </span
         ><span class="c9">Fig 2.2</span
         ><span class="c1"
@@ -2633,7 +2638,7 @@
           missing data could be due to power outage, while the damage remains as
           is or aggravates. Therefore, the visualization should flag missing
           data to let responders realize that they must get information via
-          other means. The latest data is still shown to guide the judgement but
+          other means. The latest data can be displayed to guide the decision but
           should be used cautiously (</span
         ><span class="c9">Fig 1.3</span><span class="c1">).</span>
       </p>
