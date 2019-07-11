@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Tell GitHub Linguist to ignore the html files in the answer 
+nuxt/static/answer/* linguist-vendored
