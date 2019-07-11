@@ -30,7 +30,7 @@
         },
         {
           "events": "timer{1000}",
-          "update": "TimelineControl == 'Play' && indexTime + 300000 < MAX_DATE ? indexTime + 300000 : indexTime"
+          "update": "TimelineControl == 'Play' && indexTime + 300000 < MAX_DATE ? indexTime + 300000 : MAX_DATE"
         }
       ]
     },
