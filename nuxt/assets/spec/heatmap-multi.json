@@ -26,11 +26,11 @@
       "on": [
         {
           "events": "@timeInTimeline:mousemove",
-          "update": "round(invert('xTime', clamp(x(), 0, 800)) / 300000) * 300000"
+          "update": "round(invert('xTime', clamp(x(), 0, 800)) / FIVE_MIN) * FIVE_MIN"
         },
         {
           "events": "timer{1000}",
-          "update": "TimelineControl == 'Play' && indexTime + 300000 < MAX_DATE ? indexTime + 300000 : MAX_DATE"
+          "update": "TimelineControl == 'Play' && indexTime + FIVE_MIN <= MAX_DATE ? indexTime + FIVE_MIN : indexTime"
         }
       ]
     },

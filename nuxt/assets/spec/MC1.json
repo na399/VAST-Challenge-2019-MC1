@@ -34,7 +34,7 @@
         },
         {
           "events": "timer{1000}",
-          "update": "TimelineControl == 'Play' && indexTime + FIVE_MIN < MAX_DATE ? indexTime + FIVE_MIN : MAX_DATE"
+          "update": "TimelineControl == 'Play' && indexTime + FIVE_MIN <= MAX_DATE ? indexTime + FIVE_MIN : indexTime"
         }
       ]
     },
