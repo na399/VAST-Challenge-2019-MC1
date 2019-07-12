@@ -18,17 +18,22 @@
       <p>The presentation video below shows the background information and functionalities of the visual analytics.</p>
 
       <div class="video">
-        <b>VIDEO TO BE PLACED HERE BY FRIDAY 12 JULY 19</b>
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/s28CX9V8pRI"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
       </div>
 
-      <!-- <p>
+      <p>
         There are some further mathematical and theoretical concepts that should be comprehended to interpret the visual analytics efficiently. On top of that, numerous design decisions were considered. For detailed information, please read
         <a
-          href="https://"
-          target="_blank"
-        >the write-up for the challenge</a>
-        and references therein.
-      </p> -->
+          href="https://vast2019.maxnadul.com/answer/dpst-natthawut-mc1"
+        >the write-up for the Challenge</a> and references therein.
+      </p>
 
       <p>
         The project is open-source and hosted on
@@ -112,7 +117,6 @@ p {
   margin-top: 5px;
   padding: 20px;
 }
-
 
 .video {
   position: relative;

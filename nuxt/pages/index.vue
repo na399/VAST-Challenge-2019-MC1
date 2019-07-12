@@ -42,6 +42,11 @@
           </video>
         </n-link>
       </div>
+      <div class="links">
+        <div>
+          <n-link to="/about" class="button--blue page-link">About the Project</n-link>
+        </div>
+      </div>
     </div>
   </section>
 </template>
