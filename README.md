@@ -10,6 +10,12 @@ The majority of codebase can be found in [`nuxt`](nuxt) directory.
 
 ![Dashboard](assets/dashboard.gif)
 
+![Domain Situation](assets/domain-situation.png)
+
+![Data Abstraction](assets/data-abstraction.png)
+
+![Visual Encoding](assets/visual-encoding.png)
+
 ## Overview
 
 [Source](https://vast-challenge.github.io/2019/index.html)
