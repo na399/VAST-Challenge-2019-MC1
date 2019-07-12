@@ -3,3 +3,4 @@
 
 # Tell GitHub Linguist to ignore the html files in the answer 
 nuxt/static/answer/* linguist-documentation
+*.ipynb linguist-documentation
