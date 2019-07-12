@@ -2,21 +2,19 @@
 
 This project is a submission to Visual Analytics Science and Technology (VAST) Challenge 2019 (Mini Challege 1).
 
-![Dashboard](assets/dashboard.gif)
-
 Live website: [https://vast2019.maxnadul.com](https://vast2019.maxnadul.com)
+
+Project submission package: [Summary Presentation](https://www.youtube.com/watch?v=s28CX9V8pRI), [Answer](https://vast2019.maxnadul.com/answer/dpst-natthawut-mc1)
 
 The majority of codebase can be found in [`nuxt`](nuxt) directory.
 
-
-
+![Dashboard](assets/dashboard.gif)
 
 ## Overview
 
 [Source](https://vast-challenge.github.io/2019/index.html)
 
 _Note: This scenario and all the people, places, groups, technologies, contained therein are fictitious. Any resemblance to real people, places, groups, or technologies is purely coincidental._
-
 
 St. Himark is a vibrant community located in the Oceanus Sea. Home to the world-renowned St. Himark Museum, beautiful beaches, and the Wilson Forest Nature Preserve, St. Himark is one of the region’s best cities for raising a family and provides employment across a number of industries including the Always Safe Nuclear Power Plant. Well, all that was true before the disastrous earthquake that hits the area during the course of this year’s challenge. Mayor Jordan, city officials, and emergency services are overwhelmed and are desperate for assistance in understanding the true situation on the ground and how best to deploy the limited resources available to this relatively small community.
 
