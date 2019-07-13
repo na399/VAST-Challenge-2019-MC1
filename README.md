@@ -1,12 +1,14 @@
 # Earthquake Damage Report Interactive Dashboard
 
-This project is a submission to Visual Analytics Science and Technology (VAST) Challenge 2019 (Mini Challege 1).
+This project is a submission to [Visual Analytics Science and Technology (VAST) Challenge 2019](https://vast-challenge.github.io/2019/index.html) ([Mini Challege 1](https://vast-challenge.github.io/2019/MC1.html)).
 
 Live website: [https://vast2019.maxnadul.com](https://vast2019.maxnadul.com)
 
 Project submission package: [Summary Presentation](https://www.youtube.com/watch?v=s28CX9V8pRI), [Answer](https://vast2019.maxnadul.com/answer/dpst-natthawut-mc1)
 
 The majority of codebase can be found in [`nuxt`](nuxt) directory.
+
+> The IEEE Visual Analytics Science and Technology (VAST) Challenge is an annual contest with the goal of advancing the field of visual analytics through competition. The VAST Challenge is designed to help researchers understand how their software would be used in a novel analytic task and determine if their data transformations, visualizations, and interactions would be beneficial for particular analytic tasks. VAST Challenge problems provide researchers with realistic tasks and data sets for evaluating their software, as well as an opportunity to advance the field by solving more complex problems. [Source](http://www.vacommunity.org/About+the+VAST+Challenge)
 
 ![Dashboard](assets/dashboard.gif)
 
@@ -63,7 +65,7 @@ Also included are two shakemap (PNG) files which indicate where the correspondin
 
 ---
 
-### Domain Situation
+## Domain Situation
 
 ![Domain Situation](assets/domain-situation.png)
 
@@ -71,7 +73,7 @@ Also included are two shakemap (PNG) files which indicate where the correspondin
 - Crowdsourced data may vary markedly, especially when the reports are based on subjective measurements. Therefore, the emergency responders should be informed about the uncertainty in the reports.
 - Situations and incoming reports are dynamic. Is the uncertainty dynamic too?
 
-### Data and Task Abstraction
+## Data and Task Abstraction
 
 ![Data Abstraction](assets/data-abstraction.png)
 
@@ -85,7 +87,7 @@ We had 3 and 4 tiers of CIR depending on the VSUP palettes. The cut-off threshol
 
 The main tasks of the visualization include discovery, summarization and comparison.
 
-### Visual Encoding and Interaction Idiom
+## Visual Encoding and Interaction Idiom
 
 ![Visual Encoding](assets/visual-encoding.png)
 
@@ -112,13 +114,15 @@ Despite the effectiveness of the length channel in accurately presenting the qua
 2. The more certain a value is, the more vibrant its colour is. Colour vibrance is a pre-attentive visual attribute that draws attention. This is beneficial for detecting damaged locations with high certainties.
 3. As represented by a single channel, the colour can combine with other channels to compose scalable visualization, such as positions in Heat Map.
 
-### Algorithm
+## Algorithm
 
 To perform data analysis, aggregation and transformation, we used R with several libraries, as mentioned above (scripts available [here](R)). The analysis is computationally intensive, involving Markov chain Monte Carlo sampling. Hence, to reduce the loading time, we ran this analysis parallelly prior to the visualization creation and used the processed results for the visualization.
 
 All visual elements and interactions are rendered and handled by Vega [Satyanarayan2016] with our specification JSON files (available [here](nuxt/assets/spec)). Vega performs data parsing that may take lengthy time to initialize the visualization. Streaming live data may shorten the initialization.
 
 Data aggregation was done in R. Vega could also perform such task on the client browser, but the task is too computationally intensive.
+
+---
 
 ### References
 
