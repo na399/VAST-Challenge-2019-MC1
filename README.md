@@ -89,7 +89,8 @@ The main tasks of the visualization include discovery, summarization and compari
 
 ![Visual Encoding](assets/visual-encoding.png)
 
-On this dashboard, the values and uncertainties of the MAPs are encoded with colours from the value-suppressing uncertainty palettes (VSUPs) [Correll2018]. (More details in the Q2 answer)
+On this dashboard, the values and uncertainties of the MAPs are encoded with colours from the value-suppressing uncertainty palettes (VSUPs) [Correll2018].
+
 There are four visual representations.
 
 1. Error Bar Chart: The MAPs and 95%, 80% & 50% CIs are visualized, respectively, as the circle marks and the graded error bars on the horizontal rating scale. The circle mark is coloured with either a three-tier 7-colour VSUP, an extended four-tier 15-colour VSUP or a normal 4 discrete colours. The four-tier 15-colour VSUP is recommended for trained personnel to gather detailed information. The circle mark has three visual variants that indicate the recentness of the data.
