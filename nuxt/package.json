@@ -1,6 +1,7 @@
 {
   "name": "VAST-Challenge-2019-MC1",
   "version": "1.0.0",
+  "license": "MIT",
   "description": "VAST Challenge 2019 MC1",
   "author": "Natthawut Adulyanukosol",
   "scripts": {
@@ -9,11 +10,9 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint",
-    "test": "jest"
+    "precommit": "npm run lint"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/google-analytics": "^2.2.0",
     "@nuxtjs/pwa": "^2.6.0",
     "cross-env": "^5.2.0",
