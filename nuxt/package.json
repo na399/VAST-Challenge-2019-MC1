@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "VAST Challenge 2019 MC1",
   "author": "Natthawut Adulyanukosol",
-  "private": true,
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",

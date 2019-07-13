@@ -4,7 +4,7 @@
 
     <div class="top-bar">
       <div class="header">
-        <h1>Earthquake Damage Report Heat Maps of Neighbourhoods</h1>
+        <h1>Earthquake Damage Report Heat Maps of Neighbourhoods [DEMO]</h1>
         <h2>VAST Challenge 2019</h2>
       </div>
     </div>
