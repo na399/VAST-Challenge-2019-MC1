@@ -77,7 +77,7 @@ Also included are two shakemap (PNG) files which indicate where the correspondin
 
 ![Data Abstraction](assets/data-abstraction.png)
 
-The reported ratings are modelled by Bayesian structural time series (BSTS) with a local level state [Scott2013]. The model yields a posterior probability distribution of the mean of rating at each given time point in the time series. The mode of the posterior probability distribution is defined as a maximum a posteriori (MAP) probability estimate. The highest posterior density interval specifies a credible interval (CI). To put it simply, a MAP is the most likely value of the actual mean, and a CI shows the subjective probability of the most likely interval of the mean.
+The reported ratings are modelled by Bayesian structural time series (BSTS) with a local level state [[Scott2013](#Scott2013)]. The model yields a posterior probability distribution of the mean of rating at each given time point in the time series. The mode of the posterior probability distribution is defined as a maximum a posteriori (MAP) probability estimate. The highest posterior density interval specifies a credible interval (CI). To put it simply, a MAP is the most likely value of the actual mean, and a CI shows the subjective probability of the most likely interval of the mean.
 
 According to Bayes’ theorem, the posterior distribution is proportional to the prior times the likelihood.
 We ran BSTS on the data once we have at least 5 data points from a category of a neighbourhood. The prior was simply set by a normal distribution with a mean of the first data point and an SD of 0.1 of the SD of all data points, which was the default setting. While this prior setting yielded reasonable output, we might have adjusted the priors with our beliefs, such as the known shake intensity and ongoing construction work that might affect the reports. The likelihood here is the probability of having data we observed, or the evidence given the model. The more the evidence we have, the certain the posterior is. Once a posterior distribution is obtained, it is then used as a prior distribution at the next time point recursively.
@@ -91,7 +91,7 @@ The main tasks of the visualization include discovery, summarization and compari
 
 ![Visual Encoding](assets/visual-encoding.png)
 
-On this dashboard, the values and uncertainties of the MAPs are encoded with colours from the value-suppressing uncertainty palettes (VSUPs) [Correll2018].
+On this dashboard, the values and uncertainties of the MAPs are encoded with colours from the value-suppressing uncertainty palettes (VSUPs) [[Correll2018](#Correll2018)].
 
 There are four visual representations.
 
@@ -101,7 +101,7 @@ There are four visual representations.
 
 3. Heat Map: Each unit displays the maximum value of hourly aggregated MAP and its respective 95% CIRs.
 
-4. Line Charts: They show the progression of MAP values and certainties over time. They are linked to Heat Map, which follows overview first, zoom and filter, then details-on-demand [Shneiderman1996].
+4. Line Charts: They show the progression of MAP values and certainties over time. They are linked to Heat Map, which follows overview first, zoom and filter, then details-on-demand [[Shneiderman1996](#Shneiderman1996)].
 
 All representations are assembled together. They are in sync and interacting with one another.
 
@@ -118,7 +118,7 @@ Despite the effectiveness of the length channel in accurately presenting the qua
 
 To perform data analysis, aggregation and transformation, we used R with several libraries, as mentioned above (scripts available [here](R)). The analysis is computationally intensive, involving Markov chain Monte Carlo sampling. Hence, to reduce the loading time, we ran this analysis parallelly prior to the visualization creation and used the processed results for the visualization.
 
-All visual elements and interactions are rendered and handled by Vega [Satyanarayan2016] with our specification JSON files (available [here](nuxt/assets/spec)). Vega performs data parsing that may take lengthy time to initialize the visualization. Streaming live data may shorten the initialization.
+All visual elements and interactions are rendered and handled by Vega [[Satyanarayan2016](#Satyanarayan2016)] with our specification JSON files (available [here](nuxt/assets/spec)). Vega performs data parsing that may take lengthy time to initialize the visualization. Streaming live data may shorten the initialization.
 
 Data aggregation was done in R. Vega could also perform such task on the client browser, but the task is too computationally intensive.
 
@@ -126,14 +126,14 @@ Data aggregation was done in R. Vega could also perform such task on the client 
 
 ### References
 
-- Correll M, Moritz D, Heer J (2018), “Value-Suppressing Uncertainty Palettes,” in Proceedings of the 2018 CHI Conference on Human Factors in Computing Systems - CHI ’18, vol. 272, no. 7286, pp. 1–11, [doi:10.1145/3173574.3174216](https://doi.org/10.1145/3173574.3174216).
+- <span id="Correll2018" /> Correll M, Moritz D, Heer J (2018), “Value-Suppressing Uncertainty Palettes,” in Proceedings of the 2018 CHI Conference on Human Factors in Computing Systems - CHI ’18, vol. 272, no. 7286, pp. 1–11, [doi:10.1145/3173574.3174216](https://doi.org/10.1145/3173574.3174216).
 
 - Munzner T (2009), “A Nested Process Model for Visualization Design and Validation,” IEEE Trans. Vis. Comput. Graph., vol. 15, no. 6, pp. 921–928, [doi:10.1109/TVCG.2009.111](https://doi.org/10.1109/TVCG.2009.111).
 
 - Munzner T (2014), Visualization Analysis & Design. Boca Raton, FL: CRC Press.
 
-- Satyanarayan A, Russell R, Hoffswell J, Heer J (2016), “Reactive Vega: A Streaming Dataflow Architecture for Declarative Interactive Visualization,” IEEE Trans. Vis. Comput. Graph., vol. 22, no. 1, pp. 659–668, [doi:10.1109/TVCG.2015.2467091](https://doi.org/10.1109/TVCG.2015.2467091).
+- <span id="Satyanarayan2016" /> Satyanarayan A, Russell R, Hoffswell J, Heer J (2016), “Reactive Vega: A Streaming Dataflow Architecture for Declarative Interactive Visualization,” IEEE Trans. Vis. Comput. Graph., vol. 22, no. 1, pp. 659–668, [doi:10.1109/TVCG.2015.2467091](https://doi.org/10.1109/TVCG.2015.2467091).
 
-- Scott S L, Varian H R (2013), “Predicting the Present with Bayesian Structural Time Series,” SSRN Electron. J., pp. 1–21, [doi:10.2139/ssrn.2304426](https://doi.org/10.2139/ssrn.2304426).
+- <span id="Scott2013" /> Scott S L, Varian H R (2013), “Predicting the Present with Bayesian Structural Time Series,” SSRN Electron. J., pp. 1–21, [doi:10.2139/ssrn.2304426](https://doi.org/10.2139/ssrn.2304426).
 
-- Shneiderman B (1996), “The eyes have it: a task by data type taxonomy for information visualizations,” in Proceedings 1996 IEEE Symposium on Visual Languages, pp. 336–343, [doi:10.1109/VL.1996.545307](https://doi.org/10.1109/VL.1996.545307).
+- <span id="Shneiderman1996" /> Shneiderman B (1996), “The eyes have it: a task by data type taxonomy for information visualizations,” in Proceedings 1996 IEEE Symposium on Visual Languages, pp. 336–343, [doi:10.1109/VL.1996.545307](https://doi.org/10.1109/VL.1996.545307).
