@@ -10,6 +10,30 @@ The majority of codebase can be found in [`nuxt`](nuxt) directory.
 
 ![Dashboard](assets/dashboard.gif)
 
+---
+
+## Tools Used
+
+Data transformation and analysis: [R](https://www.r-project.org/) ([bsts](https://cran.r-project.org/package%3Dbsts), [tidyverse](https://www.tidyverse.org/), [coda](https://cran.r-project.org/package%3Dcoda), [bayestestR](https://cran.r-project.org/package%3DbayestestR), [doFuture](https://cran.r-project.org/package%3DdoFuture), [zoo](https://cran.r-project.org/package%3Dzoo)), [mapshaper](https://mapshaper.org/), [Python](https://www.python.org/) ([PyMC3](https://docs.pymc.io/))
+
+Visualization: [Vega](https://vega.github.io/vega/), [VSUP](https://github.com/uwdata/vsup), [Tableau](https://www.tableau.com/), [ggplot2](https://ggplot2.tidyverse.org/)
+
+Web application: [Vue](https://vuejs.org/), [Nuxt](https://nuxtjs.org/), [Vuex](https://vuex.vuejs.org/), [Element UI](https://element.eleme.io/)
+
+Deployment & Hosting: [Netlify](https://www.netlify.com/), [Tableau Public](https://public.tableau.com/en-gb/s/)
+
+Cloud services: [Google Compute Engine](https://cloud.google.com/compute/), [Google Cloud Storage](https://cloud.google.com/storage/)
+
+Version control system (VCS): [Git](https://git-scm.com/), [GitHub](https://github.com/)
+
+Integrated development environment (IDE): [VS Code](https://code.visualstudio.com/), [RStudio](https://www.rstudio.com/), [Jupyter](https://jupyter.org/) on [Colaboratory](https://colab.research.google.com/)
+
+Prototyping & Image editing: [Sketch](https://www.sketch.com/)
+
+Data sonification: [TwoTone](https://app.twotone.io/)
+
+---
+
 ![Domain Situation](assets/domain-situation.png)
 
 ![Data Abstraction](assets/data-abstraction.png)
