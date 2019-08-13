@@ -9,6 +9,7 @@
         <br />by
         <a href="https://natthawut.adulyanukosol.com" target="_blank">Natthawut Adulyanukosol</a>
       </h2>
+      <h2 class="subtitle">Award for Operationalizing Visualization Theory</h2>
       <div class="links">
         <div>
           <n-link to="/svg/MC1-demo" class="button--blue page-link">Demo Dashboard</n-link>
