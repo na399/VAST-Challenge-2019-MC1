@@ -5,10 +5,10 @@
       <p>
         This project is a submission to
         <a
-          href="http://https://vast-challenge.github.io/2019"
+          href="https://vast-challenge.github.io/2019"
           target="_blank"
         >VAST Challenge 2019</a>
-        <a href="http://https://vast-challenge.github.io/2019/MC1" target="_blank">Mini-Challenge 1</a> created by
+        <a href="https://vast-challenge.github.io/2019/MC1" target="_blank">Mini-Challenge 1</a> created by
         <a
           href="https://natthawut.adulyanukosol.com"
           target="_blank"
@@ -55,14 +55,14 @@
         <p>
           Please visit
           <a
-            href="http://https://vast-challenge.github.io/2019/MC1"
+            href="https://vast-challenge.github.io/2019/MC1"
           >VAST Challenge 2019: Mini-Challenge 1</a> for more information and to download the data.
         </p>
         <div style="text-align: right; margin-top: 20px">
           <small>
             Retrived from
             <a
-              href="http://https://vast-challenge.github.io/2019"
+              href="https://vast-challenge.github.io/2019"
               target="_blank"
             >VAST Challenge 2019</a>
           </small>
